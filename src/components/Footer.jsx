@@ -149,7 +149,7 @@ export default function Footer() {
               {/* دکمه برای اسکرول به بالای صفحه */}
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="ml-1 p-3 bg-light/30 rounded-md cursor-pointer"
+                className="ml-1 p-3 bg-light/30 rounded-md cursor-pointer transition-all duration-500 ease-in-out"
               >
                 <FaChevronUp size={20} />
               </button>

@@ -43,6 +43,7 @@
 *,
 body {
   font-family: 'IRANSans';
+  scroll-behavior: smooth;
 }
 
 @keyframes smoothBounce {
