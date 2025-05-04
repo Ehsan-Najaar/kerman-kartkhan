@@ -80,7 +80,7 @@ export default function StepsBuying() {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center p-4 lg:p-0 overflow-x-hidden">
+    <div className="relative flex flex-col items-center justify-center p-4 lg:p-0">
       {/* title */}
       <div className="flex flex-col items-center justify-center pb-12 space-y-4">
         <p className="title-text">مراحل درخواست کارتخوان</p>
@@ -110,8 +110,6 @@ export default function StepsBuying() {
               setActiveTab(tab)
               setActiveStep(null)
             }}
-            aria-label={`انتخاب تب ${tab}`}
-            aria-expanded={activeTab === tab}
             className={`relative flex-1 p-3 main-text z-10 transition-colors duration-300 cursor-pointer ${
               activeTab === tab ? 'text-light' : 'text-dark'
             }`}
@@ -129,15 +127,13 @@ export default function StepsBuying() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
           transition={{ duration: 0.4 }}
-          className="w-full grid lg:grid-cols-2 gap-4 overflow-x-hidden"
+          className="w-[90%] h-[400px] md:h-max grid grid-cols-1 lg:grid-cols-2 gap-4"
         >
           {steps[activeTab].map((step) => (
             <div key={step.id}>
               {/* Step header */}
               <div
                 onClick={() => handleStepClick(step.id)}
-                aria-expanded={activeStep === step.id}
-                aria-label={`مرحله ${step.id} - ${step.title}`}
                 className="flex flex-col items-center p-4 bg-light rounded-2xl shadow-md cursor-pointer transition-all duration-300"
               >
                 <section className="w-full flex items-center justify-between">
@@ -147,7 +143,6 @@ export default function StepsBuying() {
                       alt={step.title}
                       width={32}
                       height={32}
-                      loading="lazy"
                     />
                     <span className="main-text text-dark">{`${step.id}. ${step.title}`}</span>
                   </div>
