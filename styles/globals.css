@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+@import '../public/fonts/IRANSans.css';
+
+@theme {
+  --color-primary: #f8243f;
+  --color-secondary: #ff697c;
+  --color-section: #fdbbc3;
+  --color-bg: #fbf5f6;
+  --color-dark: #333333;
+  --color-light: #ffffff;
+  --color-gray: #6b7280;
+  --color-lightgray: #d1d5db;
+}
+
+@layer components {
+  .h1 {
+    @apply text-[32px] font-black;
+  }
+  .h2 {
+    @apply text-[24px] font-black;
+  }
+  .body-text {
+    @apply text-base font-normal;
+  }
+
+  .small-text {
+    @apply text-[14px] leading-7 font-light;
+  }
+
+  .main-text {
+    @apply text-base font-semibold;
+  }
+
+  .button-text {
+    @apply text-base font-bold;
+  }
+
+  .title-text {
+    @apply text-2xl font-semibold text-dark;
+  }
+}
+
+*,
+body {
+  font-family: 'IRANSans';
+}
+
+@keyframes smoothBounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-smooth-bounce {
+  animation: smoothBounce 3.5s ease-in-out infinite;
+}
