@@ -13,6 +13,7 @@ const documents = [
   {
     title: 'جواز کسب و کار',
     icon: '/images/license.png',
+    optional: true, // اضافه کردن فیلد optional برای "الزامی نیست"
   },
   {
     title: 'تصاویر کارت ملی و شناسنامه',
@@ -44,19 +45,19 @@ export default function RequiredDocuments() {
       {/* list of documents */}
       <div className="w-full xl:w-max overflow-x-auto p-4 xl:overflow-visible">
         <div className="flex gap-6 flex-nowrap min-w-max">
-          {documents.map((doc, index) => (
+          {documents.map((doc) => (
             <div
-              key={index}
+              key={doc.title} // استفاده از title به عنوان key
               className={`w-52 h-40 flex-shrink-0 flex flex-col items-center justify-center gap-4 p-4 bg-light rounded-2xl shadow-md hover:shadow-lg transition ${
-                index === 1 || index === 3 ? 'xl:mt-6' : ''
+                doc.optional ? 'xl:mt-6' : ''
               }`}
             >
               <Image src={doc.icon} alt={doc.title} width={72} height={72} />
               <span className="main-text text-dark text-center">
                 {doc.title}
               </span>
-              {/* اضافه کردن متن "الزامی نیست" برای جواز کسب */}
-              {index === 2 && (
+              {/* نمایش متن "الزامی نیست" */}
+              {doc.optional && (
                 <span className="small-text text-gray -mt-3">
                   (الزامی نیست)
                 </span>

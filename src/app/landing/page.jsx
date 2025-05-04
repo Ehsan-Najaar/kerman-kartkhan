@@ -13,48 +13,45 @@ import Image from 'next/image'
 
 export default function LandingPage() {
   return (
-    <div className="space-y-32">
-      {/* top background */}
+    <div className="space-y-32 relative">
+      {/* Top background image */}
       <div className="absolute -top-4 left-0 right-0 -z-10">
         <Image
           src={'/images/top-rectangle.png'}
-          alt=""
+          alt="Background image"
           width={1500}
           height={1000}
           className="w-full"
         />
       </div>
 
-      {/* header */}
+      {/* Header Section */}
       <LandingHeaderPage />
 
-      {/* hero section */}
+      {/* Hero Section */}
       <HeroSection />
 
-      {/* services section */}
-      <div className="mt-80 sm:mt-[470px]">
+      {/* Services Section */}
+      <section className="mt-80 sm:mt-[470px]">
         <Services />
-      </div>
+      </section>
 
-      {/* register guide section */}
+      {/* Register Guide Section */}
       <RegisterGuide />
 
-      {/* steps buying */}
+      {/* Steps for Buying Section */}
       <StepsBuying />
 
-      {/* required documents */}
+      {/* Required Documents Section */}
       <RequiredDocuments />
 
-      {/* banks */}
+      {/* Banks Section */}
       <Banks />
 
-      {/* Benefits buying from us */}
-      {/* <BenefitsToBuy /> */}
-
-      {/* Faq */}
+      {/* FAQ Section */}
       <Faq />
 
-      {/* footer */}
+      {/* Footer Section */}
       <Footer />
     </div>
   )

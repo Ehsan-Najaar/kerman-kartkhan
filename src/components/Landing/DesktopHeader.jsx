@@ -17,49 +17,57 @@ export default function DesktopHeader() {
   const pathname = usePathname()
 
   return (
-    <div className="hidden lg:block sticky top-0 z-50">
+    <header className="hidden lg:block sticky top-0 z-50">
       <div className="mx-auto mt-4 p-4 max-w-6xl rounded-b-xl bg-light shadow-md backdrop-blur-md">
-        <div className="flex items-center justify-between">
-          <Image
-            src={'/images/logo.png'}
-            alt="لوگو"
-            width={200}
-            height={50}
-            draggable={false}
-          />
+        <nav className="flex items-center justify-between">
+          <Link href="/landing" aria-label="لوگوی سایت">
+            <Image
+              src="/images/logo.png"
+              alt="لوگوی کرمان کارتخوان"
+              width={200}
+              height={50}
+              draggable={false}
+              priority
+              quality={90}
+            />
+          </Link>
 
-          {/* روت‌ها */}
-          <div className="flex items-center gap-2">
+          {/* منو */}
+          <ul className="flex items-center gap-2">
             {routes.map((route) => {
               const isActive = pathname === route.path
 
               return (
-                <Link
-                  key={route.path}
-                  href={route.path}
-                  className={`relative flex items-center gap-1 px-3 py-1 rounded-md transition-all duration-300
-                    ${
-                      isActive
-                        ? 'text-secondary main-text after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-4/5 after:h-[6px] after:bg-secondary after:rounded-t-full after:content-[""]'
-                        : 'text-gray hover:text-dark'
-                    }
-                `}
-                >
-                  {route.name}
-                  {route.name === 'کارتخوان ها' && (
-                    <ChevronDown size={16} className="mr-2" />
-                  )}
-                </Link>
+                <li key={route.path}>
+                  <Link
+                    href={route.path}
+                    className={`relative flex items-center gap-1 px-3 py-1 rounded-md transition-all duration-300
+                      ${
+                        isActive
+                          ? 'text-secondary font-semibold after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-4/5 after:h-[6px] after:bg-secondary after:rounded-t-full after:content-[""]'
+                          : 'text-gray hover:text-dark'
+                      }
+                    `}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {route.name}
+                    {route.name === 'کارتخوان ها' && (
+                      <ChevronDown size={16} className="mr-2" />
+                    )}
+                  </Link>
+                </li>
               )
             })}
-          </div>
+          </ul>
 
-          {/* دکمه */}
-          <Link href={'/order-steps'}>
-            <Button variant="secondary">سفارش کارتخوان</Button>
+          {/* دکمه سفارش */}
+          <Link href="/order-steps">
+            <Button variant="secondary" aria-label="سفارش کارتخوان">
+              سفارش کارتخوان
+            </Button>
           </Link>
-        </div>
+        </nav>
       </div>
-    </div>
+    </header>
   )
 }

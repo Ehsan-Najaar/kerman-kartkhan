@@ -31,9 +31,20 @@ export default function Services() {
         {/* title */}
         <div className="flex flex-col items-center justify-center pb-12 space-y-4">
           <p className="title-text">چرا کرمان کارتخوان؟</p>
-          <article className="-space-y-5 text-section animate-smooth-bounce">
-            <ChevronDown size={32} className="stroke-3" />
-            <ChevronDown size={32} className="stroke-3" />
+          <article
+            className="-space-y-5 text-section animate-smooth-bounce"
+            aria-live="polite"
+          >
+            <ChevronDown
+              size={32}
+              className="stroke-3"
+              aria-label="Arrow Down"
+            />
+            <ChevronDown
+              size={32}
+              className="stroke-3"
+              aria-label="Arrow Down"
+            />
           </article>
         </div>
 
@@ -52,6 +63,7 @@ export default function Services() {
                 <div
                   key={index}
                   className={`relative w-52 h-52 bg-light rounded-4xl shadow-md shadow-section hover:shadow-lg p-6 flex-shrink-0 flex flex-col items-center justify-center transition-all duration-300 ${positionClass}`}
+                  aria-label={service.title}
                 >
                   <div className="mb-4">
                     <Image
@@ -60,6 +72,7 @@ export default function Services() {
                       width={72}
                       height={72}
                       draggable="false"
+                      loading="lazy"
                       className="object-contain"
                     />
                   </div>
@@ -75,10 +88,11 @@ export default function Services() {
       <div className="hidden xl:block w-[calc(100%+28%)] absolute top-0 -right-[170px] -z-10">
         <Image
           src={'/images/middle-rectangle.png'}
-          alt=""
+          alt="مستطیل پس‌زمینه"
           width={1500}
           height={700}
           draggable="false"
+          loading="lazy"
         />
       </div>
     </section>

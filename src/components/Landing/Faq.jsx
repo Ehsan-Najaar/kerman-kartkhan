@@ -1,6 +1,6 @@
 'use client'
 import { ChevronDown } from 'lucide-react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 const faqData = [
   {
@@ -55,9 +55,9 @@ const faqData = [
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState(null)
 
-  const toggle = (index) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
+  const toggle = useCallback((index) => {
+    setOpenIndex((prevIndex) => (prevIndex === index ? null : index))
+  }, [])
 
   return (
     <div className="p-8 text-dark">
@@ -74,7 +74,7 @@ export default function Faq() {
       <section className="space-y-4">
         {faqData.map((item, index) => (
           <div
-            key={index}
+            key={item.question} // استفاده از question به‌عنوان key
             className={`bg-light rounded-2xl shadow-md overflow-hidden cursor-pointer transition-all duration-300 ${
               openIndex === index
                 ? 'shadow-section/50 text-secondary'
@@ -94,7 +94,7 @@ export default function Faq() {
             </div>
             <div
               className={`overflow-hidden transition-all duration-[700ms] ease-in-out ${
-                openIndex === index ? 'max-h-[100px]' : 'max-h-0'
+                openIndex === index ? 'h-auto' : 'h-0'
               }`}
             >
               {openIndex === index && (

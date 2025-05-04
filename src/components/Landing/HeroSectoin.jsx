@@ -36,13 +36,14 @@ export default function HeroSection() {
         </div>
 
         <figure className="relative">
-          <div className="absolute top-6 left-10 sm:top-12 sm:left-20 lg:top-6 lg:left-10 w-64 h-64 lg:w-96  lg:h-96 bg-light/50 blur-2xl rounded-full z-0"></div>
+          <div className="absolute top-6 left-10 sm:top-12 sm:left-20 lg:top-6 lg:left-10 w-64 h-64 lg:w-96 lg:h-96 bg-light/50 blur-2xl rounded-full z-0"></div>
           <Image
             src="/images/card-reader.png"
-            alt=""
+            alt="تصویر کارتخوان"
             width={450}
             height={450}
             draggable="false"
+            loading="lazy"
             className="z-10 relative animate-smooth-bounce"
           />
         </figure>
@@ -65,9 +66,12 @@ export default function HeroSection() {
       {/* title */}
       <div className="flex flex-col items-center justify-center pb-4 lg:-mt-14 space-y-4">
         <p className="main-text">کارتخوان تا چه قیمتی میخوای!؟</p>
-        <article className="-space-y-5 text-section animate-smooth-bounce">
-          <ChevronDown size={32} className="stroke-3" />
-          <ChevronDown size={32} className="stroke-3" />
+        <article
+          className="-space-y-5 text-section animate-smooth-bounce"
+          aria-live="polite"
+        >
+          <ChevronDown size={32} className="stroke-3" aria-label="Arrow Down" />
+          <ChevronDown size={32} className="stroke-3" aria-label="Arrow Down" />
         </article>
       </div>
 

@@ -1,12 +1,9 @@
 import Link from 'next/link'
 import {
-  FaBookOpen,
   FaChevronUp,
-  FaInfoCircle,
   FaInstagram,
   FaMapMarkerAlt,
   FaMobile,
-  FaPhone,
   FaTelegramPlane,
   FaWhatsapp,
 } from 'react-icons/fa'
@@ -25,6 +22,7 @@ export default function Footer() {
                 alt="لوگوی کرمان کارتخوان"
                 width={150}
                 height={150}
+                loading="lazy"
               />
             </div>
             <p className="small-text text-justify bg-lightgray/30 p-3 rounded-xl">
@@ -36,33 +34,67 @@ export default function Footer() {
           {/* لینک‌های دسترسی سریع */}
           <div className="lg:w-2/4 lg:h-48 space-y-4 lg:border-l border-lightgray pl-4">
             <h3 className="text-primary main-text">دسترسی سریع</h3>
-            <ul className="space-y-4 text-sm">
-              <Link
-                href="/contact"
-                className="flex items-center gap-2 h-10 p-2 bg-lightgray/30 rounded-md cursor-pointer"
-                draggable="false"
-              >
-                <FaPhone size={20} />
-                <span>ارتباط با ما</span>
-              </Link>
-
-              <Link
-                href="/about"
-                className="flex items-center gap-2 h-10 p-2 bg-lightgray/30 rounded-md cursor-pointer"
-                draggable="false"
-              >
-                <FaInfoCircle size={20} />
-                <span>درباره ما</span>
-              </Link>
-
-              <Link
-                href="/rules"
-                className="flex items-center gap-2 h-10 p-2 bg-lightgray/30 rounded-md cursor-pointer"
-                draggable="false"
-              >
-                <FaBookOpen size={20} />
-                <span>قوانین و مقررات</span>
-              </Link>
+            <ul className="space-y-[14px] grid grid-cols-2 gap-2">
+              <li>
+                <Link
+                  href="/faq"
+                  draggable="false"
+                  aria-label="سوالات متداول"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
+                  سوالات متداول
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/shop"
+                  draggable="false"
+                  aria-label="فروشگاه کارتخوان"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
+                  فروشگاه کارتخوان
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  draggable="false"
+                  aria-label="درباره ما"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
+                  درباره ما
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact-us"
+                  draggable="false"
+                  aria-label="ارتباط با ما"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
+                  ارتباط با ما
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/guide"
+                  draggable="false"
+                  aria-label="راهنما"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
+                  راهنما
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/rules"
+                  draggable="false"
+                  aria-label="قوانین و مقررات"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
+                  قوانین و مقررات
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -70,36 +102,66 @@ export default function Footer() {
           <div className="lg:w-2/4 lg:h-48 space-y-4 lg:border-l border-lightgray pl-4">
             <h3 className="text-primary main-text">صفحات</h3>
             <ul className="space-y-[14px] grid grid-cols-2 gap-2">
-              <Link href="/faq" draggable="false">
-                <li className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer">
+              <li>
+                <Link
+                  href="/faq"
+                  draggable="false"
+                  aria-label="سوالات متداول"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
                   سوالات متداول
-                </li>
-              </Link>
-              <Link href="/shop" draggable="false">
-                <li className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer">
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/shop"
+                  draggable="false"
+                  aria-label="فروشگاه کارتخوان"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
                   فروشگاه کارتخوان
-                </li>
-              </Link>
-              <Link href="/about" draggable="false">
-                <li className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer">
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  draggable="false"
+                  aria-label="درباره ما"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
                   درباره ما
-                </li>
-              </Link>
-              <Link href="/contact-us" draggable="false">
-                <li className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer">
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact-us"
+                  draggable="false"
+                  aria-label="ارتباط با ما"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
                   ارتباط با ما
-                </li>
-              </Link>
-              <Link href="/guide" draggable="false">
-                <li className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer">
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/guide"
+                  draggable="false"
+                  aria-label="راهنما"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
                   راهنما
-                </li>
-              </Link>
-              <Link href="/rules" draggable="false">
-                <li className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer">
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/rules"
+                  draggable="false"
+                  aria-label="قوانین و مقررات"
+                  className="max-h-9 p-1 bg-lightgray/30 text-center rounded-md cursor-pointer"
+                >
                   قوانین و مقررات
-                </li>
-              </Link>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -150,6 +212,7 @@ export default function Footer() {
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="ml-1 p-3 bg-light/30 rounded-md cursor-pointer transition-all duration-500 ease-in-out"
+                aria-label="بازگشت به بالا"
               >
                 <FaChevronUp size={20} />
               </button>

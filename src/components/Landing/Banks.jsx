@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 const banks = [
   { id: 1, name: 'اقتصاد نوین', image: '/images/banks/eghtesad-novin.png' },
@@ -71,9 +71,24 @@ export default function Banks() {
   const [activeTab, setActiveTab] = useState(companies[0].name)
 
   // فیلتر کردن بانک‌ها برای شرکت فعال
-  const activeBanks = banks.filter((bank) =>
-    activeCompany.bankIds.includes(bank.id)
-  )
+  const activeBanks = useMemo(() => {
+    return banks.filter((bank) => activeCompany.bankIds.includes(bank.id))
+  }, [activeCompany, banks])
+
+  // انیمیشن‌ها
+  const tabAnimation = {
+    initial: { opacity: 0, x: -50 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 50 },
+    transition: { duration: 0.4 },
+  }
+
+  const bankAnimation = {
+    initial: { opacity: 0, x: 50 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -50 },
+    transition: { duration: 0.4 },
+  }
 
   return (
     <div id="banks" className="p-4 lg:p-0">
@@ -88,6 +103,7 @@ export default function Banks() {
         </article>
       </div>
 
+      {/* دکمه‌های تب شرکت‌ها */}
       <div className="relative w-full overflow-x-auto rounded-2xl shadow-sm bg-lightgray/20 border border-lightgray mb-4">
         <div className="flex min-w-max lg:min-w-0 lg:w-full relative">
           {/* انیمیشن پس‌زمینه */}
@@ -116,10 +132,7 @@ export default function Banks() {
               className={`w-52 relative flex-shrink-0 lg:flex-1 flex items-center justify-center gap-2  px-4 py-2 z-10 transition-colors duration-300 cursor-pointer whitespace-nowrap ${
                 activeTab === company.name ? 'text-light' : 'text-dark'
               }`}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-              transition={{ duration: 0.4 }}
+              {...tabAnimation}
             >
               <figure className="h-10">
                 <Image
@@ -141,10 +154,7 @@ export default function Banks() {
       <AnimatePresence mode="wait">
         <motion.ul
           key={activeTab}
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.4 }}
+          {...bankAnimation}
           className="list-none grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-9 place-items-center gap-2 pt-5"
         >
           {activeBanks.map((bank, index) => (

@@ -110,6 +110,8 @@ export default function StepsBuying() {
               setActiveTab(tab)
               setActiveStep(null)
             }}
+            aria-label={`انتخاب تب ${tab}`}
+            aria-expanded={activeTab === tab}
             className={`relative flex-1 p-3 main-text z-10 transition-colors duration-300 cursor-pointer ${
               activeTab === tab ? 'text-light' : 'text-dark'
             }`}
@@ -134,6 +136,8 @@ export default function StepsBuying() {
               {/* Step header */}
               <div
                 onClick={() => handleStepClick(step.id)}
+                aria-expanded={activeStep === step.id}
+                aria-label={`مرحله ${step.id} - ${step.title}`}
                 className="flex flex-col items-center p-4 bg-light rounded-2xl shadow-md cursor-pointer transition-all duration-300"
               >
                 <section className="w-full flex items-center justify-between">
@@ -143,6 +147,7 @@ export default function StepsBuying() {
                       alt={step.title}
                       width={32}
                       height={32}
+                      loading="lazy"
                     />
                     <span className="main-text text-dark">{`${step.id}. ${step.title}`}</span>
                   </div>
