@@ -1,5 +1,9 @@
+import { motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
+import { useEffect } from 'react'
+import { useInView } from 'react-intersection-observer'
+import { fadeIn } from '../../../variants'
 
 const documents = [
   {
@@ -26,8 +30,19 @@ const documents = [
 ]
 
 export default function RequiredDocuments() {
+  const controls = useAnimation()
+  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true })
+
+  useEffect(() => {
+    if (inView) controls.start('show')
+  }, [inView, controls])
+
   return (
-    <div
+    <motion.div
+      ref={ref}
+      variants={fadeIn('up', 0)}
+      initial="hidden"
+      animate={controls}
       id="RequiredDocuments"
       className="relative flex flex-col items-center justify-center"
     >
@@ -75,6 +90,6 @@ export default function RequiredDocuments() {
           height={400}
         />
       </div>
-    </div>
+    </motion.div>
   )
 }

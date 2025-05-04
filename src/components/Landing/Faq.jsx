@@ -1,6 +1,9 @@
 'use client'
+import { motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
+import { fadeIn } from '../../../variants'
 
 const faqData = [
   {
@@ -54,13 +57,25 @@ const faqData = [
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState(null)
+  const controls = useAnimation()
+  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true })
+
+  useEffect(() => {
+    if (inView) controls.start('show')
+  }, [inView, controls])
 
   const toggle = useCallback((index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index))
   }, [])
 
   return (
-    <div className="p-8 text-dark">
+    <motion.div
+      ref={ref}
+      variants={fadeIn('up', 0)}
+      initial="hidden"
+      animate={controls}
+      className="p-8 text-dark"
+    >
       {/* title */}
       <div className="flex flex-col items-center justify-center pb-12 space-y-4">
         <p className="title-text">سوالات متداول</p>
@@ -106,6 +121,6 @@ export default function Faq() {
           </div>
         ))}
       </section>
-    </div>
+    </motion.div>
   )
 }

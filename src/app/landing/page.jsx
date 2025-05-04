@@ -4,11 +4,11 @@ import Footer from '@/components/Footer'
 import Banks from '@/components/Landing/Banks'
 import Faq from '@/components/Landing/Faq'
 import HeroSection from '@/components/Landing/HeroSectoin'
+import LandingHeaderPage from '@/components/Landing/LandingHeaderPage'
 import RegisterGuide from '@/components/Landing/RegisterGuide'
 import RequiredDocuments from '@/components/Landing/RequiredDocuments'
 import Services from '@/components/Landing/Services'
 import StepsBuying from '@/components/Landing/StepsBuying'
-import LandingHeaderPage from '@/components/LandingHeaderPage'
 import Image from 'next/image'
 
 export default function LandingPage() {

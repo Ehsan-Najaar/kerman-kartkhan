@@ -1,10 +1,15 @@
 'use client'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useAnimation } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
+
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { fadeIn } from '../../../variants'
 
 export default function StepsBuying() {
+  const controls = useAnimation()
+  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true })
   const [activeTab, setActiveTab] = useState('نقدی')
   const [activeStep, setActiveStep] = useState(null)
   const tabs = ['نقدی', 'اقساط']
@@ -75,12 +80,22 @@ export default function StepsBuying() {
     ],
   }
 
+  useEffect(() => {
+    if (inView) controls.start('show')
+  }, [inView, controls])
+
   const handleStepClick = (id) => {
     setActiveStep(activeStep === id ? null : id)
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center p-4 lg:p-0">
+    <motion.div
+      ref={ref}
+      variants={fadeIn('up', 0)}
+      initial="hidden"
+      animate={controls}
+      className="relative flex flex-col items-center justify-center p-4 lg:p-0"
+    >
       {/* title */}
       <div className="flex flex-col items-center justify-center pb-12 space-y-4">
         <p className="title-text">مراحل درخواست کارتخوان</p>
@@ -127,11 +142,10 @@ export default function StepsBuying() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.4 }}
-          className="w-[90%] md:w-full h-[400px] md:h-max grid grid-cols-1 lg:grid-cols-2 gap-4"
+          className="w-[90%] md:w-full grid grid-cols-1 lg:grid-cols-2 gap-4"
         >
           {steps[activeTab].map((step) => (
             <div key={step.id}>
-              {/* Step header */}
               <div
                 onClick={() => handleStepClick(step.id)}
                 className="flex flex-col items-center p-4 bg-light rounded-2xl shadow-md cursor-pointer transition-all duration-300"
@@ -177,6 +191,6 @@ export default function StepsBuying() {
 
       <article className="absolute right-0 top-36 w-44 h-44 bg-section/60 rounded-full blur-2xl -z-10"></article>
       <article className="absolute left-0 -bottom-16 w-44 h-44 bg-section/60 rounded-full blur-2xl -z-10"></article>
-    </div>
+    </motion.div>
   )
 }

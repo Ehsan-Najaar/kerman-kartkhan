@@ -1,36 +1,63 @@
+'use client'
+
 import Button from '@/components/UI/Button'
+import { motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
+import { useEffect } from 'react'
+import { useInView } from 'react-intersection-observer'
+import { fadeIn } from '../../../variants'
 
 export default function RegisterGuide() {
+  const controls = useAnimation()
+  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true })
+
+  useEffect(() => {
+    if (inView) controls.start('show')
+  }, [inView, controls])
+
   return (
-    <div className="p-4">
+    <div className="p-4" ref={ref}>
       {/* title */}
-      <div className="flex flex-col items-center justify-center pb-12 space-y-4">
+      <motion.div
+        variants={fadeIn('up', 0)}
+        initial="hidden"
+        animate={controls}
+        className="flex flex-col items-center justify-center pb-12 space-y-4"
+      >
         <p className="title-text text-center">راهنمای درخواست و ثبت کارتخوان</p>
-        <article
-          className="-space-y-5 text-section animate-smooth-bounce"
-          aria-live="polite"
-        >
-          <ChevronDown size={32} className="stroke-3" aria-label="Arrow Down" />
-          <ChevronDown size={32} className="stroke-3" aria-label="Arrow Down" />
+        <article className="-space-y-5 text-section animate-smooth-bounce">
+          <ChevronDown size={32} className="stroke-3" />
+          <ChevronDown size={32} className="stroke-3" />
         </article>
-      </div>
+      </motion.div>
 
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-0">
-        <section className="lg:w-1/3 grid place-items-center">
+        {/* تصویر */}
+        <motion.section
+          variants={fadeIn('up', 0.2)} // استفاده از 'up' برای انیمیشن
+          initial="hidden"
+          animate={controls}
+          className="lg:w-1/3 grid place-items-center"
+        >
           <Image
-            src={'/images/bg-layers.png'}
+            src="/images/bg-layers.png"
             alt="تصویر راهنمای ثبت کارتخوان"
             width={500}
             height={300}
             loading="lazy"
             draggable="false"
           />
-        </section>
+        </motion.section>
 
+        {/* متن و دکمه */}
         <section className="lg:w-2/3 flex flex-col justify-between lg:pr-8">
-          <p className="body-text text-dark lg:text-justify text-center leading-loose">
+          <motion.p
+            variants={fadeIn('up', 0.4)} // استفاده از 'up' برای انیمیشن متن
+            initial="hidden"
+            animate={controls}
+            className="body-text text-dark lg:text-justify text-center leading-loose"
+          >
             دریافت کارت‌خوان با چند کلیک، از کرمان کارتخوان .<br /> در این ویدیو
             مراحل ثبت‌نام و دریافت کارت‌خوان از کرمان کارتخوان را مشاهده
             می‌کنید. ما این مسیر را برای شما ساده کرده‌ایم تا بدون نیاز به
@@ -38,14 +65,18 @@ export default function RegisterGuide() {
             دریافت کنید. <br /> کرمان کارتخوان با پشتیبانی سریع، ثبت‌نام آنلاین،
             و ارسال سراسری، همراه مطمئن شما در راه‌اندازی پذیرندگی بانکی است.
             همین حالا اقدام کنید و فروش خود را حرفه‌ای‌تر آغاز کنید.
-          </p>
-          <Button
-            variant="secondary"
+          </motion.p>
+
+          <motion.div
+            variants={fadeIn('up', 0.6)} // استفاده از 'up' برای انیمیشن دکمه
+            initial="hidden"
+            animate={controls}
             className="w-max mt-2 mx-auto lg:mx-0"
-            aria-label="ثبت و سفارش کارتخوان"
           >
-            ثبت و سفارش
-          </Button>
+            <Button variant="secondary" aria-label="ثبت و سفارش کارتخوان">
+              ثبت و سفارش
+            </Button>
+          </motion.div>
         </section>
       </div>
     </div>

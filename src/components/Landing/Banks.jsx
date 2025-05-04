@@ -1,7 +1,9 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
+import { fadeIn } from '../../../variants'
 
 const banks = [
   { id: 1, name: 'اقتصاد نوین', image: '/images/banks/eghtesad-novin.png' },
@@ -70,6 +72,13 @@ export default function Banks() {
   const [activeCompany, setActiveCompany] = useState(companies[0])
   const [activeTab, setActiveTab] = useState(companies[0].name)
 
+  const controls = useAnimation()
+  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true })
+
+  useEffect(() => {
+    if (inView) controls.start('show')
+  }, [inView, controls])
+
   // فیلتر کردن بانک‌ها برای شرکت فعال
   const activeBanks = useMemo(() => {
     return banks.filter((bank) => activeCompany.bankIds.includes(bank.id))
@@ -91,7 +100,14 @@ export default function Banks() {
   }
 
   return (
-    <div id="banks" className="p-4 lg:p-0">
+    <motion.div
+      ref={ref}
+      variants={fadeIn('up', 0)}
+      initial="hidden"
+      animate={controls}
+      id="banks"
+      className="p-4 lg:p-0"
+    >
       {/* نمایش عنوان */}
       <div className="flex flex-col items-center justify-center pb-12 space-y-4">
         <p className="title-text text-center">
@@ -167,6 +183,6 @@ export default function Banks() {
           ))}
         </motion.ul>
       </AnimatePresence>
-    </div>
+    </motion.div>
   )
 }
