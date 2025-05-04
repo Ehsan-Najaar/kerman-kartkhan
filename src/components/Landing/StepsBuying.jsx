@@ -80,7 +80,7 @@ export default function StepsBuying() {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center p-4 lg:p-0">
+    <div className="relative flex flex-col items-center justify-center p-4 lg:p-0 overflow-x-hidden">
       {/* title */}
       <div className="flex flex-col items-center justify-center pb-12 space-y-4">
         <p className="title-text">مراحل درخواست کارتخوان</p>
@@ -129,7 +129,7 @@ export default function StepsBuying() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
           transition={{ duration: 0.4 }}
-          className="w-full grid lg:grid-cols-2 gap-4"
+          className="w-full grid lg:grid-cols-2 gap-4 overflow-x-hidden"
         >
           {steps[activeTab].map((step) => (
             <div key={step.id}>

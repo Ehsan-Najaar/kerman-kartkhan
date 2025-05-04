@@ -6,11 +6,11 @@ const faqData = [
   {
     question: 'چه مدارکی برای دریافت کارت‌خوان لازم است؟',
     answer: (
-      <span className="flex items-center gap-2">
+      <span className="flex flex-col md:flex-row items-center gap-2">
         برای دریافت کارت‌خوان، به این مدارک نیاز است :
         <a
           href="#RequiredDocuments"
-          className="text-blue-500 hover:underline ml-1"
+          className=" text-blue-500 hover:underline ml-1"
         >
           [ لیست مدارک مورد نیاز ]
         </a>
@@ -20,9 +20,9 @@ const faqData = [
   {
     question: 'کارت‌خوان به چه حساب‌هایی متصل می‌شود؟',
     answer: (
-      <span className="flex items-center gap-2">
+      <span className="flex flex-col md:flex-row items-center gap-2">
         کارتخوان ها به این حساب ها قابل اتصال هستند :
-        <a href="#banks" className="text-blue-500 hover:underline ml-1">
+        <a href="#banks" className=" text-blue-500 hover:underline ml-1">
           [ مشاهده حساب‌ها ]
         </a>
       </span>
@@ -31,7 +31,7 @@ const faqData = [
   {
     question: 'آیا امکان خرید کارت‌خوان بدون جواز کسب وجود دارد؟',
     answer: (
-      <span className="flex items-center gap-2">
+      <span className="flex flex-col md:flex-row items-center gap-2">
         بله، بدون جواز کسب هم می‌توانید کارت‌خوان دریافت کنید. در این صورت، نام
         ثبت‌شده روی کارت‌خوان ممکن است با کسب‌وکار شما مطابقت نداشته باشد. مثلاً
         اگر تاکسی باشید، به‌جای اسم تاکسی، نام کسب‌وکار دیگری مانند سوپرمارکت
@@ -42,7 +42,7 @@ const faqData = [
   {
     question: 'کارت‌خوان‌ها سیار هستند یا ثابت؟',
     answer: (
-      <span className="flex items-center gap-2">
+      <span className="flex flex-col md:flex-row items-center gap-2">
         کارت‌خوان‌ها هم سیار هستند و هم ثابت
         <a href="#productPage" className="text-blue-500 hover:underline ml-1">
           [ مشاهده محصولات ]

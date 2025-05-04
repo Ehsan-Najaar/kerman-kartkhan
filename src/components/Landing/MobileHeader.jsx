@@ -80,9 +80,9 @@ export default function MobileHeader() {
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-[999] bg-black/50 backdrop-blur-sm">
+        <div className="fixed h-[clac(100vh+200px)] inset-0 z-[999] bg-black/50 backdrop-blur-sm">
           <motion.nav
-            className="mobile-menu fixed top-0 right-0 h-full w-64 bg-white shadow-xl"
+            className="mobile-menu fixed top-0 bottom-0 right-0 h-full w-64 bg-light shadow-xl"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
