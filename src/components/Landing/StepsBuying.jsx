@@ -123,11 +123,11 @@ export default function StepsBuying() {
       <AnimatePresence mode="wait">
         <motion.div
           key={activeTab}
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -50 }}
+          exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.4 }}
-          className="w-[90%] h-[400px] md:h-max grid grid-cols-1 lg:grid-cols-2 gap-4"
+          className="w-[90%] md:w-full h-[400px] md:h-max grid grid-cols-1 lg:grid-cols-2 gap-4"
         >
           {steps[activeTab].map((step) => (
             <div key={step.id}>
