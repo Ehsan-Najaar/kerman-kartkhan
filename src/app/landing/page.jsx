@@ -13,7 +13,7 @@ import Image from 'next/image'
 
 export default function LandingPage() {
   return (
-    <div className="space-y-32 relative">
+    <div className="space-y-32">
       {/* Top background image */}
       <div className="absolute -top-4 left-0 right-0 -z-10">
         <Image

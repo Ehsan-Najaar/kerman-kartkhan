@@ -20,13 +20,13 @@ export default function DesktopHeader() {
     <header className="hidden lg:block sticky top-0 z-50">
       <div className="mx-auto mt-4 p-4 max-w-6xl rounded-b-xl bg-light shadow-md backdrop-blur-md">
         <nav className="flex items-center justify-between">
-          <Link href="/landing" aria-label="لوگوی سایت">
+          <Link href="/landing" aria-label="لوگوی سایت" draggable="false">
             <Image
               src="/images/logo.png"
               alt="لوگوی کرمان کارتخوان"
               width={200}
               height={50}
-              draggable={false}
+              draggable="false"
               priority
               quality={90}
             />
