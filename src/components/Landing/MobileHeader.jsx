@@ -5,18 +5,21 @@ import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const routes = [
   { name: 'صفحه اصلی', path: '/landing' },
   { name: 'فروشگاه کرمان کارتخوان', path: '/shop' },
-  { name: 'راهنمای دریافت کارتخوان', path: '/guide' },
-  { name: 'ارتباط با ما', path: '/contact-us' },
+  { name: 'راهنمای دریافت کارتخوان', path: '/landing/guide' },
+  { name: 'ارتباط با ما', path: '/landing/contact-us' },
 ]
 
 export default function MobileHeader() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
+  const isLanding = pathname === '/landing'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,10 +42,14 @@ export default function MobileHeader() {
   }, [])
 
   return (
-    <header className="lg:hidden z-50">
+    <header className={`lg:hidden z-50 ${!isLanding ? 'mb-28' : ''}`}>
       <div
         className={`mx-auto px-3 py-3 max-w-6xl z-50 ${
-          scrolled ? 'bg-light shadow-md backdrop-blur-md' : 'bg-primary'
+          isLanding
+            ? scrolled
+              ? 'bg-light shadow-md backdrop-blur-md'
+              : 'bg-primary'
+            : 'bg-light shadow-md backdrop-blur-md'
         } transition-all duration-300 flex items-center justify-between fixed w-full top-0`}
       >
         <div className="flex items-center gap-1">
@@ -53,26 +60,43 @@ export default function MobileHeader() {
           >
             <Menu
               size={28}
-              className={`${scrolled ? 'text-gray' : 'text-light'}`}
+              className={`${
+                isLanding
+                  ? scrolled
+                    ? 'text-gray'
+                    : 'text-light'
+                  : 'text-gray'
+              }`}
             />
           </button>
-          <Image
-            src="/images/logo.png"
-            alt="لوگوی کرمان کارتخوان"
-            width={120}
-            height={40}
-            quality={80}
-            priority
-            loading="eager"
-            draggable={false}
-            className={`${scrolled ? 'grayscale-0' : 'grayscale-100'}`}
-          />
+
+          <Link href={'/'}>
+            <Image
+              src="/images/logo.png"
+              alt="لوگوی کرمان کارتخوان"
+              width={120}
+              height={40}
+              quality={80}
+              priority
+              loading="eager"
+              draggable={false}
+              className={`${
+                isLanding
+                  ? scrolled
+                    ? 'grayscale-0'
+                    : 'grayscale-100'
+                  : 'grayscale-0'
+              }`}
+            />
+          </Link>
         </div>
         <Link href="/order-steps">
           <Button
-            variant={scrolled ? 'secondary' : 'light'}
+            variant={
+              isLanding ? (scrolled ? 'secondary' : 'light') : 'secondary'
+            }
             size="sm"
-            customColor={!scrolled ? 'text-secondary' : ''}
+            customColor={isLanding && !scrolled ? 'text-secondary' : ''}
           >
             سفارش کارتخوان
           </Button>

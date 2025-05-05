@@ -22,7 +22,7 @@ export default function RegisterGuide() {
   }, [inView, controls, isLandingGuide])
 
   return (
-    <div className="p-4" ref={ref}>
+    <div className="p-4 lg:p-0" ref={ref}>
       {/* title */}
       <motion.div
         variants={fadeIn('up', 0)}

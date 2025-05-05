@@ -59,7 +59,7 @@ const branches = {
     phone: '034 3272 6099',
     hours: '8 الی 17',
     email: 'info@kermankartkhan.com',
-    address: 'کرمان ، بلوار جهاد ، نبش کوچه 23',
+    address: 'بلوار جهاد ، نبش کوچه 23',
   },
   زرند: {
     mapLink: 'https://maps.app.goo.gl/8CH4w1pM4JtrYq7H8',
@@ -67,7 +67,7 @@ const branches = {
     phone: '034 3342 2568',
     hours: '8 الی 17',
     email: 'zarand@kermankartkhan.com',
-    address: 'زرند ، چهار راه مصلی ، ابتدای خیابان ولیعصر',
+    address: 'چهار راه مصلی ، ابتدای خیابان ولیعصر',
   },
   راور: {
     mapLink: 'https://maps.app.goo.gl/oCXgja7MRbCRnNsm8',
@@ -75,7 +75,7 @@ const branches = {
     phone: '034 3372 2404',
     hours: '8 الی 17',
     email: 'ravar@kermankartkhan.com',
-    address: 'راور ، خیابان امام خمینی ، نبش کوچه 21',
+    address: 'خیابان امام خمینی ، نبش کوچه 21',
   },
 }
 
@@ -88,7 +88,7 @@ export default function ContactUsPage() {
     <div>
       <LandingHeaderPage />
 
-      <main className="my-12">
+      <main className="my-12 p-4 lg:p-0">
         {/* title */}
         <div className="flex flex-col items-center justify-center pb-12 space-y-4">
           <h1 className="title-text">ارتباط با ما</h1>
