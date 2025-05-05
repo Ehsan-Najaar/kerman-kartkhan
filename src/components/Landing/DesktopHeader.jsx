@@ -9,8 +9,8 @@ import { usePathname } from 'next/navigation'
 const routes = [
   { name: 'صفحه اصلی', path: '/landing' },
   { name: 'فروشگاه کرمان کارتخوان', path: '/shop' },
-  { name: 'راهنمای دریافت کارتخوان', path: '/guide' },
-  { name: 'ارتباط با ما', path: '/contact-us' },
+  { name: 'راهنمای دریافت', path: '/landing/guide' },
+  { name: 'ارتباط با ما', path: '/landing/contact-us' },
 ]
 
 export default function DesktopHeader() {

@@ -1,13 +1,17 @@
+import Button from '@/components/UI/Button'
 import Link from 'next/link'
+import { useState } from 'react'
 import {
   FaBookOpen,
   FaChevronUp,
+  FaInfo,
   FaInfoCircle,
   FaInstagram,
   FaMapMarkerAlt,
   FaMobile,
   FaPhone,
   FaTelegramPlane,
+  FaTimes,
   FaWhatsapp,
 } from 'react-icons/fa'
 
@@ -31,6 +35,7 @@ const FooterPageLink = ({ href, label }) => (
 )
 
 export default function Footer() {
+  const [open, setOpen] = useState(false)
   return (
     <footer className="mt-12">
       <section className="bg-light text-dark small-text rounded-4xl border border-lightgray shadow-md overflow-hidden">
@@ -120,24 +125,60 @@ export default function Footer() {
               dir="ltr"
               className="hidden lg:flex items-center gap-2 small-text p-2 bg-light/30 rounded-md"
             >
-              <span>0913 710 1002</span>
-              <FaMobile size={20} />
+              <span>034 3272 6099</span>
+              <FaPhone size={20} />
             </div>
 
             <div className="w-full lg:w-max flex items-center justify-between lg:justify-center gap-2">
-              {/* آدرس فیزیکی شرکت */}
-              <div className="flex items-center gap-2 small-text p-2 bg-light/30 rounded-md">
-                <FaMapMarkerAlt size={20} />
-                کرمان، بلوار جهاد، کوچه ۲۳
-              </div>
-
-              {/* دکمه برای اسکرول به بالای صفحه */}
-              <button
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="ml-1 p-3 bg-light/30 rounded-md cursor-pointer transition-all duration-500 ease-in-out"
+              <Button
+                onClick={() => setOpen(true)}
+                variant="light"
+                size="sm"
+                customColor={'bg-light/30 text-light'}
               >
-                <FaChevronUp size={20} />
-              </button>
+                <FaMapMarkerAlt />
+                آدرس تمام شعبه های کرمان کارتخوان
+              </Button>
+
+              {open && (
+                <div
+                  onClick={() => setOpen(false)}
+                  className="fixed inset-0 z-50 bg-black/30 flex justify-center items-center px-4"
+                >
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="bg-light w-full max-w-md rounded-xl p-6 relative text-center"
+                  >
+                    <button
+                      onClick={() => setOpen(false)}
+                      className="absolute top-3 left-3 text-gray hover:text-dark cursor-pointer"
+                    >
+                      <FaTimes size={20} />
+                    </button>
+                    <h3 className="text-xl text-secondary font-bold mb-4 flex items-center gap-2">
+                      <FaMapMarkerAlt />
+                      لیست شعبه‌ها
+                    </h3>
+                    <ul className="text-sm space-y-3 list-disc pr-4 text-dark text-right">
+                      <li>شعبه مرکزی : کرمان، بلوار جهاد، کوچه ۲۳</li>
+                      <li>شعبه زرند : چهار راه مصلی ، ابتدای خیابان ولیعصر</li>
+                      <li>شعبه راور : خیابان امام خمینی ، نبش کوچه 21</li>
+                    </ul>
+
+                    <Link href={'/landing/contact-us'}>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        outline
+                        className="mt-6"
+                      >
+                        <FaInfo />
+                        جزئیات بیشتر
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* آیکون‌های شبکه اجتماعی */}
@@ -185,6 +226,14 @@ export default function Footer() {
           </div>
         </div>
       </section>
+
+      {/* دکمه برای اسکرول به بالای صفحه */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed left-8 bottom-8 p-3 bg-light/30 rounded-md cursor-pointer transition-all duration-500 ease-in-out"
+      >
+        <FaChevronUp size={20} />
+      </button>
 
       {/* کپی‌رایت پایین سایت */}
       <div className="text-center text-xs py-3 text-dark/60">

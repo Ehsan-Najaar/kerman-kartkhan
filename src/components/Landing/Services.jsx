@@ -26,6 +26,7 @@ export default function Services() {
   return (
     <section className="relative py-12">
       <div className="w-full px-4 text-center">
+        {/* title */}
         <div className="flex flex-col items-center justify-center pb-12 space-y-4">
           <p className="title-text">چرا کرمان کارتخوان؟</p>
           <article className="-space-y-5 text-section animate-smooth-bounce">
