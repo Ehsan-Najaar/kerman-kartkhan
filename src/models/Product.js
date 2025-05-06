@@ -1,65 +1,59 @@
 import mongoose from 'mongoose'
-import slugify from 'slugify'
 
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     trim: true,
-  },
-  slug: {
-    type: String,
     unique: true,
     lowercase: true,
-    trim: true,
   },
   price: {
     type: Number,
     required: true,
   },
-  brand: {
+  type: {
     type: String,
+    enum: ['بیسیم', 'سیار'],
     required: true,
   },
-  origin: {
+  condition: {
     type: String,
+    enum: ['آکبند', 'استوک'],
     required: true,
   },
-  quantity: {
-    type: Number,
-    required: true,
-    min: 0,
+  colors: {
+    type: [String],
+    validate: (val) => val.length <= 2,
   },
-  category: {
+  images: {
+    type: [String],
+    validate: (val) => val.length <= 4,
+    required: true,
+  },
+  video: {
     type: String,
+  },
+  mainFeatures: {
+    type: [String],
     required: true,
   },
-  features: {
+  otherFeatures: {
     type: [String],
   },
   description: {
     type: String,
+    trim: true,
   },
-  images: {
-    type: [String],
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
     required: true,
-  },
-  views: {
-    type: Number,
-    default: 0,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-})
-
-// تولید خودکار `slug` قبل از ذخیره شدن
-productSchema.pre('save', function (next) {
-  if (!this.slug) {
-    this.slug = slugify(this.name, { lower: true, strict: true })
-  }
-  next()
 })
 
 const Product =

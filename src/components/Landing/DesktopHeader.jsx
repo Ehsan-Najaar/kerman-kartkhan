@@ -1,6 +1,6 @@
 'use client'
 
-import Button from '@/components/UI/Button'
+import Button from '@/components/ui/mine/Button'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'

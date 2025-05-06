@@ -1,5 +1,11 @@
 'use client'
 
+import { AppProvider } from '../../context/AppContext'
+
 export default function Layout({ children }) {
-  return <main className="max-w-6xl mx-auto">{children}</main>
+  return (
+    <AppProvider>
+      <main className="max-w-6xl mx-auto">{children}</main>
+    </AppProvider>
+  )
 }

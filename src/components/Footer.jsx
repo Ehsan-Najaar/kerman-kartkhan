@@ -1,4 +1,4 @@
-import Button from '@/components/UI/Button'
+import Button from '@/components/ui/mine/Button'
 import Link from 'next/link'
 import { useState } from 'react'
 import {
