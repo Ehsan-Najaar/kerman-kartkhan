@@ -1,8 +1,8 @@
 import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input'
 import { CloudUpload } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import Input from './ui/Input'
 
 export default function CategoryForm({
   categoryData,
