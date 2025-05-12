@@ -1,4 +1,4 @@
-import Button from '@/components/ui/mine/Button'
+import Button from '@/components/ui/Button'
 import Link from 'next/link'
 import { useState } from 'react'
 import {
@@ -230,7 +230,7 @@ export default function Footer() {
       {/* دکمه برای اسکرول به بالای صفحه */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed left-8 bottom-8 p-3 bg-light/30 rounded-md cursor-pointer transition-all duration-500 ease-in-out"
+        className="lg:fixed left-8 bottom-8 p-3 bg-light/30 rounded-md cursor-pointer transition-all duration-500 ease-in-out"
       >
         <FaChevronUp size={20} />
       </button>

@@ -1,9 +1,9 @@
 // src/app/storage/page.tsx
 'use client'
 
+import Button from '@/components/ui/Button'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import Button from '@/components/ui/mine/Button'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import Button from '@/components/ui/mine/Button'
+import Button from '@/components/ui/Button'
 import { motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'

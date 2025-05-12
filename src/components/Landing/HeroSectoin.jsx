@@ -1,6 +1,6 @@
 'use client'
 
-import Button from '@/components/ui/mine/Button'
+import Button from '@/components/ui/Button'
 import { motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
@@ -78,7 +78,12 @@ export default function HeroSection() {
           />
         </motion.figure>
 
-        <div className="lg:hidden flex items-center gap-2 mt-4">
+        <motion.div
+          variants={fadeIn('up', 0.1)}
+          initial="hidden"
+          animate={controlsLeft}
+          className="lg:hidden flex items-center gap-2 mt-4"
+        >
           <Button variant="light" size="sm" className="whitespace-nowrap">
             ثبت درخواست کارتخوان
           </Button>
@@ -90,7 +95,7 @@ export default function HeroSection() {
           >
             فروشگاه کرمان کارتخوان
           </Button>
-        </div>
+        </motion.div>
       </section>
 
       <motion.div

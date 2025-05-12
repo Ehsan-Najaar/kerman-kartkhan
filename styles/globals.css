@@ -19,6 +19,9 @@
   .h2 {
     @apply text-[24px] font-black;
   }
+  .h3 {
+    @apply text-[20px] font-semibold;
+  }
   .body-text {
     @apply text-base font-normal;
   }

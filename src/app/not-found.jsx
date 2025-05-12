@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 export default function NotFoundPage() {
@@ -6,16 +5,7 @@ export default function NotFoundPage() {
     <div className="flex min-h-screen items-center justify-center px-6">
       <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 -mt-44">
         {/* تصویر 404 */}
-        <div className="w-64 h-64 md:w-[492px] md:h-[492px]">
-          <Image
-            src="/images/404.webp"
-            alt="صفحه یافت نشد"
-            width={492}
-            height={492}
-            priority
-            className="w-full h-full object-contain"
-          />
-        </div>
+        <div className="w-64 h-64 md:w-[492px] md:h-[492px]"></div>
 
         {/* متن و دکمه */}
         <div className="space-y-12 md:space-y-24 text-center md:text-right">

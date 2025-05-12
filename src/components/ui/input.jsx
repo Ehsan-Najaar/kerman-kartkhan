@@ -1,19 +1,52 @@
-import { cn } from '@/components/lib/utils'
+import { useState } from 'react'
 
-function Input({ className, type, ...props }) {
+export default function Input({
+  id,
+  label,
+  placeholder,
+  value,
+  onChange,
+  required,
+  type = 'text',
+  icon = null,
+}) {
+  const [focused, setFocused] = useState(false)
+
   return (
-    <input
-      type={type}
-      data-slot="input"
-      className={cn(
-        'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-        'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
-        className
+    <div className="relative">
+      {/* اینپوت */}
+      <input
+        id={id}
+        type={type}
+        value={value}
+        onChange={onChange}
+        onFocus={() => setFocused(true)}
+        onBlur={() =>
+          setFocused(value !== '' && value !== undefined) && setFocused(false)
+        }
+        required={required}
+        className="w-full p-3 border border-lightgray rounded-lg transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-section"
+      />
+
+      {/* لیبل */}
+      <label
+        htmlFor={id}
+        className={`absolute right-4 py-1 px-4 transition-all duration-300 ${
+          focused
+            ? '-top-2 right-0 small-text text-secondary bg-bg'
+            : 'top-2 right-4 text-gray'
+        }`}
+        style={{ transform: focused ? 'translateY(-12px)' : 'translateY(0)' }}
+      >
+        {label}
+      </label>
+
+      {/* آیکون (اختیاری) */}
+      {icon && (
+        <div className="absolute top-1/2 right-3 transform -translate-y-1/2">
+          {icon}
+        </div>
       )}
-      {...props}
-    />
+    </div>
   )
 }
-
-export { Input }

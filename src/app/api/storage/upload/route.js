@@ -1,6 +1,6 @@
-// src/app/api/storage/upload/route.js
 import { s3 } from '@/lib/s3'
-import { PutObjectCommand } from '@aws-sdk/client-s3'
+import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 export async function POST(req) {
   try {
@@ -14,18 +14,43 @@ export async function POST(req) {
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
+    const fileName = file.name
+    const bucketName = process.env.LIARA_BUCKET_NAME
+    const bucketDomain = process.env.LIARA_BUCKET_DOMAIN // این متغیر باید به `.env` اضافه بشه
+
     const command = new PutObjectCommand({
-      Bucket: process.env.LIARA_BUCKET_NAME,
-      Key: file.name,
+      Bucket: bucketName,
+      Key: fileName,
       Body: buffer,
       ContentType: file.type,
     })
 
+    // آپلود فایل
     await s3.send(command)
 
+    // گرفتن URL امضا شده
+    const signedUrlCommand = new GetObjectCommand({
+      Bucket: bucketName,
+      Key: fileName,
+    })
+
+    // تولید URL امضا شده
+    const signedUrl = await getSignedUrl(s3, signedUrlCommand, {
+      expiresIn: 60 * 60, // مدت زمان انقضا URL (یک ساعت)
+    })
+
+    // ساخت URL نهایی برای ارسال به دیتابیس
+    const fileUrl = signedUrl
+
     return new Response(
-      JSON.stringify({ message: 'File uploaded successfully' }),
-      { status: 200 }
+      JSON.stringify({
+        message: 'File uploaded successfully',
+        url: fileUrl, // ارسال URL امضا شده به عنوان پاسخ
+      }),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }
     )
   } catch (error) {
     console.error('File upload failed:', error)
