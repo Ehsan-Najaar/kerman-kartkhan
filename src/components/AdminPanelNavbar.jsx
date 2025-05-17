@@ -1,6 +1,6 @@
 'use client'
 
-import { Package, ShoppingCart, Tag, Truck, Users } from 'lucide-react'
+import { Truck } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -9,24 +9,27 @@ import { FiArrowRight } from 'react-icons/fi'
 const AdminPanelNavbar = () => {
   const pathname = usePathname()
 
-  // آرایه لینک‌ها همراه با آیکون‌ها
   const navLinks = [
     {
       name: 'محصولات',
       href: '/admin/products',
-      icon: <Package size={24} />,
+      icon: '/icons/Box_fill_duotone.svg',
     },
     {
       name: 'دسته‌بندی‌ها',
       href: '/admin/categories',
-      icon: <Tag size={24} />,
+      icon: '/icons/lable_duotone _fill.svg',
     },
     {
       name: 'سفارشات',
       href: '/admin/orders',
-      icon: <ShoppingCart size={24} />,
+      icon: '/icons/Bag_alt_duotone.svg',
     },
-    { name: 'کاربران', href: '/admin/users', icon: <Users size={24} /> },
+    {
+      name: 'کاربران',
+      href: '/admin/users',
+      icon: '/icons/User_alt_duotone.svg',
+    },
     {
       name: 'هزینه ارسال',
       href: '/admin/shipping',
@@ -36,7 +39,7 @@ const AdminPanelNavbar = () => {
 
   return (
     <div
-      className={`min-h-full w-full lg:w-1/5 bg-lightgray text-dark rounded-2xl flex flex-col items-center p-4 shadow-lg ${
+      className={`min-h-full w-full lg:w-1/5 bg-light text-dark rounded-2xl flex flex-col items-center p-4 shadow-lg ${
         pathname !== '/admin' ? 'hidden lg:flex' : ''
       }`}
     >
@@ -61,13 +64,18 @@ const AdminPanelNavbar = () => {
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center gap-2 px-6 py-4 rounded-xl bg-bg ${
+              className={`flex items-center gap-3 px-6 py-4 rounded-xl bg-bg ${
                 isActive
-                  ? 'bg-secondary text-light'
-                  : 'lg:bg-transparent hover:bg-bg hover:pr-8 transition-all duration-300'
+                  ? 'bg-dark text-light'
+                  : 'lg:bg-transparent hover:bg-dark/5 hover:pr-8 transition-all duration-300'
               }`}
             >
-              {link.icon}
+              {/* نمایش آیکون به صورت تصویر یا JSX */}
+              {typeof link.icon === 'string' ? (
+                <Image src={link.icon} alt={link.name} width={32} height={32} />
+              ) : (
+                link.icon
+              )}
               <span>{link.name}</span>
             </Link>
           )

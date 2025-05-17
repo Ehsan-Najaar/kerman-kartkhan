@@ -97,7 +97,7 @@ export default function Faq() {
             }`}
             onClick={() => toggle(index)}
           >
-            <div className="flex justify-between items-center p-8">
+            <div className="flex justify-between items-center p-6">
               <p className="body-text w-[80%]">{`${index + 1}. ${
                 item.question
               }`}</p>
@@ -108,15 +108,13 @@ export default function Faq() {
               />
             </div>
             <div
-              className={`overflow-hidden transition-all duration-[700ms] ease-in-out ${
-                openIndex === index ? 'h-auto' : 'h-0'
+              className={`overflow-hidden transition-all duration-300 ${
+                openIndex === index ? 'max-h-96' : 'max-h-0'
               }`}
             >
-              {openIndex === index && (
-                <div className="px-8 pb-4 small-text text-gray">
-                  {item.answer}
-                </div>
-              )}
+              <div className="px-8 pb-4 small-text text-gray">
+                {item.answer}
+              </div>
             </div>
           </div>
         ))}

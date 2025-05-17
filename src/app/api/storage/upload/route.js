@@ -14,9 +14,9 @@ export async function POST(req) {
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    const fileName = file.name
+    const fileName = `categories/${file.name}`
     const bucketName = process.env.LIARA_BUCKET_NAME
-    const bucketDomain = process.env.LIARA_BUCKET_DOMAIN // این متغیر باید به `.env` اضافه بشه
+    const bucketDomain = process.env.LIARA_BUCKET_DOMAIN
 
     const command = new PutObjectCommand({
       Bucket: bucketName,
@@ -40,12 +40,12 @@ export async function POST(req) {
     })
 
     // ساخت URL نهایی برای ارسال به دیتابیس
-    const fileUrl = signedUrl
+    const fileUrl = `https://${bucketDomain}/${fileName}`
 
     return new Response(
       JSON.stringify({
         message: 'File uploaded successfully',
-        url: fileUrl, // ارسال URL امضا شده به عنوان پاسخ
+        url: fileUrl, // ارسال URL به عنوان پاسخ
       }),
       {
         status: 200,

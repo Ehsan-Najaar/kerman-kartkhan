@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 export default function Input({
   id,
+  name,
   label,
   placeholder,
   value,
@@ -12,18 +13,20 @@ export default function Input({
 }) {
   const [focused, setFocused] = useState(false)
 
+  // اگر value از بیرون مقدار گرفت، لیبل باید بالا بره
+  const shouldFloatLabel = focused || (value !== '' && value !== undefined)
+
   return (
     <div className="relative">
       {/* اینپوت */}
       <input
         id={id}
+        name={name}
         type={type}
         value={value}
         onChange={onChange}
         onFocus={() => setFocused(true)}
-        onBlur={() =>
-          setFocused(value !== '' && value !== undefined) && setFocused(false)
-        }
+        onBlur={() => setFocused(false)}
         required={required}
         className="w-full p-3 border border-lightgray rounded-lg transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-section"
       />
@@ -32,11 +35,13 @@ export default function Input({
       <label
         htmlFor={id}
         className={`absolute right-4 py-1 px-4 transition-all duration-300 ${
-          focused
+          shouldFloatLabel
             ? '-top-2 right-0 small-text text-secondary bg-bg'
-            : 'top-2 right-4 text-gray'
+            : 'top-2 right-4 text-gray/50 small-text'
         }`}
-        style={{ transform: focused ? 'translateY(-12px)' : 'translateY(0)' }}
+        style={{
+          transform: shouldFloatLabel ? 'translateY(-12px)' : 'translateY(0)',
+        }}
       >
         {label}
       </label>

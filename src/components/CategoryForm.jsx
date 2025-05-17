@@ -3,12 +3,14 @@ import Input from '@/components/ui/Input'
 import { CloudUpload } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { FiLoader, FiPlus } from 'react-icons/fi'
 
 export default function CategoryForm({
   categoryData,
   setCategoryData,
   handleSubmit,
   isEditing,
+  setIsEditing,
 }) {
   const [imageFile, setImageFile] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -70,7 +72,10 @@ export default function CategoryForm({
 
   return (
     <div>
-      <form onSubmit={handleFormSubmit} className="flex gap-6">
+      <form
+        onSubmit={handleFormSubmit}
+        className="flex flex-col md:flex-row gap-6"
+      >
         {/* آپلود تصویر */}
         <div className="flex items-center justify-center">
           <label
@@ -87,9 +92,7 @@ export default function CategoryForm({
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <CloudUpload className="w-8 h-8 mb-4 text-gray" />
                 <p className="mb-2 text-sm text-gray">
-                  <span className="font-semibold">
-                    برای آپلود تصویر کلیک کنید
-                  </span>
+                  <span>برای آپلود تصویر کلیک کنید</span>
                 </p>
               </div>
             )}
@@ -104,7 +107,7 @@ export default function CategoryForm({
         </div>
 
         {/* فیلدها */}
-        <section className="w-full grid grid-cols-2 gap-6">
+        <section className="w-full grid md:grid-cols-2 gap-6">
           <Input
             id="title"
             label="عنوان"
@@ -144,14 +147,41 @@ export default function CategoryForm({
             }
           />
 
-          <div>
-            <Button variant="secondary" disabled={loading}>
-              {loading
-                ? 'در حال آپلود تصویر...'
-                : isEditing
-                ? 'ویرایش دسته‌بندی'
-                : 'افزودن دسته‌بندی'}
+          <div className="flex items-center gap-4 body-text">
+            <Button variant="primary" fontWeight="medium" disabled={loading}>
+              {loading ? (
+                <div className="px-12 py-px">
+                  <FiLoader size={20} className="animate-spin" />
+                </div>
+              ) : isEditing ? (
+                'ویرایش دسته‌بندی'
+              ) : (
+                <>
+                  <FiPlus size={24} />
+                  افزودن دسته‌بندی
+                </>
+              )}
             </Button>
+
+            {isEditing && (
+              <Button
+                type="button"
+                variant="ghost"
+                fontWeight="medium"
+                onClick={() => {
+                  setCategoryData({
+                    title: '',
+                    slug: '',
+                    description: '',
+                    image: '',
+                    parent: '',
+                  })
+                  setIsEditing(false)
+                }}
+              >
+                لغو
+              </Button>
+            )}
           </div>
         </section>
       </form>

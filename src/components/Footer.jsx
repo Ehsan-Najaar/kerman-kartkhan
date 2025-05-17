@@ -98,15 +98,7 @@ export default function Footer() {
             <h3 className="text-primary main-text">نماد ها</h3>
             <div className="flex lg:flex-col gap-3 items-center justify-center">
               <img
-                src="/images/enamad.png"
-                alt="نماد اعتماد الکترونیکی"
-                width={70}
-                height={70}
-                draggable="false"
-                className="bg-lightgray/30 rounded-md p-2"
-              />
-              <img
-                src="/images/zarinpall.png"
+                src="/images/.png"
                 alt="زرین‌پال"
                 width={70}
                 height={70}
@@ -133,6 +125,7 @@ export default function Footer() {
               <Button
                 onClick={() => setOpen(true)}
                 variant="light"
+                fontWeight="medium"
                 size="sm"
                 customColor={'bg-light/30 text-light'}
               >
@@ -157,18 +150,28 @@ export default function Footer() {
                     </button>
                     <h3 className="text-xl text-secondary font-bold mb-4 flex items-center gap-2">
                       <FaMapMarkerAlt />
-                      لیست شعبه‌ها
+                      لیست آدرس شعبه‌ها
                     </h3>
                     <ul className="text-sm space-y-3 list-disc pr-4 text-dark text-right">
-                      <li>شعبه مرکزی : کرمان، بلوار جهاد، کوچه ۲۳</li>
-                      <li>شعبه زرند : چهار راه مصلی ، ابتدای خیابان ولیعصر</li>
-                      <li>شعبه راور : خیابان امام خمینی ، نبش کوچه 21</li>
+                      <li>
+                        <b className="font-semibold">شعبه مرکزی:</b> کرمان،
+                        بلوار جهاد، کوچه ۲۳
+                      </li>
+                      <li>
+                        <b className="font-semibold">شعبه زرند:</b> چهار راه
+                        مصلی، ابتدای خیابان ولیعصر
+                      </li>
+                      <li>
+                        <b className="font-semibold">شعبه راور:</b> خیابان امام
+                        خمینی، نبش کوچه 21
+                      </li>
                     </ul>
 
                     <Link href={'/landing/contact-us'}>
                       <Button
                         variant="secondary"
                         size="sm"
+                        fontWeight="medium"
                         outline
                         className="mt-6"
                       >

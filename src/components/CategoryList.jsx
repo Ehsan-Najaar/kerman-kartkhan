@@ -2,8 +2,8 @@ import CategoryItem from '@/components/CategoryItem'
 
 export default function CategoryList({ categories, handleEdit, handleDelete }) {
   return (
-    <div className="h-96 overflow-hidden">
-      <ul className="h-full overflow-auto space-y-2">
+    <div className="h-[350px] overflow-hidden">
+      <ul className="h-full overflow-auto px-4">
         {categories.length === 0 ? (
           <p className="text-center">دسته‌بندی‌ای موجود نیست.</p>
         ) : (

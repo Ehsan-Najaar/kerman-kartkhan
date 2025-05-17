@@ -62,7 +62,11 @@ export default function DesktopHeader() {
 
           {/* دکمه سفارش */}
           <Link href="/order-steps">
-            <Button variant="secondary" aria-label="سفارش کارتخوان">
+            <Button
+              variant="primary"
+              fontWeight="medium"
+              aria-label="سفارش کارتخوان"
+            >
               سفارش کارتخوان
             </Button>
           </Link>

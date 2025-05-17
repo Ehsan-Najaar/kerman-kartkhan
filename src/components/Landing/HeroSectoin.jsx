@@ -47,13 +47,22 @@ export default function HeroSection() {
           </div>
           <div className="hidden lg:flex items-center gap-2">
             <Link href={'/order-steps'}>
-              <Button variant="light" className="whitespace-nowrap">
+              <Button
+                variant="light"
+                fontWeight="medium"
+                className="whitespace-nowrap"
+              >
                 ثبت درخواست کارتخوان
               </Button>
             </Link>
 
             <Link href={'/shop'}>
-              <Button variant="light" outline className="whitespace-nowrap">
+              <Button
+                variant="light"
+                fontWeight="medium"
+                outline
+                className="whitespace-nowrap"
+              >
                 فروشگاه کرمان کارتخوان
               </Button>
             </Link>
@@ -84,13 +93,19 @@ export default function HeroSection() {
           animate={controlsLeft}
           className="lg:hidden flex items-center gap-2 mt-4"
         >
-          <Button variant="light" size="sm" className="whitespace-nowrap">
+          <Button
+            variant="light"
+            size="sm"
+            fontWeight="medium"
+            className="whitespace-nowrap"
+          >
             ثبت درخواست کارتخوان
           </Button>
           <Button
             variant="light"
             outline
             size="sm"
+            fontWeight="medium"
             className="whitespace-nowrap"
           >
             فروشگاه کرمان کارتخوان

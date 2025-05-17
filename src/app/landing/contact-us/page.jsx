@@ -64,7 +64,7 @@ const branches = {
   زرند: {
     mapLink: 'https://maps.app.goo.gl/8CH4w1pM4JtrYq7H8',
     image: '/images/zrand-map.png',
-    phone: '034 3342 2568',
+    phone: '0913 713 5009',
     hours: '8 الی 17',
     email: 'zarand@kermankartkhan.com',
     address: 'چهار راه مصلی ، ابتدای خیابان ولیعصر',

@@ -78,7 +78,11 @@ export default function RegisterGuide() {
             animate={isLandingGuide ? false : controls}
             className="w-max mt-2 mx-auto lg:mx-0"
           >
-            <Button variant="secondary" aria-label="ثبت و سفارش کارتخوان">
+            <Button
+              variant="primary"
+              fontWeight="medium"
+              aria-label="ثبت و سفارش کارتخوان"
+            >
               ثبت و سفارش
             </Button>
           </motion.div>
