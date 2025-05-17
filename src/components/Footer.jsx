@@ -97,6 +97,22 @@ export default function Footer() {
           <div className="lg:w-1/4 lg:h-48 space-y-4">
             <h3 className="text-primary main-text">نماد ها</h3>
             <div className="flex lg:flex-col gap-3 items-center justify-center">
+              <a
+                referrerPolicy="origin"
+                target="_blank"
+                href="https://trustseal.enamad.ir/?id=609824&Code=BnvdJImbxIiAeEeBC3zKmsvRUMsJ0M6V"
+              >
+                <img
+                  referrerPolicy="origin"
+                  src="https://trustseal.enamad.ir/logo.aspx?id=609824&Code=BnvdJImbxIiAeEeBC3zKmsvRUMsJ0M6V"
+                  alt="نماد"
+                  width={70}
+                  height={70}
+                  className="bg-lightgray/30 rounded-md p-2 cursor-pointer"
+                  code="BnvdJImbxIiAeEeBC3zKmsvRUMsJ0M6V"
+                />
+              </a>
+
               <img
                 src="/images/.png"
                 alt="زرین‌پال"

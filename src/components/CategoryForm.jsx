@@ -1,5 +1,5 @@
 import Button from '@/components/ui/Button'
-import Input from '@/components/ui/Input'
+import Input from '@/components/ui/Input.jsx'
 import { CloudUpload } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'

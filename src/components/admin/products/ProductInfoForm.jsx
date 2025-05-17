@@ -1,4 +1,4 @@
-import Input from '@/components/ui/Input'
+import Input from '@/components/ui/Input.jsx'
 import RadioGroup from '@/components/ui/RadioGroup'
 import Textarea from '@/components/ui/Textarea'
 
