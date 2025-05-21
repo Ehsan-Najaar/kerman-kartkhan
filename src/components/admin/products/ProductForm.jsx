@@ -154,20 +154,24 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
           const formData = new FormData()
           formData.append('file', file)
           formData.append('folder', folder)
+
           const res = await fetch('/api/storage/upload', {
             method: 'POST',
             body: formData,
           })
+
           const data = await res.json()
+          if (!res.ok || !data.url) {
+            throw new Error('آپلود تصویر با مشکل مواجه شد')
+          }
+
           return data.url
         })
       )
 
       // آپلود ویدیو اگر فایل بود
       let videoUrl = ''
-      if (typeof videoFile === 'string') {
-        videoUrl = videoFile
-      } else if (videoFile instanceof File) {
+      if (videoFile instanceof File) {
         const formData = new FormData()
         formData.append('file', videoFile)
         formData.append('folder', folder)
@@ -176,6 +180,9 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
           body: formData,
         })
         const data = await res.json()
+        if (!res.ok || !data.url) {
+          throw new Error('آپلود ویدیو با مشکل مواجه شد')
+        }
         videoUrl = data.url
       }
 
