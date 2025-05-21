@@ -24,11 +24,11 @@ export default function Textarea({
         onChange={onChange}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        placeholder={placeholder}
+        placeholder=" " // لازم برای peer-placeholder-shown
         required={required}
         className={clsx(
           'peer w-full pt-6 pb-2 px-3 border border-lightgray rounded-lg resize-none',
-          'focus:outline-none focus:ring-1 focus:ring-section transition-all duration-200',
+          'focus:outline-none focus:border-section transition-all duration-200',
           'placeholder-transparent'
         )}
       />
@@ -36,10 +36,10 @@ export default function Textarea({
       <label
         htmlFor={id}
         className={clsx(
-          'absolute right-3 top-2 text-sm text-gray-500 pointer-events-none transition-all duration-200',
-          {
-            'text-xs -top-32 right-4 bg-white px-1': focused || hasValue,
-          }
+          'absolute right-3 px-1 text-gray/50 bg-white transition-all duration-200 pointer-events-none',
+          'peer-placeholder-shown:top-3 peer-placeholder-shown:text-xs',
+          'peer-focus:-top-2 peer-focus:text-xs',
+          (focused || hasValue) && '-top-2 text-xs text-secondary'
         )}
       >
         {label}

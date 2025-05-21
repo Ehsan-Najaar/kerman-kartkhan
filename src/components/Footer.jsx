@@ -143,7 +143,7 @@ export default function Footer() {
                 variant="light"
                 fontWeight="medium"
                 size="sm"
-                customColor={'bg-light/30 text-light'}
+                customColor={'bg-light/30 text-white'}
               >
                 <FaMapMarkerAlt />
                 آدرس تمام شعبه های کرمان کارتخوان

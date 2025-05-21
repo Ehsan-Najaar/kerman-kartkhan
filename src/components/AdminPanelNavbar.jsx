@@ -18,7 +18,7 @@ const AdminPanelNavbar = () => {
     {
       name: 'دسته‌بندی‌ها',
       href: '/admin/categories',
-      icon: '/icons/lable_duotone _fill.svg',
+      icon: '/icons/lable_duotone_fill.svg', // اصلاح شد: فاصله حذف شده
     },
     {
       name: 'سفارشات',
@@ -28,7 +28,7 @@ const AdminPanelNavbar = () => {
     {
       name: 'کاربران',
       href: '/admin/users',
-      icon: '/icons/User_alt_duotone.svg',
+      icon: '/icons/Group_duotone_fill.svg',
     },
     {
       name: 'هزینه ارسال',
@@ -51,7 +51,7 @@ const AdminPanelNavbar = () => {
           width={150}
           height={150}
           priority
-          className="w-44 rounded-lg"
+          className="rounded-lg w-auto h-auto"
         />
       </Link>
 
@@ -66,13 +66,19 @@ const AdminPanelNavbar = () => {
               href={link.href}
               className={`flex items-center gap-3 px-6 py-4 rounded-xl bg-bg ${
                 isActive
-                  ? 'bg-dark text-light'
+                  ? 'bg-lightgray'
                   : 'lg:bg-transparent hover:bg-dark/5 hover:pr-8 transition-all duration-300'
               }`}
             >
               {/* نمایش آیکون به صورت تصویر یا JSX */}
               {typeof link.icon === 'string' ? (
-                <Image src={link.icon} alt={link.name} width={32} height={32} />
+                <Image
+                  src={link.icon}
+                  alt={link.name}
+                  priority
+                  width={32}
+                  height={32}
+                />
               ) : (
                 link.icon
               )}

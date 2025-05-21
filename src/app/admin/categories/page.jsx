@@ -3,6 +3,7 @@
 import AdminPanelNavbar from '@/components/AdminPanelNavbar'
 import CategoryForm from '@/components/CategoryForm'
 import CategoryList from '@/components/CategoryList'
+import { Loader2 } from '@/components/Loader'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
@@ -85,7 +86,7 @@ export default function CategoryManagement() {
       <div className="w-full lg:w-4/5 lg:h-[750px] bg-light px-2 lg:p-4 rounded-2xl shadow-lg overflow-hidden relative">
         {loading ? (
           <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-10">
-            <p className="text-gray-600">در حال بارگذاری...</p>
+            <Loader2 />
           </div>
         ) : (
           <div className="space-y-20">

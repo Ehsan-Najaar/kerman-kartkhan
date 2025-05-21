@@ -12,17 +12,19 @@ export default function Button({
   className = '',
   customColor,
   hoverColor,
+  type = 'button',
+  onClick,
   ...props
 }) {
   const isPrimaryGradient = variant === 'primary' && !outline
 
   return (
     <button
+      type={type}
       className={clsx(
         'inline-flex items-center justify-center gap-2 rounded-lg transition-all duration-300 cursor-pointer',
         {
-          // حذف کلاس bg-primary وقتی گرادیانت داریم
-          'text-light hover:bg-secondary': isPrimaryGradient,
+          'text-light hover:brightness-90': isPrimaryGradient,
           'bg-secondary text-light hover:bg-primary':
             variant === 'secondary' && !outline,
           'bg-light text-secondary': variant === 'light' && !outline,
@@ -39,7 +41,6 @@ export default function Button({
           'px-6 py-3 text-base': size === 'md',
           'px-8 py-4 text-lg': size === 'lg',
 
-          // فونت وزن
           'font-light': fontWeight === 'light',
           'font-normal': fontWeight === 'normal',
           'font-medium': fontWeight === 'medium',
@@ -56,6 +57,7 @@ export default function Button({
             }
           : {}
       }
+      onClick={onClick}
       {...props}
     >
       {iconLeft && <span className="flex-shrink-0">{iconLeft}</span>}

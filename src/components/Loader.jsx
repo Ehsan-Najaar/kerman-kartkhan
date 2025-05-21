@@ -1,22 +1,47 @@
-'use client'
+import Image from 'next/image'
 
-const Loader = () => {
-  return (
-    <div className="min-h-screen grid place-items-center">
-      <span className="loader"></span>
-    </div>
-  )
-}
-
-const Loader2 = () => {
+function Loader1() {
   return (
     <div
-      className="fixed top-0 right-0 bg-black/60 w-screen min-h-screen grid place-items-center z-50"
-      style={{ margin: 0 }}
+      className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
+      aria-label="Loading content, please wait"
+      role="alert"
+      aria-busy="true"
     >
-      <span className="loader after:bg-accent"></span>
+      <Image
+        src="/images/loader1.png"
+        alt="Loading animation"
+        width={200}
+        height={200}
+        priority
+        className="animate-smooth-bounce"
+      />
     </div>
   )
 }
 
-export { Loader, Loader2 }
+function Loader2() {
+  return (
+    <div
+      className="h-full flex items-center justify-center z-50"
+      aria-label="Loading content, please wait"
+      role="alert"
+      aria-busy="true"
+    >
+      <section>
+        <Image
+          src="/images/loader1.png"
+          alt="Loading animation"
+          width={200}
+          height={200}
+          priority
+          className="animate-smooth-bounce"
+        />
+        <p className="text-center mt-4 mr-8">در حال بارگذاری ...</p>
+      </section>
+    </div>
+  )
+}
+
+// حالت اول: named export
+export { Loader1, Loader2 }

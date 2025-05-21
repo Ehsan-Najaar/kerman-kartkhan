@@ -93,11 +93,10 @@ function ProductImagesUploader({
         {imageFiles.map((file, index) => (
           <div key={index} className="relative group">
             <Image
-              src={URL.createObjectURL(file)}
+              src={typeof file === 'string' ? file : URL.createObjectURL(file)}
               alt="Selected Image"
               width={112}
               height={112}
-              className="rounded-lg border-2 border-dashed border-gray-300 object-cover"
             />
             <div className="absolute inset-0 flex items-center justify-center gap-2 rounded-lg bg-black/50 opacity-0 group-hover:opacity-100 transition">
               <label
@@ -127,7 +126,7 @@ function ProductImagesUploader({
         {imageFiles.length < 4 && (
           <label
             htmlFor="imageUpload"
-            className="w-28 h-28 bg-bg rounded-lg flex flex-col items-center justify-center text-gray-500 border-2 border-dashed border-gray-300 cursor-pointer"
+            className="w-28 h-28 rounded-lg flex flex-col items-center justify-center text-gray-500 border-2 border-dashed border-gray-300 cursor-pointer"
           >
             <FiPlus size={40} />
             <span className="text-sm">تصویر</span>

@@ -1,5 +1,5 @@
-import ConfirmDialog from '@/components/ConfirmDialog'
 import { Loader } from '@/components/Loader'
+import ConfirmDialog from '@/components/ui/ConfirmDialog'
 import { Edit, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'

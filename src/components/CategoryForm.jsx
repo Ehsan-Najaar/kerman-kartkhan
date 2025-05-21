@@ -3,7 +3,7 @@ import Input from '@/components/ui/Input.jsx'
 import { CloudUpload } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { FiLoader, FiPlus } from 'react-icons/fi'
+import { FiEdit, FiLoader, FiPlus } from 'react-icons/fi'
 
 export default function CategoryForm({
   categoryData,
@@ -154,7 +154,10 @@ export default function CategoryForm({
                   <FiLoader size={20} className="animate-spin" />
                 </div>
               ) : isEditing ? (
-                'ویرایش دسته‌بندی'
+                <>
+                  <FiEdit size={24} />
+                  ویرایش دسته‌بندی
+                </>
               ) : (
                 <>
                   <FiPlus size={24} />

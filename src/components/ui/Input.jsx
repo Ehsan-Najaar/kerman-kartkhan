@@ -28,20 +28,18 @@ export default function Input({
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         required={required}
-        className="w-full p-3 border border-lightgray rounded-lg transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-section"
+        className="w-full p-3 rounded-lg transition-all duration-300 outline-none 
+             border border-lightgray focus:border-section"
       />
 
       {/* لیبل */}
       <label
         htmlFor={id}
-        className={`absolute right-4 py-1 px-4 transition-all duration-300 ${
+        className={`absolute right-4 text-xs transition-all duration-300 cursor-text ${
           shouldFloatLabel
-            ? '-top-2 right-0 small-text text-secondary bg-bg'
-            : 'top-2 right-4 text-gray/50 small-text'
+            ? '-top-2 text-secondary text-sm bg-light'
+            : 'top-4 text-gray/50'
         }`}
-        style={{
-          transform: shouldFloatLabel ? 'translateY(-12px)' : 'translateY(0)',
-        }}
       >
         {label}
       </label>

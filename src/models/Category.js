@@ -19,10 +19,10 @@ const categorySchema = new mongoose.Schema({
   parent: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
+    default: null, // دسته‌های اصلی parent ندارند
   },
 })
 
-// استفاده از mongoose.models برای جلوگیری از بازتعریف مدل
 const Category =
   mongoose.models.Category || mongoose.model('Category', categorySchema)
 

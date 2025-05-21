@@ -10,7 +10,7 @@ export default function ProductsManagementHeader({
 }) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-4 lg:gap-0">
-      <div className="w-full lg:w-1/3 flex items-center gap-2">
+      <div className="w-full lg:w-max flex items-center gap-2">
         <button
           onClick={() => (window.location.href = '/admin')}
           className="lg:hidden p-2 rounded-full bg-bg hover:bg-gray-300"
