@@ -214,7 +214,7 @@ export default function ProductCard2({
               <FiEdit size={20} />
             </Link>
             <button
-              className="p-2 text-gray rounded-lg cursor-pointer border border-lightgray bg-lightgray/35 hover:text-red-500 hover:border-gray transition-all duration-300"
+              className="p-2 text-gray rounded-lg cursor-pointer border border-lightgray bg-lightgray/35 hover:text-red-500 hover:border-red-500 transition-all duration-300"
               onClick={(e) => {
                 e.stopPropagation()
                 onDelete()

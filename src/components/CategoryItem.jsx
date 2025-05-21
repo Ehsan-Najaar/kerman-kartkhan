@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { FaEdit, FaTrashAlt } from 'react-icons/fa'
+import { FiEdit, FiTrash2 } from 'react-icons/fi'
 
 export default function CategoryItem({ category, handleEdit, handleDelete }) {
   return (
@@ -24,15 +24,15 @@ export default function CategoryItem({ category, handleEdit, handleDelete }) {
       <div className="w-full sm:w-max flex justify-end sm:items-center gap-2 text-gray">
         <button
           onClick={() => handleEdit(category)}
-          className="sm:p-3 p-2 bg-lightgray rounded-md cursor-pointer hover:text-dark transition duration-200"
+          className="p-2 text-gray rounded-lg cursor-pointer border border-lightgray bg-lightgray/35 hover:text-dark hover:border-gray transition-all duration-300"
         >
-          <FaEdit size={20} />
+          <FiEdit size={20} />
         </button>
         <button
           onClick={() => handleDelete(category._id)}
-          className="sm:p-3 p-2 bg-lightgray rounded-md cursor-pointer hover:text-red-500 transition duration-200"
+          className="p-2 text-gray rounded-lg cursor-pointer border border-lightgray bg-lightgray/35 hover:text-red-500 hover:border-red-500 transition-all duration-300"
         >
-          <FaTrashAlt size={20} />
+          <FiTrash2 size={20} />
         </button>
       </div>
     </li>

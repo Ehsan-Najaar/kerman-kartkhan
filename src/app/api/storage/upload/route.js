@@ -53,6 +53,9 @@ export async function POST(req) {
     )
   } catch (error) {
     console.error('File upload failed:', error)
-    return new Response('Error uploading file', { status: 500 })
+    return new Response(JSON.stringify({ error: 'Error uploading file' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 }

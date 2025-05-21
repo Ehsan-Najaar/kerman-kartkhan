@@ -14,6 +14,7 @@ export default function CategoryForm({
 }) {
   const [imageFile, setImageFile] = useState(null)
   const [loading, setLoading] = useState(false)
+  const folder = 'categories'
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -35,6 +36,7 @@ export default function CategoryForm({
       setLoading(true)
       const formData = new FormData()
       formData.append('file', imageFile)
+      formData.append('folder', folder)
 
       try {
         const res = await fetch('/api/storage/upload', {
@@ -58,6 +60,7 @@ export default function CategoryForm({
         return
       }
     }
+    console.log('handleFormSubmit called')
 
     setLoading(false)
 
@@ -67,7 +70,7 @@ export default function CategoryForm({
       image: imageUrl, // ذخیره URL امضا شده
     }
 
-    await handleSubmit({ preventDefault: () => {} }, finalCategory)
+    await handleSubmit(finalCategory)
   }
 
   return (
@@ -148,7 +151,12 @@ export default function CategoryForm({
           />
 
           <div className="flex items-center gap-4 body-text">
-            <Button variant="primary" fontWeight="medium" disabled={loading}>
+            <Button
+              type="submit"
+              variant="primary"
+              fontWeight="medium"
+              disabled={loading}
+            >
               {loading ? (
                 <div className="px-12 py-px">
                   <FiLoader size={20} className="animate-spin" />
@@ -168,7 +176,7 @@ export default function CategoryForm({
 
             {isEditing && (
               <Button
-                type="button"
+                type="submit"
                 variant="ghost"
                 fontWeight="medium"
                 onClick={() => {

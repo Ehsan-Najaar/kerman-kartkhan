@@ -4,6 +4,7 @@ import AdminPanelNavbar from '@/components/AdminPanelNavbar'
 import CategoryForm from '@/components/CategoryForm'
 import CategoryList from '@/components/CategoryList'
 import { Loader2 } from '@/components/Loader'
+import ConfirmDialog from '@/components/ui/ConfirmDialog'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
@@ -19,6 +20,8 @@ export default function CategoryManagement() {
   const [isEditing, setIsEditing] = useState(false)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null)
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -35,8 +38,7 @@ export default function CategoryManagement() {
     fetchCategories()
   }, [])
 
-  const handleSubmit = async (e, customData = categoryData) => {
-    e.preventDefault()
+  const handleSubmit = async (customData) => {
     try {
       if (isEditing && customData._id) {
         await axios.put(`/api/admin/categories/${customData._id}`, customData)
@@ -57,6 +59,7 @@ export default function CategoryManagement() {
       const res = await axios.get('/api/categories')
       setCategories(res.data)
     } catch (err) {
+      console.error(err) // برای دیباگ
       setError('خطا در ذخیره دسته‌بندی')
     }
   }
@@ -77,6 +80,26 @@ export default function CategoryManagement() {
       imagePreview: category.image || '',
     })
     setIsEditing(true)
+  }
+
+  const confirmDelete = (id) => {
+    setSelectedCategoryId(id)
+    setShowConfirm(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (!selectedCategoryId) return
+
+    try {
+      await axios.delete(`/api/admin/categories/${selectedCategoryId}`)
+      const res = await axios.get('/api/categories')
+      setCategories(res.data)
+      setShowConfirm(false)
+      setSelectedCategoryId(null)
+    } catch (err) {
+      setError('خطا در حذف دسته‌بندی')
+      setShowConfirm(false)
+    }
   }
 
   return (
@@ -111,12 +134,23 @@ export default function CategoryManagement() {
               <CategoryList
                 categories={categories}
                 handleEdit={handleEdit}
-                handleDelete={handleDelete}
+                handleDelete={confirmDelete}
               />
             </section>
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        isOpen={showConfirm}
+        title="حذف دسته‌بندی"
+        message="آیا از حذف این دسته‌بندی مطمئن هستید؟ این عملیات قابل بازگشت نیست."
+        onConfirm={handleConfirmDelete}
+        onCancel={() => {
+          setShowConfirm(false)
+          setSelectedCategoryId(null)
+        }}
+      />
     </div>
   )
 }
