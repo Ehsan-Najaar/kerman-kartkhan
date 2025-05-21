@@ -162,6 +162,7 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
 
           const data = await res.json()
           if (!res.ok || !data.url) {
+            console.error('❌ خطا در پاسخ:', data)
             throw new Error('آپلود تصویر با مشکل مواجه شد')
           }
 
@@ -181,8 +182,10 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
         })
         const data = await res.json()
         if (!res.ok || !data.url) {
+          console.error('❌ خطا در پاسخ:', data)
           throw new Error('آپلود ویدیو با مشکل مواجه شد')
         }
+
         videoUrl = data.url
       }
 

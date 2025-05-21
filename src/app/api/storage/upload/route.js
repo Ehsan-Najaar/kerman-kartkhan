@@ -9,15 +9,21 @@ export async function POST(req) {
     const file = formData.get('file')
     const folder = formData.get('folder') || 'general'
 
-    if (!file) {
-      return new Response('No file uploaded', { status: 400 })
+    if (!file || typeof file.name !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'فایلی ارسال نشده یا نامعتبره' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
     const safeFolder = folder.replace(/[^a-zA-Z0-9-_]/g, '')
-    const fileName = `${safeFolder}/${file.name}`
+    const fileName = `${safeFolder}/${Date.now()}-${file.name}`
     const bucketName = process.env.LIARA_BUCKET_NAME
     const bucketDomain = process.env.LIARA_BUCKET_DOMAIN
 
@@ -25,7 +31,7 @@ export async function POST(req) {
       Bucket: bucketName,
       Key: fileName,
       Body: buffer,
-      ContentType: file.type,
+      ContentType: file.type || 'application/octet-stream',
     })
 
     await s3.send(command)
@@ -35,15 +41,13 @@ export async function POST(req) {
       Key: fileName,
     })
 
-    const signedUrl = await getSignedUrl(s3, signedUrlCommand, {
-      expiresIn: 60 * 60,
-    })
+    await getSignedUrl(s3, signedUrlCommand, { expiresIn: 60 * 60 }) // فقط برای تست؛ می‌تونی حذفش کنی
 
     const fileUrl = `https://${bucketDomain}/${fileName}`
 
     return new Response(
       JSON.stringify({
-        message: 'File uploaded successfully',
+        message: 'فایل با موفقیت آپلود شد',
         url: fileUrl,
       }),
       {
@@ -52,10 +56,13 @@ export async function POST(req) {
       }
     )
   } catch (error) {
-    console.error('File upload failed:', error)
-    return new Response(JSON.stringify({ error: 'Error uploading file' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    console.error('❌ File upload failed:', error, error.stack)
+    return new Response(
+      JSON.stringify({ error: 'مشکل در آپلود فایل. جزئیات در لاگ سرور.' }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
   }
 }
