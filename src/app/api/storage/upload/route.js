@@ -41,7 +41,7 @@ export async function POST(req) {
       Key: fileName,
     })
 
-    await getSignedUrl(s3, signedUrlCommand, { expiresIn: 60 * 60 }) // فقط برای تست؛ می‌تونی حذفش کنی
+    await getSignedUrl(s3, signedUrlCommand, { expiresIn: 60 * 60 })
 
     const fileUrl = `https://${bucketDomain}/${fileName}`
 

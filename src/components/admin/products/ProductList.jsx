@@ -51,7 +51,7 @@ export default function ProductList({
     return <p className="text-center text-gray-500">محصولی یافت نشد.</p>
 
   return (
-    <div className="space-y-4 p-4 overflow-auto h-[650px]">
+    <div className="space-y-4 p-4 overflow-auto h-[470px]">
       {filteredProducts.map((product) => (
         <ProductCard2
           key={product._id}

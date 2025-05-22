@@ -15,7 +15,10 @@ export default function Dropdown({
   const containerRef = useRef()
 
   useEffect(() => {
-    if (selectedValue) {
+    if (selectedValue == null || selectedValue === '') {
+      // وقتی مقدار انتخاب شده خالی یا null بود، selected رو پاک کن
+      setSelected(null)
+    } else {
       const matched = items.find(
         (item) => String(item.value) === String(selectedValue)
       )
@@ -50,7 +53,7 @@ export default function Dropdown({
   const hasValue = !!selected
 
   return (
-    <div className="relative w-full h-full" ref={containerRef}>
+    <div className="relative w-full h-[52px]" ref={containerRef}>
       {/* لیبل شناور */}
       <label
         className={clsx(
@@ -72,8 +75,8 @@ export default function Dropdown({
           open ? 'border-section' : 'border-lightgray'
         )}
       >
-        <span className={selected ? 'text-dark' : 'text-gray/50'}>
-          {selected ? selected.label : placeholder}
+        <span className={hasValue ? 'text-dark' : 'text-gray/50'}>
+          {hasValue ? selected.label : placeholder}
         </span>
         <ChevronDown className="w-4 h-4 text-gray/50" />
       </button>

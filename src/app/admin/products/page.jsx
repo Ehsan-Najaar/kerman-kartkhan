@@ -2,22 +2,24 @@
 
 import AdminPanelNavbar from '@/components/AdminPanelNavbar'
 import ProductList from '@/components/admin/products/ProductList'
+import ProductsFilters from '@/components/admin/products/ProductsFilters'
 import ProductsManagementHeader from '@/components/admin/products/ProductsManagementHeader'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 
 export default function ProductsManagement() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [products, setProducts] = useState([])
+  const [allProducts, setAllProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
+  const [filters, setFilters] = useState({})
 
   const fetchProducts = () => {
     setLoading(true)
     fetch('/api/admin/products')
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data)
+        setAllProducts(data)
         setLoading(false)
       })
       .catch((err) => {
@@ -42,12 +44,66 @@ export default function ProductsManagement() {
         method: 'DELETE',
       })
       if (!res.ok) throw new Error('خطا در حذف محصول')
-      setProducts((prev) => prev.filter((p) => p._id !== id))
+      setAllProducts((prev) => prev.filter((p) => p._id !== id))
       toast.success('محصول با موفقیت حذف شد')
     } catch (err) {
       toast.error(err.message)
     }
   }
+
+  const filteredProducts = useMemo(() => {
+    return allProducts
+      .filter((product) => {
+        const matchSearch = searchTerm
+          ? product.title?.toLowerCase().includes(searchTerm.toLowerCase())
+          : true
+
+        const matchCategory = filters.category
+          ? product.category === filters.category
+          : true
+
+        const matchBrand = filters.brand
+          ? product.brand === filters.brand
+          : true
+
+        const matchCondition = filters.condition
+          ? product.condition === filters.condition
+          : true
+
+        const matchType = filters.type ? product.type === filters.type : true
+
+        const matchStock =
+          filters.stock === 'in'
+            ? product.stock > 3
+            : filters.stock === 'low'
+            ? product.stock > 0 && product.stock <= 3
+            : filters.stock === 'out'
+            ? product.stock === 0
+            : true
+
+        return (
+          matchSearch &&
+          matchCategory &&
+          matchBrand &&
+          matchCondition &&
+          matchType &&
+          matchStock
+        )
+      })
+      .sort((a, b) => {
+        if (filters.sort === 'price-asc') return a.price - b.price
+        if (filters.sort === 'price-desc') return b.price - a.price
+        if (filters.sort === 'sold-desc') return b.sold - a.sold
+        if (filters.sort === 'views-desc') return b.views - a.views
+        return 0
+      })
+  }, [allProducts, searchTerm, filters])
+
+  // برندها رو از محصولات استخراج کن
+  const uniqueBrands = useMemo(() => {
+    const brands = allProducts.map((p) => p.brand).filter(Boolean)
+    return [...new Set(brands)].map((b) => ({ label: b, value: b }))
+  }, [allProducts])
 
   useEffect(() => {
     fetchProducts()
@@ -62,9 +118,17 @@ export default function ProductsManagement() {
         <ProductsManagementHeader
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
+          products={filteredProducts}
         />
+
+        <ProductsFilters
+          categories={categories}
+          brands={uniqueBrands}
+          onFilterChange={(newFilters) => setFilters(newFilters)}
+        />
+
         <ProductList
-          products={products}
+          products={filteredProducts}
           loading={loading}
           searchTerm={searchTerm}
           onDelete={deleteProduct}

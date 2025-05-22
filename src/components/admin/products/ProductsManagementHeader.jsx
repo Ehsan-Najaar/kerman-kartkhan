@@ -7,6 +7,7 @@ import { FiArrowRight, FiPlus, FiSearch } from 'react-icons/fi'
 export default function ProductsManagementHeader({
   searchTerm,
   setSearchTerm,
+  products,
 }) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-4 lg:gap-0">
@@ -18,7 +19,7 @@ export default function ProductsManagementHeader({
           <FiArrowRight size={24} />
         </button>
         <h2 className="h3">لیست محصولات</h2>
-        <small>محصول</small>
+        <small>({products.length} محصول)</small>
       </div>
 
       <div className="w-full lg:w-1/3 flex items-center gap-2">
@@ -42,8 +43,9 @@ export default function ProductsManagementHeader({
       </div>
 
       <Link href={'/admin/products/add-product'}>
-        <Button>
-          افزودن محصول <FiPlus size={24} />
+        <Button fontWeight="medium">
+          <FiPlus size={24} />
+          افزودن محصول
         </Button>
       </Link>
     </div>
