@@ -1,7 +1,94 @@
+import Button from '@/components/ui/Button'
 import { formatPriceToPersian } from '@/utils/formatPrice'
+import {
+  BatteryCharging,
+  Box,
+  Plug,
+  Plus,
+  ShoppingCart,
+  Zap,
+} from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { FiEdit, FiPlus, FiTrash2 } from 'react-icons/fi'
+
+export function ProductCard({ product }) {
+  return (
+    <div className="bg-light p-2 rounded-lg border border-lightgray/50 shadow-sm space-y-4">
+      <section>
+        <figure className="rounded-lg border-b-2 border-section p-1">
+          <Image
+            src={product.images?.[0] || '/images/placeholder.png'}
+            alt={product.title || 'محصول بدون عنوان'}
+            width={140}
+            height={140}
+            property="all"
+            className="object-contain h-36 w-36 mx-auto"
+          />
+        </figure>
+        <div className="flex items-center gap-1 mt-4 font-semibold text-sm text-dark">
+          <span>کارتخوان</span>
+          {product.model || 'D210'}
+        </div>
+      </section>
+
+      <section className="text-xs text-gray mt-2 space-y-1">
+        {/* نوع دستگاه (آکبند یا استوک) */}
+        <article className="flex items-center gap-1">
+          <Box size={14} className="text-secondary" />
+          <span>{product.type}</span>
+        </article>
+
+        {/* سرعت تراکنش */}
+        <article className="flex items-center gap-1">
+          <Zap size={14} className="text-secondary" />
+          <span>{product.specs[0]?.value}</span>
+          <span>{product.specs[0]?.key}</span>
+        </article>
+
+        {/* آیکون باتری یا کارتخوان */}
+        <article className="flex items-center gap-1">
+          {product.type === 'ثابت' ? (
+            <Plug size={14} className="text-secondary" />
+          ) : (
+            <BatteryCharging size={14} className="text-secondary" />
+          )}
+          <span>
+            {product.type === 'ثابت'
+              ? product.specs[1]?.value
+              : product.specs[2]?.value}
+          </span>
+          <span>
+            {product.type === 'ثابت'
+              ? product.specs[1]?.key
+              : product.specs[2]?.key}
+          </span>
+        </article>
+      </section>
+
+      <div className="text-sm font-semibold text-dark mt-2">
+        {formatPriceToPersian(product.price)} تومان
+      </div>
+
+      <section className="flex items-center gap-2">
+        <Button variant="primary" size="xs" fontWeight="medium">
+          مشاهده محصول
+        </Button>
+
+        <button className="p-2 rounded-lg bg-section/50 text-secondary cursor-pointer">
+          <span className="relative">
+            <ShoppingCart size={20} />
+            <Plus
+              size={12}
+              className="absolute -top-1 -right-4 bg-light rounded-full text-secondary"
+            />
+          </span>
+        </button>
+      </section>
+    </div>
+  )
+}
 
 export default function ProductCard2({
   product,
@@ -72,9 +159,12 @@ export default function ProductCard2({
       >
         <section className="w-44 flex gap-2 items-center">
           {product.images?.[0] && (
-            <img
+            <Image
               src={product.images[0]}
               alt={product.name}
+              width={80}
+              height={80}
+              property="all"
               className="w-20 h-20 object-cover rounded-md"
             />
           )}

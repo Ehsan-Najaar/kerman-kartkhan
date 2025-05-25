@@ -37,6 +37,7 @@ export default function Button({
           'bg-lightgray text-dark hover:bg-gray-200': variant === 'ghost',
 
           'w-full': fullWidth,
+          'px-3 py-2 text-sm': size === 'xs',
           'px-4 py-2 small-text': size === 'sm',
           'px-6 py-3 text-base': size === 'md',
           'px-8 py-4 text-lg': size === 'lg',

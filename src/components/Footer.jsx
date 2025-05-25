@@ -114,7 +114,7 @@ export default function Footer() {
               </a>
 
               <img
-                src="/images/.png"
+                src="/images/zarinpall.png"
                 alt="زرین‌پال"
                 width={70}
                 height={70}
