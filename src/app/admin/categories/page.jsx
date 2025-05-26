@@ -7,6 +7,7 @@ import { Loader2 } from '@/components/Loader'
 import ConfirmDialog from '@/components/ui/ConfirmDialog'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { FiArrowRight } from 'react-icons/fi'
 
 export default function CategoryManagement() {
   const [categoryData, setCategoryData] = useState({
@@ -103,10 +104,10 @@ export default function CategoryManagement() {
   }
 
   return (
-    <div className="min-h-screen flex p-6 gap-12">
+    <div className="min-h-screen flex md:p-6 gap-12">
       <AdminPanelNavbar />
 
-      <div className="w-full lg:w-4/5 lg:h-[750px] bg-light px-2 lg:p-4 rounded-2xl shadow-lg overflow-hidden relative">
+      <div className="w-full lg:w-4/5 lg:h-[750px] bg-light p-4 rounded-2xl shadow-lg overflow-hidden relative">
         {loading ? (
           <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-10">
             <Loader2 />
@@ -115,7 +116,17 @@ export default function CategoryManagement() {
           <div className="space-y-20">
             {error && <p className="text-red-500 text-center">{error}</p>}
             <section className="space-y-4">
-              <h3 className="h3 pb-4 border-b border-lightgray">
+              <div className="w-full lg:w-max flex items-center gap-2">
+                <button
+                  onClick={() => (window.location.href = '/admin')}
+                  className="lg:hidden p-2 rounded-full bg-lightgray/50 hover:bg-gray-300"
+                >
+                  <FiArrowRight size={24} />
+                </button>
+                <h3 className="lg:hidden h3">افزودن و ویرایش دسته‌بندی‌ها</h3>
+              </div>
+
+              <h3 className="hidden lg:block h3 pb-4 border-b border-lightgray">
                 افزودن و ویرایش دسته‌بندی‌ها
               </h3>
               <CategoryForm

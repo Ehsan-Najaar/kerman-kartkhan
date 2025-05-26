@@ -55,7 +55,7 @@ export default function ProductsManagement() {
     return allProducts
       .filter((product) => {
         const matchSearch = searchTerm
-          ? product.title?.toLowerCase().includes(searchTerm.toLowerCase())
+          ? product.name?.toLowerCase().includes(searchTerm.toLowerCase())
           : true
 
         const matchCategory = filters.category
@@ -111,7 +111,7 @@ export default function ProductsManagement() {
   }, [])
 
   return (
-    <div className="min-h-screen flex p-6 gap-12">
+    <div className="min-h-screen flex md:p-6 gap-12">
       <AdminPanelNavbar />
 
       <div className="w-full lg:w-4/5 lg:h-[750px] bg-light px-2 lg:p-4 rounded-2xl shadow-lg space-y-4 overflow-hidden">

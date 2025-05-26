@@ -73,7 +73,7 @@ export default function Footer() {
                 label="درباره ما"
               />
               <FooterLink
-                href="/rules"
+                href="/terms"
                 icon={<FaBookOpen size={20} />}
                 label="قوانین و مقررات"
               />

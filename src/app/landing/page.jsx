@@ -32,7 +32,7 @@ export default function LandingPage() {
       <HeroSection />
 
       {/* Services Section */}
-      <section className="mt-80 sm:mt-[470px]">
+      <section className="mt-[384px] sm:mt-[450px] lg:mt-[350px]">
         <Services />
       </section>
 

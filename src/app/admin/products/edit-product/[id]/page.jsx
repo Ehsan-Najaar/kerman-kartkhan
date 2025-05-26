@@ -46,9 +46,9 @@ export default function EditProductPage() {
   }
 
   return (
-    <div className="min-h-screen flex p-6 gap-12">
+    <div className="min-h-screen flex md:p-6 gap-12">
       <AdminPanelNavbar />
-      <div className="w-full lg:w-4/5 lg:h-[750px] bg-light px-2 lg:p-4 rounded-2xl shadow-lg space-y-4 overflow-hidden relative">
+      <div className="w-full lg:w-4/5 p-6 bg-light rounded-2xl shadow-lg space-y-6">
         {loading ? (
           <div className="absolute inset-0 bg-white/70 backdrop-blur-sm z-20 flex items-center justify-center rounded-2xl">
             <Loader2 />

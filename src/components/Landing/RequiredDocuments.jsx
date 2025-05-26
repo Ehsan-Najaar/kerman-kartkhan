@@ -7,24 +7,25 @@ import { fadeIn } from '../../../variants'
 
 const documents = [
   {
-    title: 'شماره تلفن به نام خود',
+    title: 'شماره تلفن همراه به نام خود',
     icon: '/images/mobile.png',
   },
   {
     title: 'برگه مالیاتی',
     icon: '/images/document.png',
+    optional: true,
   },
   {
     title: 'جواز کسب و کار',
     icon: '/images/license.png',
-    optional: true, // اضافه کردن فیلد optional برای "الزامی نیست"
+    optional: true,
   },
   {
     title: 'تصاویر کارت ملی و شناسنامه',
     icon: '/images/user-id.png',
   },
   {
-    title: 'شماره شبا یا حساب بانکی',
+    title: 'شماره شبا یا حساب بانکی به نام خود',
     icon: '/images/card.png',
   },
 ]
@@ -62,17 +63,22 @@ export default function RequiredDocuments() {
         <div className="flex gap-6 flex-nowrap min-w-max">
           {documents.map((doc) => (
             <div
-              key={doc.title} // استفاده از title به عنوان key
-              className={`w-52 h-40 flex-shrink-0 flex flex-col items-center justify-center gap-4 p-4 bg-light rounded-2xl shadow-md hover:shadow-lg transition ${
-                doc.optional ? 'xl:mt-6' : ''
-              }`}
+              key={doc.title}
+              className={`w-52 h-40 flex-shrink-0 flex flex-col items-center justify-center gap-4 p-4 bg-light rounded-2xl shadow-md hover:shadow-lg transition`}
             >
               <Image src={doc.icon} alt={doc.title} width={72} height={72} />
+
               <span className="main-text text-dark text-center">
                 {doc.title}
               </span>
-              {/* نمایش متن "الزامی نیست" */}
-              {doc.optional && (
+
+              {/* فقط برای برگه مالیاتی: دو خط */}
+              {doc.title === 'برگه مالیاتی' && (
+                <span className="small-text -mt-3 text-gray">(تا گام ۴)</span>
+              )}
+
+              {/* فقط برای جواز کسب و کار: یک خط */}
+              {doc.title === 'جواز کسب و کار' && (
                 <span className="small-text text-gray -mt-3">
                   (الزامی نیست)
                 </span>

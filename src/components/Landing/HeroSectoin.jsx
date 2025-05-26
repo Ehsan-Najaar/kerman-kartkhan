@@ -48,7 +48,7 @@ export default function HeroSection() {
   return (
     <div
       ref={ref}
-      className="bg-primary h-auto lg:h-[750px] max-w-6xl mx-auto rounded-b-4xl lg:rounded-[48px] -mt-16 lg:-mt-24 p-4 lg:p-0 text-light"
+      className="bg-primary h-[950px] max-w-6xl mx-auto rounded-b-4xl lg:rounded-[48px] -mt-16 lg:-mt-24 p-4 lg:p-0 text-light"
     >
       <TopSection controlsLeft={controlsLeft} controlsRight={controlsRight} />
       <ScrollDownArrow controlsLeft={controlsLeft} />

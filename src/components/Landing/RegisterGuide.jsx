@@ -61,7 +61,7 @@ export default function RegisterGuide() {
             variants={fadeIn('up', 0.4)}
             initial={isLandingGuide ? false : 'hidden'}
             animate={isLandingGuide ? false : controls}
-            className="body-text text-dark lg:text-justify text-center leading-loose"
+            className="body-text text-dark text-justify leading-loose"
           >
             دریافت کارت‌خوان با چند کلیک، از کرمان کارتخوان .<br /> در این ویدیو
             مراحل ثبت‌نام و دریافت کارت‌خوان از کرمان کارتخوان را مشاهده
@@ -76,7 +76,7 @@ export default function RegisterGuide() {
             variants={fadeIn('up', 0.6)}
             initial={isLandingGuide ? false : 'hidden'}
             animate={isLandingGuide ? false : controls}
-            className="w-max mt-2 mx-auto lg:mx-0"
+            className="w-max mt-2 lg:mx-0"
           >
             <Button
               variant="primary"

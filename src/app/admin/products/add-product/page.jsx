@@ -33,7 +33,7 @@ export default function AddProduct() {
   }
 
   return (
-    <div className="min-h-screen lg:h-[710px] lg:flex p-6 gap-12">
+    <div className="min-h-screen lg:h-[710px] lg:flex md:p-6 gap-12">
       <AdminPanelNavbar />
 
       <div className="w-full lg:w-4/5 p-6 bg-light rounded-2xl shadow-lg space-y-6">

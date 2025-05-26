@@ -31,13 +31,13 @@ export default function ProductsSection({
       variants={fadeIn('up', 0.2)}
       initial="hidden"
       animate={controlsRight}
-      className="max-w-5xl mx-auto mt-10 px-4 lg:px-0"
+      className="max-w-5xl mx-auto md:px-4 lg:px-0"
     >
       <div className="bg-white rounded-3xl shadow-xl p-6 lg:p-8">
         {/* نمایش قیمت فعلی و اسلایدر */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center gap-2 w-1/2">
-            <span className="w-24 text-sm text-dark">۳ میلیون</span>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+          <div className="flex items-center gap-2 md:w-1/2">
+            <span className="w-28 text-sm text-dark">۳ میلیون</span>
             <CustomRange
               min={3000000}
               max={20000000}
@@ -46,11 +46,11 @@ export default function ProductsSection({
               direction="rtl"
               isDescending={false}
             />
-            <span className="w-24 text-sm text-dark">۲۰ میلیون</span>
+            <span className="w-28 text-sm text-dark">۲۰ میلیون</span>
           </div>
 
           <div className="text-xl lg:text-2xl font-bold text-dark">
-            {formatPriceToPersian(price)} تومان
+            تا {formatPriceToPersian(price)} تومان
           </div>
         </div>
 
@@ -82,7 +82,7 @@ export default function ProductsSection({
 
         {/* لیست محصولات */}
         <div className="h-96 max-h-96 overflow-auto p-4">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
             {filteredProducts.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}

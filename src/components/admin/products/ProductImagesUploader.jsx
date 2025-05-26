@@ -41,7 +41,7 @@ function ProductImagesUploader({
   }
 
   return (
-    <div className="max-w-max border-l border-lightgray pl-4 space-y-6">
+    <div className="lg:max-w-max lg:border-l border-lightgray pl-4 space-y-6">
       {/* ویدیو */}
       <div className="w-28 h-28 relative group rounded-lg border-2 border-dashed border-yellow-500 overflow-hidden">
         {videoFile ? (
@@ -97,6 +97,7 @@ function ProductImagesUploader({
               alt="Selected Image"
               width={112}
               height={112}
+              className="mx-auto"
             />
             <div className="absolute inset-0 flex items-center justify-center gap-2 rounded-lg bg-black/50 opacity-0 group-hover:opacity-100 transition">
               <label

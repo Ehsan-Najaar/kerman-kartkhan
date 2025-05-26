@@ -45,13 +45,18 @@ export default function ProductList({
     (categories || []).map((cat) => [cat._id, cat.title])
   )
 
-  if (loading) return <Loader2 />
+  if (loading)
+    return (
+      <div className="h-[calc(100%-200px)]">
+        <Loader2 />
+      </div>
+    )
 
   if (!filteredProducts.length)
     return <p className="text-center text-gray-500">محصولی یافت نشد.</p>
 
   return (
-    <div className="space-y-4 p-4 overflow-auto h-[470px]">
+    <div className="space-y-4 p-4 overflow-auto lg:h-[450px]">
       {filteredProducts.map((product) => (
         <ProductCard2
           key={product._id}

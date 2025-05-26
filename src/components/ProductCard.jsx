@@ -15,7 +15,7 @@ import { FiEdit, FiPlus, FiTrash2 } from 'react-icons/fi'
 
 export function ProductCard({ product }) {
   return (
-    <div className="bg-light p-2 rounded-lg border border-lightgray/50 shadow-sm space-y-4">
+    <div className="w-56 bg-light p-2 rounded-lg border border-lightgray/50 shadow-sm space-y-4">
       <section>
         <figure className="rounded-lg border-b-2 border-section p-1">
           <Image
@@ -165,22 +165,27 @@ export default function ProductCard2({
               width={80}
               height={80}
               property="all"
-              className="w-20 h-20 object-cover rounded-md"
+              className="sm:w-20 w-16 sm:h-20 h-16 object-cover rounded-md"
             />
           )}
           <div className="flex flex-col justify-between">
-            <h3 className="text-lg font-bold capitalize">{product.name}</h3>
+            <h3 className="sm:text-lg text-sm font-bold capitalize">
+              {product.name}
+            </h3>
           </div>
         </section>
 
-        <p className="w-44 text-sm text-gray">دسته‌بندی: {categoryName}</p>
+        <p className="hidden sm:block w-44 text-sm text-gray">
+          دسته‌بندی: {categoryName}
+        </p>
 
-        <p className="w-44 text-dark">
-          قیمت: {formatPriceToPersian(product.price)} تومان
+        <p className="flex items-center gap-1 w-44 text-dark text-xs sm:text-base mr-4 sm:mr-0">
+          <span className="hidden sm:block">قیمت:</span>
+          {formatPriceToPersian(product.price)} تومان
         </p>
 
         <span
-          className={`w-24 flex items-center justify-center gap-2 px-2 py-1 text-xs rounded-full whitespace-nowrap ${
+          className={`sm:w-24 flex items-center justify-center gap-2 sm:px-2 sm:py-1 text-xs rounded-full whitespace-nowrap ${
             product.stock > 3
               ? 'bg-green-100 text-green-800'
               : product.stock === 0
@@ -194,14 +199,16 @@ export default function ProductCard2({
                 ? 'bg-green-800'
                 : product.stock === 0
                 ? 'bg-red-800'
-                : 'bg-yellow-800'
+                : 'bg-yellow-200 sm:bg-yellow-800'
             }`}
           ></span>
-          {product.stock > 3
-            ? 'موجود'
-            : product.stock === 0
-            ? 'ناموجود'
-            : `تنها ${product.stock} عدد `}
+          <span className="hidden sm:block">
+            {product.stock > 3
+              ? 'موجود'
+              : product.stock === 0
+              ? 'ناموجود'
+              : `تنها ${product.stock} عدد `}
+          </span>
         </span>
 
         {/* علامت + و - برای باز و بسته */}
@@ -212,7 +219,7 @@ export default function ProductCard2({
             e.stopPropagation()
             setOpen(!open)
           }}
-          className="cursor-pointer pl-3"
+          className="cursor-pointer md:pl-3 pr-4 sm:pr-0"
         >
           <FiPlus
             size={24}
@@ -234,7 +241,11 @@ export default function ProductCard2({
         }}
       >
         <div className="pt-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm px-6 text-gray-700">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm px-6 text-gray-700">
+            <p className="sm:hidden bg-lightgray/35 rounded-md p-2">
+              <span className="font-medium text-gray-500">دسته بندی: </span>
+              <span className="text-gray-800">{categoryName}</span>
+            </p>
             <p className="bg-lightgray/35 rounded-md p-2">
               <span className="font-medium text-gray-500">برند: </span>
               <span className="text-gray-800">{product.brand}</span>

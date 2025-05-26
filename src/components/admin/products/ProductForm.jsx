@@ -206,7 +206,10 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex h-[calc(100%-50px)]">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col lg:flex-row h-[calc(100%-50px)]"
+    >
       {isLoading && <Loader1 />}
 
       <ProductImagesUploader
@@ -218,7 +221,7 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
         setForm={setForm}
       />
 
-      <div className="flex-1 space-y-6 px-4 pt-2 overflow-auto">
+      <div className="flex-1 space-y-6 lg:px-4 pt-4 overflow-auto">
         <ProductInfoForm
           form={form}
           setForm={setForm}
