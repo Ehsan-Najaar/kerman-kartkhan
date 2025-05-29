@@ -82,11 +82,17 @@ export default function ProductsSection({
 
         {/* لیست محصولات */}
         <div className="h-96 max-h-96 overflow-auto p-4">
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
+          {filteredProducts.length > 0 ? (
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="h-full text-center text-gray text-sm md:text-base grid place-items-center">
+              محصول {activeTab} در این بازه قیمتی موجود نیست.
+            </div>
+          )}
         </div>
       </div>
     </motion.section>

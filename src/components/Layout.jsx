@@ -6,11 +6,11 @@ import { AppProvider } from '../../context/AppContext'
 
 export default function Layout({ children }) {
   const pathname = usePathname()
-  const isAdminRoute = pathname.startsWith('/admin')
+  const isShopRoute = pathname.startsWith('/shop')
 
   return (
     <AppProvider>
-      <main className={isAdminRoute ? '' : 'max-w-6xl mx-auto'}>
+      <main className={isShopRoute ? '' : 'max-w-6xl mx-auto'}>
         {children}
         <Toaster />
       </main>

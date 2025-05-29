@@ -12,6 +12,7 @@ const routes = [
   { name: 'صفحه اصلی', path: '/landing' },
   { name: 'فروشگاه کرمان کارتخوان', path: '/shop' },
   { name: 'راهنمای دریافت کارتخوان', path: '/guide' },
+  { name: 'درباره ما', path: '/about-us' },
   { name: 'ارتباط با ما', path: '/contact-us' },
 ]
 

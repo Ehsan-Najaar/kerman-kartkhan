@@ -1,15 +1,19 @@
 'use client'
 
+import Image from 'next/image'
+
 const TermsAndConditions = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       {/* تصویر و عنوان */}
-      <header className="text-center mb-12 space-y-6">
+      <header className="text-center mb-12 space-y-12">
         <div className="flex justify-center">
-          <img
+          <Image
             src="/images/undraw/undraw_terms_7l7t.svg"
             alt="قوانین و مقررات"
-            className="w-64 h-64 object-contain"
+            width={300}
+            height={300}
+            className="object-contain"
           />
         </div>
         <h1 className="text-3xl font-semibold text-gray-800">

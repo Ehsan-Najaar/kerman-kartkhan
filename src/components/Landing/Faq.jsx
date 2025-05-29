@@ -1,7 +1,11 @@
 'use client'
+import Button from '@/components/ui/Button'
 import { motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import { FiArrowLeft } from 'react-icons/fi'
 import { useInView } from 'react-intersection-observer'
 import { fadeIn } from '../../../variants'
 
@@ -53,12 +57,72 @@ const faqData = [
       </span>
     ),
   },
+  {
+    question: 'مدت زمان فعال‌سازی کارت‌خوان چقدر است؟',
+    answer: (
+      <span>
+        پس از ارسال کامل مدارک، کارت‌خوان معمولاً ظرف ۳ تا ۵ روز کاری فعال
+        می‌شود.
+      </span>
+    ),
+  },
+  {
+    question: 'آیا دستگاه‌ها دارای گارانتی هستند؟',
+    answer: (
+      <span>
+        بله، تمامی کارت‌خوان‌ها دارای ۶ ماه گارانتی تعویض و ۱۲ ماه خدمات پس از
+        فروش هستند.
+      </span>
+    ),
+  },
+  {
+    question: 'هزینه ارسال کارت‌خوان چقدر است؟',
+    answer: (
+      <span>
+        هزینه ارسال برای تهران رایگان است. برای شهرستان‌ها بسته به موقعیت
+        جغرافیایی، هزینه‌ای جزئی دریافت می‌شود.
+      </span>
+    ),
+  },
+  {
+    question: 'آیا کارت‌خوان‌ها به سیستم حسابداری متصل می‌شوند؟',
+    answer: (
+      <span>
+        بله، برخی از مدل‌ها قابلیت اتصال به نرم‌افزارهای حسابداری را دارند.
+        <a href="#integration" className="text-blue-500 hover:underline ml-1">
+          [ اطلاعات بیشتر ]
+        </a>
+      </span>
+    ),
+  },
+  {
+    question: 'آیا امکان اقساطی خریدن کارت‌خوان وجود دارد؟',
+    answer: (
+      <span>
+        بله، امکان خرید کارت‌خوان به‌صورت اقساطی وجود دارد. برای اطلاع از شرایط
+        اقساط، با ما تماس بگیرید.
+        <a href="#installment" className="text-blue-500 hover:underline ml-1">
+          [ شرایط اقساط ]
+        </a>
+      </span>
+    ),
+  },
+  {
+    question: 'آیا نیاز به مراجعه حضوری هست؟',
+    answer: (
+      <span>
+        خیر، تمام مراحل ثبت‌نام، ارسال مدارک و دریافت کارت‌خوان کاملاً غیرحضوری
+        انجام می‌شود.
+      </span>
+    ),
+  },
 ]
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState(null)
   const controls = useAnimation()
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true })
+  const pathname = usePathname()
 
   useEffect(() => {
     if (inView) controls.start('show')
@@ -67,6 +131,8 @@ export default function Faq() {
   const toggle = useCallback((index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index))
   }, [])
+
+  const visibleFaqs = pathname === '/landing' ? faqData.slice(0, 4) : faqData
 
   return (
     <motion.div
@@ -85,11 +151,11 @@ export default function Faq() {
         </article>
       </div>
 
-      {/* FAQ */}
+      {/* FAQ List */}
       <section className="space-y-4">
-        {faqData.map((item, index) => (
+        {visibleFaqs.map((item, index) => (
           <div
-            key={item.question} // استفاده از question به‌عنوان key
+            key={item.question}
             className={`bg-light rounded-2xl shadow-md overflow-hidden cursor-pointer transition-all duration-300 ${
               openIndex === index
                 ? 'shadow-section/50 text-secondary'
@@ -119,6 +185,18 @@ export default function Faq() {
           </div>
         ))}
       </section>
+
+      {/* CTA Button for Landing Page */}
+      {pathname === '/landing' && (
+        <div className="flex justify-center mt-10">
+          <Link href="/faq">
+            <Button variant="ghost" fontWeight="medium">
+              سوال شما اینجا نیست؟ مشاهده همه سوالات
+              <FiArrowLeft size={20} />
+            </Button>
+          </Link>
+        </div>
+      )}
     </motion.div>
   )
 }

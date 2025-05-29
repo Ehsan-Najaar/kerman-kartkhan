@@ -28,11 +28,11 @@ export default function Button({
           'bg-secondary text-light hover:bg-primary':
             variant === 'secondary' && !outline,
           'bg-light text-secondary': variant === 'light' && !outline,
-          'border-2 border-light text-light hover:bg-light hover:text-secondary':
+          'border border-light text-light hover:bg-light hover:text-secondary':
             variant === 'light' && outline,
-          'border-2 border-primary text-primary hover:bg-primary hover:text-light':
+          'border border-primary text-primary hover:bg-primary hover:text-light':
             variant === 'primary' && outline,
-          'border-2 border-secondary text-secondary hover:bg-secondary hover:text-light':
+          'border border-secondary text-secondary hover:bg-secondary hover:text-light':
             variant === 'secondary' && outline,
           'bg-lightgray text-dark hover:bg-gray-200': variant === 'ghost',
 

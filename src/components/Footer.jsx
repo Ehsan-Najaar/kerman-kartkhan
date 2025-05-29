@@ -1,9 +1,9 @@
 import Button from '@/components/ui/Button'
+import ScrollToTopButton from '@/components/ui/ScrollToTopButton'
 import Link from 'next/link'
 import { useState } from 'react'
 import {
   FaBookOpen,
-  FaChevronUp,
   FaInfo,
   FaInfoCircle,
   FaInstagram,
@@ -63,12 +63,12 @@ export default function Footer() {
             <h3 className="text-primary main-text">دسترسی سریع</h3>
             <ul className="space-y-4 text-sm">
               <FooterLink
-                href="/contact"
+                href="/contact-us"
                 icon={<FaPhone size={20} />}
                 label="ارتباط با ما"
               />
               <FooterLink
-                href="/about"
+                href="/about-us"
                 icon={<FaInfoCircle size={20} />}
                 label="درباره ما"
               />
@@ -86,10 +86,10 @@ export default function Footer() {
             <ul className="space-y-[14px] grid grid-cols-2 gap-2">
               <FooterPageLink href="/faq" label="سوالات متداول" />
               <FooterPageLink href="/shop" label="فروشگاه کارتخوان" />
-              <FooterPageLink href="/about" label="درباره ما" />
+              <FooterPageLink href="/about-us" label="درباره ما" />
               <FooterPageLink href="/contact-us" label="ارتباط با ما" />
               <FooterPageLink href="/guide" label="راهنما" />
-              <FooterPageLink href="/rules" label="قوانین و مقررات" />
+              <FooterPageLink href="/terms" label="قوانین و مقررات" />
             </ul>
           </div>
 
@@ -247,12 +247,7 @@ export default function Footer() {
       </section>
 
       {/* دکمه برای اسکرول به بالای صفحه */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="lg:fixed left-8 bottom-8 p-3 bg-light/30 rounded-md cursor-pointer transition-all duration-500 ease-in-out"
-      >
-        <FaChevronUp size={20} />
-      </button>
+      <ScrollToTopButton />
 
       {/* کپی‌رایت پایین سایت */}
       <div className="text-center text-xs py-3 text-dark/60">

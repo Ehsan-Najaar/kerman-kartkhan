@@ -10,6 +10,7 @@ const routes = [
   { name: 'صفحه اصلی', path: '/landing' },
   { name: 'فروشگاه کرمان کارتخوان', path: '/shop' },
   { name: 'راهنمای دریافت', path: '/guide' },
+  { name: 'درباره ما', path: '/about-us' },
   { name: 'ارتباط با ما', path: '/contact-us' },
 ]
 
@@ -44,7 +45,7 @@ export default function DesktopHeader() {
                     className={`relative flex items-center gap-1 px-3 py-1 rounded-md transition-all duration-300
                       ${
                         isActive
-                          ? 'text-secondary font-semibold after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-4/5 after:h-[6px] after:bg-secondary after:rounded-t-full after:content-[""]'
+                          ? 'text-secondary after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-4/5 after:h-[4px] after:bg-secondary after:rounded-t-full after:content-[""]'
                           : 'text-gray hover:text-dark'
                       }
                     `}

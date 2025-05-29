@@ -17,19 +17,29 @@ export default function Input({
   const shouldFloatLabel = focused || (value !== '' && value !== undefined)
 
   return (
-    <div className="relative">
+    <div
+      className={`relative flex items-center ${
+        icon ? 'rounded-lg px-4 bg-[#fff9f9] border border-lightgray/35' : ''
+      }`}
+    >
+      {/* آیکون (اختیاری) */}
+      {icon && <div>{icon}</div>}
+
       {/* اینپوت */}
       <input
         id={id}
         name={name}
         type={type}
         value={value}
+        placeholder={placeholder}
         onChange={onChange}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         required={required}
-        className="w-full p-3 rounded-lg transition-all duration-300 outline-none 
-             border border-lightgray focus:border-section"
+        className={`w-full p-3 rounded-lg transition-all duration-300 outline-none 
+             ${
+               !icon ? 'border' : ''
+             } border-lightgray focus:border-section placeholder:text-gray/70`}
       />
 
       {/* لیبل */}
@@ -43,13 +53,6 @@ export default function Input({
       >
         {label}
       </label>
-
-      {/* آیکون (اختیاری) */}
-      {icon && (
-        <div className="absolute top-1/2 right-3 transform -translate-y-1/2">
-          {icon}
-        </div>
-      )}
     </div>
   )
 }
