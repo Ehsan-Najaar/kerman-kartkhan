@@ -23,7 +23,7 @@ export default function BannersSection() {
           width={300}
           height={300}
           property="true"
-          className="rounded-lg"
+          className="rounded-lg object-center object-cover"
         />
         <Image
           src={'/images/banners/android-banner.png'}
@@ -31,7 +31,7 @@ export default function BannersSection() {
           width={300}
           height={300}
           property="true"
-          className="rounded-lg"
+          className="rounded-lg object-center object-contain"
         />
       </section>
     </div>

@@ -69,6 +69,7 @@ export default function ProductsFilters({
           items={[
             { label: 'سیار', value: 'سیار' },
             { label: 'ثابت', value: 'ثابت' },
+            { label: 'اندرویدی', value: 'اندرویدی' },
           ]}
           onSelect={(item) => handleChange('type', item)}
           selectedValue={filters.type}

@@ -19,7 +19,7 @@ export default function AbouutUs() {
         </article>
       </div>
 
-      <section className="flex gap-4 space-y-12">
+      <section className="flex flex-col md:flex-row gap-4 space-y-12">
         <Image
           src={'/images/undraw/undraw_about-us-page_dbh0.svg'}
           alt="aboutus"

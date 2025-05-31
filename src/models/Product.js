@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: true,
-    enum: ['ثابت', 'سیار', 'دیواری'],
+    enum: ['ثابت', 'سیار', 'اندرویدی'],
   },
 
   colors: { type: [String] },

@@ -33,6 +33,7 @@ export async function PUT(req, context) {
 
     return NextResponse.json(updated)
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { error: 'خطا در بروزرسانی محصول' },
       { status: 500 }

@@ -140,7 +140,7 @@ export default function ProductInfoForm({
           options={[
             { label: 'ثابت', value: 'ثابت' },
             { label: 'سیار', value: 'سیار' },
-            { label: 'دیواری', value: 'دیواری' },
+            { label: 'اندرویدی', value: 'اندرویدی' },
           ]}
           value={form.type}
           onChange={handleChange}

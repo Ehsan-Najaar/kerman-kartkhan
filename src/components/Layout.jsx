@@ -7,10 +7,13 @@ import { AppProvider } from '../../context/AppContext'
 export default function Layout({ children }) {
   const pathname = usePathname()
   const isShopRoute = pathname.startsWith('/shop')
+  const isAdminPanel = pathname.startsWith('/admin')
+
+  const shouldApplyContainer = !isShopRoute && !isAdminPanel
 
   return (
     <AppProvider>
-      <main className={isShopRoute ? '' : 'max-w-6xl mx-auto'}>
+      <main className={shouldApplyContainer ? 'max-w-6xl mx-auto' : ''}>
         {children}
         <Toaster />
       </main>
