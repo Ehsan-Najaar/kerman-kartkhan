@@ -3,7 +3,7 @@
 import { ProductCard } from '@/components/ProductCard'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useMemo, useRef } from 'react'
-import { Navigation } from 'swiper/modules'
+import { Autoplay, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import Button from '@/components/ui/Button'
@@ -36,7 +36,7 @@ export default function BestSellingProducts({ products }) {
   if (bestSellingProducts.length === 0) return null
 
   return (
-    <section className="py-12 px-24 mt-24">
+    <section className="py-12 px-24">
       <h3 className="h3 text-center relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
         پرفروش ترین های کرمان کارتخوان
       </h3>
@@ -80,9 +80,13 @@ export default function BestSellingProducts({ products }) {
         </button>
 
         <Swiper
-          modules={[Navigation]}
+          modules={[Navigation, Autoplay]}
           slidesPerView={4}
           spaceBetween={16}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
           dir="rtl"
           onSwiper={(swiper) => {
             swiperRef.current = swiper

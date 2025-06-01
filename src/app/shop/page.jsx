@@ -1,8 +1,12 @@
 'use client'
 
+import Footer from '@/components/Footer'
 import BannersSection from '@/components/shop/BannersSection'
 import BestSellingProducts from '@/components/shop/BestSellingProducts'
+import CustomersComments from '@/components/shop/CustomersComments'
+import HowToOrder from '@/components/shop/HowToOrder'
 import ProductsByCategories from '@/components/shop/ProductsByCategories'
+import Question from '@/components/shop/Question'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
 import SuggestedProducts from '@/components/shop/SuggestedProducts'
 import { useEffect, useState } from 'react'
@@ -27,10 +31,20 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen bg-light">
       <ShopPageHeader />
-      <BannersSection />
-      <ProductsByCategories products={products} />
-      <SuggestedProducts products={products} />
-      <BestSellingProducts products={products} />
+
+      <section className="space-y-16">
+        <BannersSection />
+        <ProductsByCategories products={products} />
+        <Question />
+        <SuggestedProducts products={products} />
+        <HowToOrder />
+        <BestSellingProducts products={products} />
+        <CustomersComments />
+      </section>
+
+      <div className="max-w-7xl mx-auto mt-24">
+        <Footer />
+      </div>
     </div>
   )
 }

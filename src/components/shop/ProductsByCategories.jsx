@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { Navigation } from 'swiper/modules'
+import { Autoplay, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 export default function ProductsByType({ products }) {
@@ -103,9 +103,13 @@ export default function ProductsByType({ products }) {
 
           <Swiper
             key={selectedType}
-            modules={[Navigation]}
+            modules={[Navigation, Autoplay]}
             slidesPerView={4}
             spaceBetween={16}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
             dir="rtl"
             onSwiper={(swiper) => {
               swiperRef.current = swiper

@@ -3,7 +3,7 @@
 import { ProductCard } from '@/components/ProductCard'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useMemo, useRef } from 'react'
-import { Navigation } from 'swiper/modules'
+import { Autoplay, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import Button from '@/components/ui/Button'
@@ -86,9 +86,13 @@ export default function SuggestedProducts({ products }) {
         </button>
 
         <Swiper
-          modules={[Navigation]}
+          modules={[Navigation, Autoplay]}
           slidesPerView={4}
           spaceBetween={16}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
           dir="rtl"
           onSwiper={(swiper) => {
             swiperRef.current = swiper

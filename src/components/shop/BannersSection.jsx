@@ -6,12 +6,12 @@ export default function BannersSection() {
       {/* big banner */}
       <section className="w-3/4">
         <Image
-          src={'/images/banners/big-banner.png'}
+          src={'/images/banners/main-banner.png'}
           alt="بنر"
           width={300}
           height={300}
           property="true"
-          className="w-full h-fit rounded-lg"
+          className="w-[920px] h-fit rounded-lg"
         />
       </section>
 
@@ -26,7 +26,7 @@ export default function BannersSection() {
           className="rounded-lg object-center object-cover"
         />
         <Image
-          src={'/images/banners/android-banner.png'}
+          src={'/images/banners/sayar-banner.png'}
           alt="بنر"
           width={300}
           height={300}
