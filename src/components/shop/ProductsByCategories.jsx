@@ -78,7 +78,7 @@ export default function ProductsByType({ products }) {
                   ? activeClass
                   : normalClass
               }`}
-              style={{ zIndex: 100 }} // اضافه کردن z-index برای اطمینان
+              style={{ zIndex: 100 }}
             >
               {type}
             </span>

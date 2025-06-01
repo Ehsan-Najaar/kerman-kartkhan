@@ -7,6 +7,7 @@ import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import Button from '@/components/ui/Button'
+import Image from 'next/image'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
@@ -35,18 +36,35 @@ export default function BestSellingProducts({ products }) {
   if (bestSellingProducts.length === 0) return null
 
   return (
-    <section className="py-12 px-24">
-      <div className="flex items-center justify-between mb-6 ">
-        <h3 className="h3 relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
-          پرفروش ترین های کرمان کارتخوان
-        </h3>
+    <section className="py-12 px-24 mt-24">
+      <h3 className="h3 text-center relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
+        پرفروش ترین های کرمان کارتخوان
+      </h3>
 
-        <Button variant="secondary" outline fontWeight="medium" size="sm">
-          مشاهده همه
-        </Button>
-      </div>
+      <figure className="relative">
+        <Image
+          src="/images/BestSellingProducts-bg.svg"
+          alt="تصویر"
+          width={1432}
+          height={450}
+          property="true"
+          draggable="false"
+          className="absolute left-0 top-0"
+        />
+      </figure>
 
-      <div className="relative">
+      <div className="relative mt-12 max-w-[85%] mx-auto">
+        <div className="flex items-center justify-between mb-6 px-4">
+          <h4 className="text-center relative z-10">
+            این‌ها پرفروش‌ترین دستگاه‌های کارت‌خوان ما تا این لحظه هستن که مورد
+            اعتماد بیشتر مشتری‌ها قرار گرفتن.
+          </h4>
+
+          <Button variant="light" fontWeight="medium" size="sm">
+            مشاهده همه
+          </Button>
+        </div>
+
         <button
           ref={prevRef}
           className="absolute -right-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
@@ -63,7 +81,7 @@ export default function BestSellingProducts({ products }) {
 
         <Swiper
           modules={[Navigation]}
-          slidesPerView={5}
+          slidesPerView={4}
           spaceBetween={16}
           dir="rtl"
           onSwiper={(swiper) => {
