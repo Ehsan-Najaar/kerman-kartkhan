@@ -1,5 +1,6 @@
 'use client'
 
+import AuthModal from '@/components/shop/AuthModal'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { Search, ShoppingCart, User } from 'lucide-react'
@@ -8,6 +9,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function ShopPageHeader() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [show, setShow] = useState(true)
 
@@ -57,7 +59,13 @@ export default function ShopPageHeader() {
         </section>
 
         <div className="flex items-center gap-4">
-          <Button variant="secondary" outline fontWeight="medium" size="sm">
+          <Button
+            variant="secondary"
+            outline
+            fontWeight="medium"
+            size="sm"
+            onClick={() => setIsModalOpen(true)}
+          >
             <User />
             ورود | ثبت نام
           </Button>
@@ -107,6 +115,8 @@ export default function ShopPageHeader() {
           ))}
         </section>
       </nav>
+
+      <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </header>
   )
 }

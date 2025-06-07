@@ -4,7 +4,6 @@ import Footer from '@/components/Footer'
 import BannersSection from '@/components/shop/BannersSection'
 import BestSellingProducts from '@/components/shop/BestSellingProducts'
 import CustomersComments from '@/components/shop/CustomersComments'
-import HowToOrder from '@/components/shop/HowToOrder'
 import ProductsByCategories from '@/components/shop/ProductsByCategories'
 import Question from '@/components/shop/Question'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
@@ -35,9 +34,8 @@ export default function ShopPage() {
       <section className="space-y-16">
         <BannersSection />
         <ProductsByCategories products={products} />
-        <Question />
         <SuggestedProducts products={products} />
-        <HowToOrder />
+        <Question />
         <BestSellingProducts products={products} />
         <CustomersComments />
       </section>

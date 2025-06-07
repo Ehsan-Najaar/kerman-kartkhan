@@ -2,37 +2,39 @@ import Image from 'next/image'
 
 export default function BannersSection() {
   return (
-    <div className="flex gap-4 px-24 py-12">
+    <div className="flex gap-4 px-24 py-12 h-[516px]">
       {/* big banner */}
-      <section className="w-3/4">
+      <section className="w-5/6 relative">
         <Image
-          src={'/images/banners/main-banner.png'}
+          src="/images/banners/main-banner.png"
           alt="بنر"
-          width={300}
-          height={300}
-          property="true"
-          className="w-[920px] h-fit rounded-lg"
+          fill
+          className="rounded-lg object-cover"
         />
       </section>
 
       {/* small banners */}
-      <section className="w-1/4 space-y-4">
-        <Image
-          src={'/images/banners/android-banner.png'}
-          alt="بنر"
-          width={300}
-          height={300}
-          property="true"
-          className="rounded-lg object-center object-cover"
-        />
-        <Image
-          src={'/images/banners/sayar-banner.png'}
-          alt="بنر"
-          width={300}
-          height={300}
-          property="true"
-          className="rounded-lg object-center object-contain"
-        />
+      <section className="w-1/6 flex flex-col gap-4">
+        <div className="relative h-1/2">
+          <Image
+            src="/images/banners/android-banner.png"
+            alt="بنر"
+            width={200}
+            height={200}
+            className="rounded-lg object-cover"
+            priority
+          />
+        </div>
+        <div className="relative h-1/2">
+          <Image
+            src="/images/banners/sayar-banner.png"
+            alt="بنر"
+            width={200}
+            height={200}
+            className="rounded-lg object-contain"
+            priority
+          />
+        </div>
       </section>
     </div>
   )
