@@ -4,16 +4,17 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { X } from 'lucide-react'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 export default function AuthModal({ isOpen, onClose }) {
-  const [step, setStep] = useState('phone') // 'phone' یا 'verify'
+  const [step, setStep] = useState('phone')
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function sendOtp() {
     if (!phone) {
-      alert('شماره موبایل را وارد کنید')
+      toast.error('شماره موبایل را وارد کنید')
       return
     }
     setLoading(true)
@@ -25,6 +26,7 @@ export default function AuthModal({ isOpen, onClose }) {
     setLoading(false)
     if (res.ok) {
       setStep('verify')
+      toast.success('کد تایید 6 رقمی ارسال شد')
     } else {
       const data = await res.json()
       alert(data.error || 'خطا در ارسال کد')
@@ -33,7 +35,7 @@ export default function AuthModal({ isOpen, onClose }) {
 
   async function verifyOtp() {
     if (!code) {
-      alert('کد تایید را وارد کنید')
+      toast.error('کد تایید را وارد کنید')
       return
     }
     setLoading(true)
@@ -45,11 +47,11 @@ export default function AuthModal({ isOpen, onClose }) {
     setLoading(false)
     const data = await res.json()
     if (res.ok) {
-      alert('ورود موفقیت‌آمیز بود! خوش آمدید.')
+      toast.success('ورود موفقیت‌آمیز بود! خوش آمدید.')
       onClose()
       // TODO: ذخیره توکن یا اطلاعات کاربر در سشن یا context
     } else {
-      alert(data.error || 'کد تایید اشتباه است')
+      toast.error(data.error || 'کد تایید اشتباه است')
     }
   }
 
