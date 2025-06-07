@@ -29,7 +29,8 @@ export default function AuthModal({ isOpen, onClose }) {
       toast.success('کد تایید 6 رقمی ارسال شد')
     } else {
       const data = await res.json()
-      alert(data.error || 'خطا در ارسال کد')
+      console.log('data: ', data)
+      toast.error(data.error || 'خطا در ارسال کد')
     }
   }
 

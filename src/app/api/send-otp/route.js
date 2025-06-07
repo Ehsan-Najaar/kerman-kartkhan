@@ -1,15 +1,16 @@
 import otpStorage from '@/lib/otpStorage'
+import { NextResponse } from 'next/server'
 
 export async function POST(req) {
   const { phone } = await req.json()
 
   if (!phone) {
-    return new Response(JSON.stringify({ error: 'شماره موبایل وارد نشده' }), {
-      status: 400,
-    })
+    return NextResponse.json(
+      { error: 'شماره موبایل وارد نشده' },
+      { status: 400 }
+    )
   }
 
-  // تولید کد 6 رقمی و ذخیره در حافظه موقت با انقضا 5 دقیقه
   const code = Math.floor(100000 + Math.random() * 900000).toString()
   otpStorage.set(phone, { code, expires: Date.now() + 5 * 60 * 1000 })
 
@@ -17,7 +18,10 @@ export async function POST(req) {
   const apiKey = process.env.MELI_API_KEY
   const url = `${apiUrl}/${apiKey}`
 
-  const data = JSON.stringify({ to: phone })
+  const data = JSON.stringify({
+    to: phone,
+    code: code,
+  })
 
   try {
     const response = await fetch(url, {
@@ -28,7 +32,6 @@ export async function POST(req) {
       body: data,
     })
 
-    // برای بررسی اگر پاسخ JSON داشت:
     let result = null
     try {
       result = await response.json()
@@ -38,16 +41,23 @@ export async function POST(req) {
     console.log('Response from SMS API:', result)
 
     if (!response.ok) {
-      return new Response(JSON.stringify({ error: 'ارسال پیامک ناموفق بود' }), {
-        status: 500,
-      })
+      return NextResponse.json(
+        { error: 'ارسال پیامک ناموفق بود', result },
+        { status: 500 }
+      )
     }
 
-    return new Response(JSON.stringify({ status: 'ok' }), { status: 200 })
+    return NextResponse.json({ status: 'ok' }, { status: 200 })
   } catch (error) {
     console.error('خطای اتصال به API پیامک:', error)
-    return new Response(
-      JSON.stringify({ error: 'خطا در ارسال پیامک', details: error.message }),
+
+    return NextResponse.json(
+      {
+        error: 'خطا در ارسال پیامک',
+        message: error.message,
+        name: error.name,
+        stack: error.stack,
+      },
       { status: 500 }
     )
   }
