@@ -55,7 +55,7 @@ export default function CustomersComments() {
   }
 
   return (
-    <div className="bg-gradient-to-t from-lightgray to-light py-16 rounded-2xl">
+    <div className="bg-gradient-to-t from-section/35 to-light py-16 rounded-2xl">
       <h3 className="h3 text-center relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
         نظرات مشتریان کرمان کارتخوان
       </h3>

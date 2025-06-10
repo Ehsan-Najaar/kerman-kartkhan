@@ -72,9 +72,13 @@ export function ProductCard({ product }) {
       </div>
 
       <section className="flex items-center gap-2">
-        <Button variant="primary" size="xs" fontWeight="medium">
-          مشاهده محصول
-        </Button>
+        <Link
+          href={`/shop/${`${product.brand}-${product.name}`.toLowerCase()}`}
+        >
+          <Button variant="primary" size="xs" fontWeight="medium">
+            مشاهده محصول
+          </Button>
+        </Link>
 
         <button className="p-2 rounded-lg bg-section/50 text-secondary cursor-pointer">
           <span className="relative">

@@ -22,14 +22,12 @@ export default function ProductFeatureInputs({
         return (
           <div key={i} className="flex gap-2 items-center">
             <Input
-              placeholder={`ویژگی ${i + 1}`}
               value={feature.key || ''}
               label={i === 0 ? 'ویژگی (مثلاً: شارژر)' : `ویژگی ${i + 1}`}
               onChange={(e) => onFeatureChange(i, 'key', e.target.value)}
               className="flex-1"
             />
             <Input
-              placeholder="مقدار ویژگی"
               value={feature.value || ''}
               label={i === 0 ? 'مقدار ویژگی (مثلاً: تایپ سی)' : 'مقدار ویژگی'}
               onChange={(e) => onFeatureChange(i, 'value', e.target.value)}

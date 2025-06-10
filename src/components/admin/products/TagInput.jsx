@@ -61,7 +61,6 @@ export default function TagInput({ value = [], onChange }) {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             formNoValidate
-            placeholder="مثلاً: کارتخوان بیسیم"
           />
         </div>
         <Button

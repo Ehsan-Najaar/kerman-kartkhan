@@ -183,7 +183,7 @@ export default function Footer() {
                       </li>
                     </ul>
 
-                    <Link href={'/landing/contact-us'}>
+                    <Link href={'/contact-us'}>
                       <Button
                         variant="secondary"
                         size="sm"

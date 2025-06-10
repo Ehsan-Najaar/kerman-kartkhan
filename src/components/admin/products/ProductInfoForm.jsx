@@ -49,7 +49,6 @@ export default function ProductInfoForm({
           value={form.name || ''}
           onChange={handleChange}
           required
-          placeholder="مثلاً: واکی‌تاکی مدل x"
           type="text"
           className="w-full"
         />
@@ -61,7 +60,6 @@ export default function ProductInfoForm({
           label="برند"
           value={form.brand || ''}
           onChange={handleChange}
-          placeholder="مثلاً: موتورولا"
           type="text"
           className="w-full"
         />
@@ -75,7 +73,6 @@ export default function ProductInfoForm({
           label="مدل"
           value={form.model || ''}
           onChange={handleChange}
-          placeholder="مثلاً: XT420"
           type="text"
           className="w-full"
         />
@@ -188,7 +185,6 @@ export default function ProductInfoForm({
         label="توضیحات (اختیاری)"
         value={form.description || ''}
         onChange={handleChange}
-        placeholder="توضیحات کامل محصول..."
         rows={5}
       />
     </div>

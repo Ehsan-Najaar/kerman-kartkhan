@@ -31,7 +31,7 @@ export default function ShopPage() {
     <div className="min-h-screen bg-light">
       <ShopPageHeader />
 
-      <section className="space-y-16">
+      <section className="space-y-12">
         <BannersSection />
         <ProductsByCategories products={products} />
         <SuggestedProducts products={products} />
