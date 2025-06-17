@@ -16,7 +16,7 @@ export default function PopularOrSearchProducts({ search, products }) {
       <div className="flex items-center max-h-60 overflow-y-auto">
         {products.slice(0, 5).map((product) => (
           <Link
-            href={`/product/${product.slug}`}
+            href={`/shop/${`${product.brand}-${product.name}`.toLowerCase()}`}
             key={product._id}
             className="flex flex-col gap-2 items-center hover:bg-lightgray/20 p-4 transition border-l border-lightgray/35 last:border-none"
           >

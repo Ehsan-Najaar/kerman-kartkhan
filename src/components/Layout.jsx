@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation'
 import { Toaster } from 'react-hot-toast'
-import { AppProvider } from '../../context/AppContext'
 
 export default function Layout({ children }) {
   const pathname = usePathname()
@@ -12,11 +11,9 @@ export default function Layout({ children }) {
   const shouldApplyContainer = !isShopRoute && !isAdminPanel
 
   return (
-    <AppProvider>
-      <main className={shouldApplyContainer ? 'max-w-6xl mx-auto' : ''}>
-        {children}
-        <Toaster />
-      </main>
-    </AppProvider>
+    <main className={shouldApplyContainer ? 'max-w-6xl mx-auto' : ''}>
+      {children}
+      <Toaster />
+    </main>
   )
 }

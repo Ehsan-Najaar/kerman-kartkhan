@@ -12,6 +12,7 @@ export default function Input({
   required,
   type = 'text',
   icon = null,
+  readOnly = false,
 }) {
   const [focused, setFocused] = useState(false)
 
@@ -29,7 +30,7 @@ export default function Input({
         id={id}
         name={name}
         type={type}
-        value={value}
+        value={value ?? ''}
         placeholder={placeholder}
         onChange={onChange}
         onFocus={(e) => {
@@ -39,10 +40,11 @@ export default function Input({
         onBlur={() => setFocused(false)}
         onKeyDown={onKeyDown}
         required={required}
+        readOnly={readOnly}
         className={`w-full p-3 rounded-lg transition-all duration-300 outline-none 
-          ${
-            !icon ? 'border' : ''
-          } border-lightgray focus:border-section placeholder:text-gray/70`}
+          ${!icon ? 'border' : ''} ${
+          readOnly ? 'opacity-35 pointer-events-none' : ''
+        } border-lightgray focus:border-section placeholder:text-gray/70`}
       />
 
       <label

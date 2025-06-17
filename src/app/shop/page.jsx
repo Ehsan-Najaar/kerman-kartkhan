@@ -4,7 +4,7 @@ import Footer from '@/components/Footer'
 import BannersSection from '@/components/shop/BannersSection'
 import BestSellingProducts from '@/components/shop/BestSellingProducts'
 import CustomersComments from '@/components/shop/CustomersComments'
-import ProductsByCategories from '@/components/shop/ProductsByCategories'
+import ProductsByType from '@/components/shop/ProductsByType'
 import Question from '@/components/shop/Question'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
 import SuggestedProducts from '@/components/shop/SuggestedProducts'
@@ -33,7 +33,7 @@ export default function ShopPage() {
 
       <section className="space-y-12">
         <BannersSection />
-        <ProductsByCategories products={products} />
+        <ProductsByType products={products} />
         <SuggestedProducts products={products} />
         <Question />
         <BestSellingProducts products={products} />

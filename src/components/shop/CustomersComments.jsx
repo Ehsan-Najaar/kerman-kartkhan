@@ -44,7 +44,7 @@ export default function CustomersComments() {
     swiper.slides.forEach((slide) => {
       slide.style.opacity = '0.4'
       slide.style.transform = 'scale(0.85)'
-      slide.style.filter = 'blur(0.5px)'
+      slide.style.filter = 'blur(1px)'
     })
     const activeSlide = swiper.slides[swiper.activeIndex]
     if (activeSlide) {
@@ -55,7 +55,7 @@ export default function CustomersComments() {
   }
 
   return (
-    <div className="bg-gradient-to-t from-section/35 to-light py-16 rounded-2xl">
+    <div className="bg-gradient-to-t from-section/15 to-light py-16 rounded-2xl">
       <h3 className="h3 text-center relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
         نظرات مشتریان کرمان کارتخوان
       </h3>
@@ -81,18 +81,16 @@ export default function CustomersComments() {
         >
           {comments.map((item, index) => (
             <SwiperSlide key={index} className="transition-all duration-300">
-              <div className="bg-gray/60 border border-gray text-light rounded-xl shadow-xl px-6 py-8 text-right h-full relative">
+              <div className="bg-light border border-section/80 text-dark rounded-xl px-6 py-8 text-right h-full relative">
                 {/* Avatar + Rating */}
                 <div className="flex gap-2 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-sm font-bold">
-                    <User size={24} className="text-gray" />
+                  <div className="w-10 h-10 rounded-full bg-section/50 flex items-center justify-center text-sm font-bold">
+                    <User size={24} className="text-dark" />
                   </div>
                   {/* Name + Job */}
                   <div>
-                    <h3 className="font-bold mb-1 text-gray-100">
-                      {item.name}
-                    </h3>
-                    <p className="text-xs text-gray-300 mb-4">{item.job}</p>
+                    <h3 className="font-bold mb-1 text-dark">{item.name}</h3>
+                    <p className="text-xs text-gray/80 mb-4">{item.job}</p>
                   </div>
                 </div>
 

@@ -6,7 +6,7 @@ export default function Button({
   outline = false,
   fullWidth = false,
   size = 'md',
-  fontWeight = 'semibold',
+  fontWeight = 'medium',
   iconLeft = null,
   iconRight = null,
   className = '',

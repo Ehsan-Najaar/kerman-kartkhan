@@ -1,6 +1,7 @@
 import connectDB from '@/lib/db'
 import otpStorage from '@/lib/otpStorage'
 import User from '@/models/User'
+import jwt from 'jsonwebtoken'
 
 export async function POST(req) {
   const { phone, code } = await req.json()
@@ -26,13 +27,12 @@ export async function POST(req) {
     })
   }
 
-  if (otpData.code !== code) {
+  if (String(otpData.code) !== String(code)) {
     return new Response(JSON.stringify({ error: 'کد نادرست است' }), {
       status: 400,
     })
   }
 
-  // اگر OTP درست بود، برو سراغ دیتابیس
   try {
     await connectDB()
 
@@ -46,10 +46,34 @@ export async function POST(req) {
     }
 
     otpStorage.delete(phone)
+    console.log('OTP data for', phone, ':', otpData)
 
-    return new Response(JSON.stringify({ status: 'verified', user }), {
-      status: 200,
-    })
+    // ✅ ساخت توکن بعد از اینکه user آماده شد
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        phone: user.phone,
+        name: user.name || '',
+        roles: user.roles || [],
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    )
+
+    const response = new Response(
+      JSON.stringify({ status: 'verified', user }),
+      {
+        status: 200,
+      }
+    )
+
+    // ✅ ذخیره توکن در کوکی HTTP-only
+    response.headers.set(
+      'Set-Cookie',
+      `token=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=604800`
+    )
+
+    return response
   } catch (err) {
     console.error('خطا در ذخیره کاربر:', err)
     return new Response(JSON.stringify({ error: 'خطا در سرور' }), {

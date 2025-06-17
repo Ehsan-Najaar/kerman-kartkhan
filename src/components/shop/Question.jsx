@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Question() {
   return (
@@ -17,9 +18,11 @@ export default function Question() {
           تا کمک کنیم.
         </p>
         <div className="flex gap-4 mt-4">
-          <Button variant="light" fontWeight="medium" size="sm">
-            سوالات متداول
-          </Button>
+          <Link href={'/faq'}>
+            <Button variant="light" fontWeight="medium" size="sm">
+              سوالات متداول
+            </Button>
+          </Link>
           <Button variant="secondary" fontWeight="medium" size="sm">
             گفتگو با ما
           </Button>

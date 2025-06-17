@@ -1,52 +1,31 @@
-import { createContext, useContext, useState } from 'react'
+'use client'
 
-const AppContext = createContext()
+import { createContext, useContext, useEffect, useState } from 'react'
 
-export const AppProvider = ({ children }) => {
-  const [toast, setToast] = useState({
-    message: '',
-    type: '',
-    isVisible: false,
-    duration: 5000, // مدت زمان نمایش Toast
-    timeLeft: 5000, // زمان باقی‌مانده
-  })
+// مقدار اولیه کانتکس (می‌تونی متغیرهای دیگه هم اضافه کنی)
+const AppContext = createContext({
+  user: null,
+  setUser: () => {},
+  // هر state یا فانکشن دیگه که لازم داری
+})
 
-  const showToast = (message, type) => {
-    const duration = 5000 // مدت زمان دلخواه برای نمایش Toast
+export function useAppContext() {
+  return useContext(AppContext)
+}
 
-    setToast((prev) => ({
-      message,
-      type,
-      isVisible: true,
-      duration,
-      timeLeft: duration,
-    }))
+export default function AppContextProvider({ user = null, children }) {
+  const [currentUser, setCurrentUser] = useState(user)
 
-    // تایمر کاهش زمان
-    const timer = setInterval(() => {
-      setToast((prev) => {
-        if (prev.timeLeft <= 0) {
-          clearInterval(timer)
-          return { ...prev, isVisible: false }
-        }
-        return { ...prev, timeLeft: prev.timeLeft - 100 }
-      })
-    }, 100)
-
-    // پاک کردن تایمر در صورت unmount شدن
-    return () => clearInterval(timer)
-  }
+  useEffect(() => {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      setUser(JSON.parse(userData))
+    }
+  }, [])
 
   return (
-    <AppContext.Provider
-      value={{
-        toast,
-        showToast,
-      }}
-    >
+    <AppContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}>
       {children}
     </AppContext.Provider>
   )
 }
-
-export const useAppContext = () => useContext(AppContext)

@@ -3,7 +3,7 @@ import Image from 'next/image'
 function Loader1() {
   return (
     <div
-      className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
       aria-label="Loading content, please wait"
       role="alert"
       aria-busy="true"

@@ -3,15 +3,21 @@
 import AuthModal from '@/components/shop/AuthModal'
 import PopularOrSearchProducts from '@/components/shop/search/PopularOrSearchProducts'
 import RecentSearches from '@/components/shop/search/RecentSearches'
+import UserDropdown from '@/components/shop/UserDropdown'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Fuse from 'fuse.js'
 import { Search, ShoppingCart, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useAppContext } from '../../../context/AppContext'
 
 export default function ShopPageHeader() {
+  const { user, setUser } = useAppContext()
+  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [show, setShow] = useState(true)
@@ -22,9 +28,9 @@ export default function ShopPageHeader() {
   const dropdownRef = useRef(null)
 
   const categories = [
-    { name: 'ثابت', href: '/category/fixed' },
-    { name: 'سیار', href: '/category/mobile' },
-    { name: 'اندرویدی', href: '/category/android' },
+    { name: 'ثابت', href: '/shop/type/ثابت' },
+    { name: 'سیار', href: '/shop/type/سیار' },
+    { name: 'اندرویدی', href: '/shop/type/اندرویدی' },
     { name: 'لوازم جانبی', href: '/category/accessories' },
   ]
 
@@ -66,7 +72,7 @@ export default function ShopPageHeader() {
   useEffect(() => {
     if (search.trim()) {
       const fuse = new Fuse(popularProducts, {
-        keys: ['name', 'tags', 'model', 'brand' , "کارتخوان"],
+        keys: ['name', 'tags', 'model', 'brand', 'کارتخوان'],
         threshold: 0.1,
         ignoreLocation: true,
         minMatchCharLength: 2,
@@ -86,14 +92,6 @@ export default function ShopPageHeader() {
     }
   }, [])
 
-  const handleSearchSubmit = () => {
-    if (search.trim() && !recentSearches.includes(search)) {
-      const updated = [search, ...recentSearches].slice(0, 5)
-      setRecentSearches(updated)
-      localStorage.setItem('recentSearches', JSON.stringify(updated))
-    }
-  }
-
   useEffect(() => {
     const handleClickOutside = (e) => {
       // اگر کلیک خارج از dropdownRef بود، دراپ داون رو ببندیم
@@ -105,13 +103,43 @@ export default function ShopPageHeader() {
       }
     }
 
+    console.log('user -> ', user)
+
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
   }, [])
 
+  const handleSearchSubmit = () => {
+    if (search.trim() && !recentSearches.includes(search)) {
+      const updated = [search, ...recentSearches].slice(0, 5)
+      setRecentSearches(updated)
+      localStorage.setItem('recentSearches', JSON.stringify(updated))
+    }
+  }
+
   const clearRecentSearches = () => {
     setRecentSearches([])
     localStorage.removeItem('recentSearches')
+  }
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include',
+      })
+
+      if (res.ok) {
+        setUser(null)
+        router.push('/shop')
+        toast.success('خروج از حساب کاربری موفقیت‌آمیز بود')
+      } else {
+        console.error('خطا در خروج از حساب')
+        toast.error('خطا در خروج از حساب')
+      }
+    } catch (err) {
+      console.error('خطای خروج از حساب:', err)
+    }
   }
 
   return (
@@ -120,7 +148,14 @@ export default function ShopPageHeader() {
         {/* لوگو و جستجو */}
         <section className="w-2/3 flex items-center gap-10 overflow-visible">
           <figure>
-            <Image src="/images/logo.png" alt="logo" width={200} height={200} />
+            <Link href={'/shop'}>
+              <Image
+                src="/images/logo.png"
+                alt="logo"
+                width={200}
+                height={200}
+              />
+            </Link>
           </figure>
 
           {/* باکس جستجو و منو */}
@@ -164,16 +199,20 @@ export default function ShopPageHeader() {
 
         {/* آیکون‌ها */}
         <div className="flex items-center gap-4">
-          <Button
-            variant="secondary"
-            outline
-            fontWeight="medium"
-            size="sm"
-            onClick={() => setIsModalOpen(true)}
-          >
-            <User />
-            ورود | ثبت نام
-          </Button>
+          {user ? (
+            <UserDropdown user={user} onLogout={handleLogout} />
+          ) : (
+            <Button
+              variant="secondary"
+              outline
+              fontWeight="medium"
+              size="sm"
+              onClick={() => setIsModalOpen(true)}
+            >
+              <User />
+              ورود | ثبت نام
+            </Button>
+          )}
 
           <button className="p-3 text-gray border border-lightgray/35 rounded-lg cursor-pointer">
             <ShoppingCart size={20} />
@@ -188,7 +227,7 @@ export default function ShopPageHeader() {
         }`}
       >
         <section className="flex items-center gap-4">
-          <span className="bg-section/50 text-secondary/80 rounded-full px-4 py-1 text-sm whitespace-nowrap">
+          <span className="bg-section/25 text-secondary/80 rounded-full px-4 py-1 text-sm whitespace-nowrap">
             صفحات
           </span>
           <div className="h-6 w-px bg-lightgray rounded-full"></div>
@@ -204,7 +243,7 @@ export default function ShopPageHeader() {
         </section>
 
         <section className="flex items-center gap-4">
-          <span className="bg-section/50 text-secondary/80 rounded-full px-4 py-1 text-sm whitespace-nowrap">
+          <span className="bg-section/25 text-secondary/80 rounded-full px-4 py-1 text-sm whitespace-nowrap">
             کارتخوان‌ها
           </span>
           <div className="h-6 w-px bg-lightgray rounded-full"></div>

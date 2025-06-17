@@ -5,7 +5,7 @@ import { motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { fadeIn } from '../../../variants'
 
@@ -13,6 +13,7 @@ export default function RegisterGuide() {
   const controls = useAnimation()
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true })
   const pathname = usePathname()
+  const [showVideo, setShowVideo] = useState(false)
   const isLandingGuide = pathname === '/landing/guide'
 
   useEffect(() => {
@@ -45,14 +46,25 @@ export default function RegisterGuide() {
           animate={isLandingGuide ? false : controls}
           className="lg:w-1/3 grid place-items-center"
         >
-          <Image
-            src="/images/bg-layers.png"
-            alt="تصویر راهنمای ثبت کارتخوان"
-            width={500}
-            height={300}
-            loading="lazy"
-            draggable="false"
-          />
+          {showVideo ? (
+            <video
+              src="https://kerman-kartkhan-2.storage.c2.liara.space/VID_20250613_052336_128.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=6b96162b-d379-44a7-ae3f-e3cd178bbf19%2F20250617%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250617T074358Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=3c2b122c66ca4d5f1db9ad4abf9e35833a9738a447b5e665f1ddb04646128d71"
+              controls
+              autoPlay
+              className="rounded-lg w-full h-auto"
+            />
+          ) : (
+            <Image
+              src="/images/covers/video-cover.png"
+              alt="تصویر راهنمای ثبت کارتخوان"
+              width={500}
+              height={300}
+              loading="lazy"
+              draggable="false"
+              className="rounded-lg cursor-pointer"
+              onClick={() => setShowVideo(true)}
+            />
+          )}
         </motion.section>
 
         {/* متن و دکمه */}

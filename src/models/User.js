@@ -1,5 +1,26 @@
 import mongoose from 'mongoose'
 
+const addressSchema = new mongoose.Schema(
+  {
+    city: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    street: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    postalCode: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+  },
+  { _id: false }
+)
+
 const userSchema = new mongoose.Schema(
   {
     phone: {
@@ -32,6 +53,11 @@ const userSchema = new mongoose.Schema(
     },
     lastLogin: {
       type: Date,
+    },
+    address: {
+      type: [addressSchema],
+      default: [],
+      validate: [(val) => val.length <= 3, '{PATH} exceeds the limit of 3'],
     },
   },
   { versionKey: false }

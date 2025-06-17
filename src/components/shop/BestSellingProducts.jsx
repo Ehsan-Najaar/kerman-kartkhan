@@ -6,7 +6,6 @@ import { useEffect, useMemo, useRef } from 'react'
 import { Autoplay, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import Button from '@/components/ui/Button'
 import Image from 'next/image'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -54,16 +53,10 @@ export default function BestSellingProducts({ products }) {
       </figure>
 
       <div className="relative mt-12 max-w-[85%] mx-auto">
-        <div className="flex items-center justify-between mb-6 px-4">
-          <h4 className="text-center relative z-10">
-            این‌ها پرفروش‌ترین دستگاه‌های کارت‌خوان ما تا این لحظه هستن که مورد
-            اعتماد بیشتر مشتری‌ها قرار گرفتن.
-          </h4>
-
-          <Button variant="light" fontWeight="medium" size="sm">
-            مشاهده همه
-          </Button>
-        </div>
+        <h4 className="text-center relative z-10 mb-12">
+          این‌ها پرفروش‌ترین دستگاه‌های کارت‌خوان ما تا این لحظه هستن که مورد
+          اعتماد بیشتر مشتری‌ها قرار گرفتن.
+        </h4>
 
         <button
           ref={prevRef}

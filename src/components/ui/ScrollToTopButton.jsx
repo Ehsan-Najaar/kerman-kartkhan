@@ -16,7 +16,7 @@ const ScrollToTopButton = () => {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className={`hidden lg:block fixed left-8 bottom-8 p-3 bg-light rounded-md cursor-pointer transition-transform duration-300 ease-in-out
+      className={`hidden lg:block fixed left-6 bottom-6 p-3 bg-primary/15 border border-primary/50 rounded-md cursor-pointer transition-transform duration-300 ease-in-out z-50
         ${showButton ? 'scale-100' : 'scale-0'} `}
     >
       <FaChevronUp size={20} />

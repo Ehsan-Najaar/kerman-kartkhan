@@ -6,7 +6,6 @@ import { useEffect, useMemo, useRef } from 'react'
 import { Autoplay, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import Button from '@/components/ui/Button'
 import Image from 'next/image'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -60,16 +59,10 @@ export default function SuggestedProducts({ products }) {
       </figure>
 
       <div className="relative mt-12 max-w-[85%] mx-auto">
-        <div className="flex items-center justify-between mb-6 px-4">
-          <h4 className="text-center relative z-10">
-            این‌ها محصولاتی هستن که ما با توجه به نیازهای مختلف کسب‌وکارها بهت
-            پیشنهاد می‌کنیم تا بهترین انتخاب رو داشته باشی.
-          </h4>
-
-          <Button variant="light" fontWeight="medium" size="sm">
-            مشاهده همه
-          </Button>
-        </div>
+        <h4 className="text-center relative z-10 mb-12">
+          این‌ها محصولاتی هستن که ما با توجه به نیازهای مختلف کسب‌وکارها بهت
+          پیشنهاد می‌کنیم تا بهترین انتخاب رو داشته باشی.
+        </h4>
 
         <button
           ref={prevRef}

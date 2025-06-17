@@ -2,15 +2,70 @@
 
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
-import { X } from 'lucide-react'
-import { useState } from 'react'
+import { MessageSquare, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { FiEdit } from 'react-icons/fi'
 
 export default function AuthModal({ isOpen, onClose }) {
   const [step, setStep] = useState('phone')
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false)
+  const [seconds, setSeconds] = useState(60)
+  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+
+  // ریست حالت‌ها هنگام بستن
+  useEffect(() => {
+    if (!isOpen) {
+      setStep('phone')
+      setPhone('')
+      setCode('')
+      setLoading(false)
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (step === 'verify' && seconds > 0) {
+      const timer = setInterval(() => setSeconds((s) => s - 1), 1000)
+      return () => clearInterval(timer)
+    }
+  }, [step, seconds])
+
+  const handleChange = (e, index) => {
+    const value = e.target.value
+    if (!/^\d?$/.test(value)) return
+
+    const newOtp = [...otp]
+    newOtp[index] = value
+    setOtp(newOtp)
+
+    // رفتن به بعدی
+    if (value && index < otp.length - 1) {
+      const nextInput = document.getElementById(`otp-${index + 1}`)
+      if (nextInput) nextInput.focus()
+    }
+  }
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const prevInput = document.getElementById(`otp-${index - 1}`)
+      if (prevInput) prevInput.focus()
+    }
+  }
+
+  const handleResendOtp = async () => {
+    await fetch('/api/send-otp', {
+      method: 'POST',
+      body: JSON.stringify({ phone }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    // ریست تایمر
+    setSeconds(60)
+  }
 
   async function sendOtp() {
     if (!phone) {
@@ -29,16 +84,17 @@ export default function AuthModal({ isOpen, onClose }) {
       toast.success('کد تایید 6 رقمی ارسال شد')
     } else {
       const data = await res.json()
-      console.log('data: ', data)
       toast.error(data.error || 'خطا در ارسال کد')
     }
   }
 
-  async function verifyOtp() {
-    if (!code) {
-      toast.error('کد تایید را وارد کنید')
+  const verifyOtp = async () => {
+    const code = otp.join('')
+    if (code.length !== 6) {
+      toast.error('کد ۶ رقمی را کامل وارد کنید')
       return
     }
+
     setLoading(true)
     const res = await fetch('/api/verify-otp', {
       method: 'POST',
@@ -46,13 +102,13 @@ export default function AuthModal({ isOpen, onClose }) {
       body: JSON.stringify({ phone, code }),
     })
     setLoading(false)
+
     const data = await res.json()
     if (res.ok) {
-      toast.success('ورود موفقیت‌آمیز بود! خوش آمدید.')
+      toast.success('ورود موفقیت‌آمیز بود!')
       onClose()
-      // TODO: ذخیره توکن یا اطلاعات کاربر در سشن یا context
     } else {
-      toast.error(data.error || 'کد تایید اشتباه است')
+      toast.error(data.error || 'کد نادرست است')
     }
   }
 
@@ -82,29 +138,72 @@ export default function AuthModal({ isOpen, onClose }) {
               variant="primary"
               fontWeight="medium"
               className="w-full"
+              disabled={loading}
             >
-              {loading ? 'در حال ارسال...' : 'ارسال کد'}
+              {loading ? 'در حال ارسال...' : 'دریافت کد'}
             </Button>
           </div>
         )}
 
         {step === 'verify' && (
-          <div className="space-y-4">
-            <h2 className="text-xl mb-4 text-center">کد تایید را وارد کنید</h2>
-            <Input
-              type="text"
-              label="کد تایید"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
-            <Button
-              onClick={verifyOtp}
-              variant="primary"
-              fontWeight="medium"
-              className="w-full"
-            >
-              {loading ? 'در حال ارسال...' : 'ارسال کد'}
+          <div className="space-y-4 text-center">
+            <h2 className="text-xl font-semibold">کد تایید ورود</h2>
+            <p className="text-sm text-gray-600">
+              کد پیامک شده به شماره {phone} را وارد کنید.
+            </p>
+            <div className="grid place-items-center">
+              <button
+                className="flex items-center gap-2 text-sm text-blue-600 mt-1 cursor-pointer"
+                onClick={() => setStep('phone')}
+              >
+                <FiEdit />
+                تغییر شماره موبایل
+              </button>
+            </div>
+
+            <div className="flex justify-center gap-2 my-4" dir="ltr">
+              {otp.map((digit, index) => (
+                <input
+                  key={index}
+                  id={`otp-${index}`}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  dir="ltr"
+                  placeholder="-"
+                  className="w-12 h-12 text-center border border-lightgray rounded-md text-xl bg-lightgray/35 font-bold outline-none focus:border-secondary"
+                  value={digit}
+                  onChange={(e) => handleChange(e, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                />
+              ))}
+            </div>
+
+            <Button onClick={verifyOtp} className="w-full" disabled={loading}>
+              {loading ? 'در حال بررسی...' : 'تایید کد'}
             </Button>
+
+            {seconds > 0 ? (
+              <p className="text-sm text-gray-500 mt-2">
+                0:{seconds < 10 ? `0${seconds}` : seconds} مانده تا ارسال مجدد
+                کد
+              </p>
+            ) : (
+              <>
+                <p className="text-gray text-xs text-right mb-2">
+                  آیا کد را دریافت نکرده‌اید؟
+                </p>
+                <Button
+                  onClick={handleResendOtp}
+                  variant="ghost"
+                  fontWeight="medium"
+                  className="w-full"
+                >
+                  <MessageSquare size={18} />
+                  ارسال مجدد کد
+                </Button>
+              </>
+            )}
           </div>
         )}
       </div>

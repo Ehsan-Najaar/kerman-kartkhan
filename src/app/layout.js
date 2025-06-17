@@ -1,3 +1,4 @@
+import UserWrapper from '@/app/UserWrapper'
 import Layout from '@/components/Layout'
 import '../../styles/globals.css'
 
@@ -11,7 +12,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl">
       <body className="bg-bg overflow-x-hidden">
-        <Layout>{children}</Layout>
+        <UserWrapper>
+          <Layout>{children}</Layout>
+        </UserWrapper>
       </body>
     </html>
   )

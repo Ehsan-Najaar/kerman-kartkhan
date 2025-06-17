@@ -120,7 +120,7 @@ export default function ProductDetails({
             </ol>
             <small className="text-xs font-light text-gray">
               (فعال سازی و اتصال به حساب{' '}
-              <b className="text-yellow-600">رایگان</b> است.)
+              <b className="text-green-600">رایگان</b> است.)
             </small>
           </nav>
 
