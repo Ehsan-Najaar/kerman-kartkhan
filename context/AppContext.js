@@ -19,7 +19,7 @@ export default function AppContextProvider({ user = null, children }) {
   useEffect(() => {
     const userData = localStorage.getItem('user')
     if (userData) {
-      setUser(JSON.parse(userData))
+      setCurrentUser(JSON.parse(userData))
     }
   }, [])
 

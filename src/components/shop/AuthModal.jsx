@@ -3,11 +3,15 @@
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { MessageSquare, X } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FiEdit } from 'react-icons/fi'
+import { useAppContext } from '../../../context/AppContext'
 
 export default function AuthModal({ isOpen, onClose }) {
+  const { user, setUser } = useAppContext()
+  const router = useRouter()
   const [step, setStep] = useState('phone')
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
@@ -106,7 +110,16 @@ export default function AuthModal({ isOpen, onClose }) {
     const data = await res.json()
     if (res.ok) {
       toast.success('ورود موفقیت‌آمیز بود!')
+
+      // ✅ ذخیره کاربر در localStorage و کانتکس
+      localStorage.setItem('user', JSON.stringify(data.user))
+      setUser(data.user)
+
       onClose()
+
+      // ❌ دیگه نیازی به router.refresh نیست، چون کانتکس رفرش میشه
+      // ولی اگر واقعاً چیزی از سرور دوباره باید fetch شه، می‌تونی نگهش داری
+      // router.refresh()
     } else {
       toast.error(data.error || 'کد نادرست است')
     }
