@@ -15,14 +15,10 @@ import {
   FiPlus,
   FiShoppingCart,
 } from 'react-icons/fi'
+import { useAppContext } from '../../../../context/AppContext'
 
-export default function ProductDetails({
-  product,
-  addToCart,
-  inCart,
-  isLoading,
-  isLoggedIn,
-}) {
+export default function ProductDetails({ product, inCart, isLoggedIn }) {
+  const { cart, removeFromCart, loadingCart, addToCart } = useAppContext()
   const [selectedImage, setSelectedImage] = useState(product?.images[0] || '')
   const [productNumber, setProductNumber] = useState(1)
   const [isInCart, setIsInCart] = useState(inCart)
@@ -50,10 +46,16 @@ export default function ProductDetails({
 
   const handleImageClick = (image) => setSelectedImage(image)
   const handleQuantityChange = (e) => setProductNumber(Number(e.target.value))
-  const updateCart = (quantity) => {
-    addToCart(quantity)
+  const updateCart = () => {
+    addToCart({
+      productId: product._id,
+      quantity: productNumber,
+      selectedColor: product.colors?.[0] || null,
+      selectedVariant: product.model || null,
+    })
     isLoggedIn && setIsInCart(true)
   }
+
   const calculateTotalPrice = () => product?.price * productNumber
   const scrollToDescription = () => {
     const tabSection = document.getElementById('product-details-tabs')
@@ -267,7 +269,7 @@ export default function ProductDetails({
                 variant="primary"
                 fontWeight="medium"
                 className="w-max"
-                onClick={() => !isInCart && updateCart(productNumber)}
+                onClick={() => !isInCart && updateCart()}
                 disabled={isInCart || cartLoading}
               >
                 {cartLoading ? (

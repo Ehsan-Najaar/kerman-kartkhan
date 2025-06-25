@@ -70,7 +70,7 @@ export default function UserDropdown({ user, onLogout }) {
           {user?.roles?.some((role) => role.toLowerCase() === 'admin') && (
             <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
               <Link
-                href="/shop/admin/products"
+                href="/admin/products"
                 className="flex items-center gap-2 w-full body-text"
                 onClick={() => setIsHovered(false)}
               >
