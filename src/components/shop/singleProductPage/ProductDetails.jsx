@@ -24,6 +24,12 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
   const [isInCart, setIsInCart] = useState(inCart)
   const [cartLoading, setCartLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('features')
+  const [activeVariant, setActiveVariant] = useState(
+    product?.variants?.[0] || null
+  )
+  const [activeColor, setActiveColor] = useState(
+    product?.colors?.length > 1 ? product.colors[0] : null
+  )
 
   const colorMap = {
     قرمز: '#ff0000',
@@ -50,16 +56,28 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
     addToCart({
       productId: product._id,
       quantity: productNumber,
-      selectedColor: product.colors?.[0] || null,
-      selectedVariant: product.model || null,
+      selectedColor: activeColor || product.colors?.[0] || null,
+      selectedVariant: activeVariant?.name || null,
     })
     isLoggedIn && setIsInCart(true)
   }
 
-  const calculateTotalPrice = () => product?.price * productNumber
+  const calculateTotalPrice = () => {
+    const price =
+      activeVariant?.price != null
+        ? Number(activeVariant.price)
+        : Number(product?.price)
+
+    return price * productNumber
+  }
+
   const scrollToDescription = () => {
     const tabSection = document.getElementById('product-details-tabs')
     tabSection?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleColorClick = (color) => {
+    setActiveColor(color)
   }
 
   return (
@@ -111,11 +129,13 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
               </li>
               <FiChevronLeft />
               <li>
-                <Link href="/products">محصولات</Link>
+                <Link href="/shop">فروشگاه</Link>
               </li>
               <FiChevronLeft />
               <li>
-                <Link href="/products">کارتخوان {product.type}</Link>
+                <Link href={`/shop/type/${product.type}`}>
+                  کارتخوان {product.type}
+                </Link>
               </li>
               <FiChevronLeft />
               <li>{product.name.toUpperCase()}</li>
@@ -148,68 +168,81 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
             </p>
           </div>
 
-          {(product.colors?.length > 0 || product.bodyColors?.length > 0) && (
-            <div className="space-y-2">
-              <p className="font-medium">رنگ محصول:</p>
-              <div className="flex items-center">
-                {/* رنگ‌های موجود (تک‌رنگ‌ها) */}
-                {product.colors?.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    {product.colors.map((color, index) => (
-                      <div
-                        key={`color-${index}`}
-                        title={color}
-                        className="w-6 h-6 rounded-full border"
-                        style={{ backgroundColor: colorMap[color] || '#ccc' }}
-                      />
-                    ))}
-                  </div>
-                )}
+          <section className="flex ">
+            {product.colors?.length > 0 && (
+              <div className="w-1/2 space-y-2">
+                <p className="font-medium flex items-center gap-2">
+                  انتخاب رنگ:
+                  <span className="text-dark underline">
+                    {activeColor || product.colors?.[0]}
+                  </span>
+                </p>
 
-                {/* فاصله بین رنگ‌ها و بدنه */}
-                {product.colors?.length > 0 &&
-                  product.bodyColors?.length > 0 && <div className="w-4" />}
-
-                {/* رنگ بدنه */}
-                {product.bodyColors?.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    {product.bodyColors.length === 1 ? (
+                <div className="flex items-center gap-2">
+                  {product.colors.length === 1 ? (
+                    <div
+                      title={product.colors[0]}
+                      className="w-8 h-8 rounded-full"
+                      style={{
+                        backgroundColor: colorMap[product.colors[0]] || '#ccc',
+                      }}
+                    ></div>
+                  ) : (
+                    product.colors.map((color) => (
                       <div
-                        title={product.bodyColors[0]}
-                        className="w-6 h-6 rounded-full border"
-                        style={{
-                          backgroundColor:
-                            colorMap[product.bodyColors[0]] || '#ccc',
-                        }}
-                      />
-                    ) : (
-                      <div
-                        title={`${product.bodyColors[0]} و ${product.bodyColors[1]}`}
-                        className="w-6 h-6 rounded-full border border-gray-400 bg-gray-200 overflow-hidden relative"
+                        key={`color-${color}`}
+                        className={`p-1 border rounded-full ${
+                          activeColor === color
+                            ? 'border-secondary'
+                            : 'border-gray/50'
+                        }`}
                       >
-                        {/* سمت چپ (نیمه اول) */}
                         <div
-                          className="absolute top-0 left-0 w-1/2 h-full"
+                          onClick={() => handleColorClick(color)}
+                          title={color}
+                          className="w-8 h-8 rounded-full cursor-pointer relative"
                           style={{
-                            backgroundColor:
-                              colorMap[product.bodyColors[0]] || '#ccc',
+                            backgroundColor: colorMap[color] || '#ccc',
                           }}
-                        />
-                        {/* سمت راست (نیمه دوم) */}
-                        <div
-                          className="absolute top-0 right-0 w-1/2 h-full"
-                          style={{
-                            backgroundColor:
-                              colorMap[product.bodyColors[1]] || '#ccc',
-                          }}
-                        />
+                        >
+                          {activeColor === color && (
+                            <FiCheck
+                              size={20}
+                              className="text-gray absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                            />
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </div>
-                )}
+                    ))
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+            {product.variants?.length > 0 && (
+              <div className="w-1/2 space-y-2">
+                <p className="font-medium">انتخاب مدل:</p>
+                <div className="flex gap-2">
+                  {product.variants.map((variant, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveVariant(variant)}
+                      className={`
+                        px-4 py-2 border rounded-lg cursor-pointer
+                        ${
+                          activeVariant?.name === variant.name
+                            ? 'border-secondary bg-secondary text-white'
+                            : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'
+                        }
+                      `}
+                    >
+                      {variant.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
 
           <section className="space-y-4">
             <div className="flex items-center gap-2">

@@ -34,7 +34,10 @@ export default function Button({
             variant === 'primary' && outline,
           'border border-secondary text-secondary hover:bg-secondary hover:text-light':
             variant === 'secondary' && outline,
-          'bg-lightgray text-dark hover:bg-gray-200': variant === 'ghost',
+          'bg-lightgray text-gray hover:bg-gray-200':
+            variant === 'ghost' && !outline,
+          'border border-gray-400 text-gray hover:bg-gray-100':
+            variant === 'ghost' && outline,
 
           'w-full': fullWidth,
           'px-3 py-2 text-sm': size === 'xs',

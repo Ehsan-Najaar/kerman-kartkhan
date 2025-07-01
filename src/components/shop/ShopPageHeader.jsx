@@ -214,9 +214,11 @@ export default function ShopPageHeader() {
             </Button>
           )}
 
-          <button className="p-3 text-gray border border-lightgray/35 rounded-lg cursor-pointer">
-            <ShoppingCart size={20} />
-          </button>
+          <a href={'/shop/cart'}>
+            <button className="p-3 text-gray border border-lightgray/35 rounded-lg cursor-pointer">
+              <ShoppingCart size={20} />
+            </button>
+          </a>
         </div>
       </div>
 

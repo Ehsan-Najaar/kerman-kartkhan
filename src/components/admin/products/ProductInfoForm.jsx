@@ -1,5 +1,6 @@
 import ProductColorSelector from '@/components/admin/products/ProductColorSelector'
 import ProductFeatureInputs from '@/components/admin/products/ProductFeatureInputs'
+import ProductVariantInputs from '@/components/admin/products/ProductVariantInputs'
 import TagInput from '@/components/admin/products/TagInput'
 import Dropdown from '@/components/ui/Dropdown'
 import Input from '@/components/ui/Input.jsx'
@@ -165,6 +166,18 @@ export default function ProductInfoForm({
         form={form}
         onColorsChange={handleColorChange}
         onBodyColorsChange={handleBodyColorsChange}
+      />
+
+      <ProductVariantInputs
+        variants={form.variants}
+        onChange={(newVariants) =>
+          handleChange({
+            target: {
+              name: 'variants',
+              value: newVariants,
+            },
+          })
+        }
       />
 
       {/* ویژگی‌ها*/}

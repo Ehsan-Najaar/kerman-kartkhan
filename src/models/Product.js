@@ -28,6 +28,17 @@ const productSchema = new mongoose.Schema({
     enum: ['ثابت', 'سیار', 'اندرویدی'],
   },
 
+  variants: [
+    {
+      name: String,
+      price: Number,
+    },
+    {
+      name: String,
+      price: Number,
+    },
+  ],
+
   colors: { type: [String] },
   bodyColors: {
     type: [String],

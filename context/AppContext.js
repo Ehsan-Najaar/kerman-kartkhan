@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { createContext, useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -18,6 +19,7 @@ export function useAppContext() {
 
 export default function AppContextProvider({ user = null, children }) {
   const [currentUser, setCurrentUser] = useState(user)
+  const router = useRouter()
 
   // ---------------- Cart State ----------------
   const [cart, setCart] = useState({ items: [] })
@@ -52,22 +54,49 @@ export default function AppContextProvider({ user = null, children }) {
   }, [])
 
   const addToCart = async (item) => {
-    console.log('item to add:', item)
-    const res = await fetch('/api/cart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Authorization حذف شد
-      },
-      body: JSON.stringify(item),
-    })
-    toast.success('محصول به سبد خرید شما افزوده شد.')
+    try {
+      console.log('item to add:', item)
 
-    if (!res.ok) {
-      console.log('خطا در افزودن به سبد خرید:', await res.text())
-      return
+      const res = await fetch('/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+      })
+
+      if (!res.ok) {
+        const errorMessage = await res.text()
+        console.log('خطا در افزودن به سبد خرید:', errorMessage)
+        toast.error('خطا در افزودن محصول به سبد خرید.')
+        return
+      }
+
+      const updated = await res.json()
+      setCart(updated)
+      toast.success('محصول به سبد خرید شما افزوده شد.')
+    } catch (error) {
+      console.log('خطا در ارتباط با سرور:', error)
+      toast.error('خطا در ارتباط با سرور.')
     }
+  }
 
+  const updateCartQuantity = async ({
+    productId,
+    selectedColor,
+    selectedVariant,
+    quantity,
+  }) => {
+    const res = await fetch('/api/cart', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        productId,
+        selectedColor,
+        selectedVariant,
+        quantity,
+      }),
+    })
     const updated = await res.json()
     setCart(updated)
   }
@@ -77,7 +106,6 @@ export default function AppContextProvider({ user = null, children }) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        // Authorization حذف شد
       },
       body: JSON.stringify(item),
     })
@@ -89,6 +117,8 @@ export default function AppContextProvider({ user = null, children }) {
 
     const updated = await res.json()
     setCart(updated)
+
+    location.reload()
   }
 
   return (
@@ -99,6 +129,7 @@ export default function AppContextProvider({ user = null, children }) {
         cart,
         loadingCart,
         addToCart,
+        updateCartQuantity,
         removeFromCart,
       }}
     >

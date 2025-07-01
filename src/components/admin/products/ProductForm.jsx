@@ -26,6 +26,10 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
     condition: '',
     colors: [],
     bodyColors: [],
+    variants: [
+      { name: '', price: null },
+      { name: '', price: null },
+    ],
     specs: [
       { key: '', value: '' },
       { key: '', value: '' },
@@ -68,9 +72,11 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
 
   // پایه‌ای‌ترین تغییرات فرم
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    console.log('handleChange:', name, value)
-    if (type === 'checkbox') {
+    const { name, value, type, checked } = e.target || {}
+
+    if (Array.isArray(value) || typeof value === 'object') {
+      setForm((prev) => ({ ...prev, [name]: value }))
+    } else if (type === 'checkbox') {
       setForm((prev) => ({ ...prev, [name]: checked }))
     } else {
       setForm((prev) => ({ ...prev, [name]: value }))
@@ -194,6 +200,10 @@ export default function ProductForm({ onSubmit, initialData = {} }) {
         type: form.type && form.type.trim() !== '' ? form.type : 'سیار',
         images: uploadedImageUrls,
         video: videoUrl,
+        variants: form.variants.map((v) => ({
+          ...v,
+          price: Number(v.price || 0),
+        })),
       }
 
       onSubmit(updatedForm)

@@ -22,7 +22,12 @@ export async function POST(req) {
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    const safeFolder = folder.replace(/[^a-zA-Z0-9-_]/g, '')
+    const safeFolder = folder
+      .split('/')
+      .map((part) => part.replace(/[^a-zA-Z0-9-_]/g, ''))
+      .filter(Boolean)
+      .join('/')
+
     const fileName = `${safeFolder}/${Date.now()}-${file.name}`
     const bucketName = process.env.LIARA_BUCKET_NAME
     const bucketDomain = process.env.LIARA_BUCKET_DOMAIN

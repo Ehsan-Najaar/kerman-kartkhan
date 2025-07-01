@@ -2,6 +2,8 @@
 
 import connectDB from '@/lib/db'
 import Cart from '@/models/Cart'
+// ایمپورت کردن اسکیما محصول
+import Product from '@/models/Product'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import { cookies } from 'next/headers'
@@ -93,6 +95,56 @@ export async function POST(req) {
 
   await cart.save()
   return NextResponse.json(cart)
+}
+
+export async function PUT(req) {
+  await connectDB()
+
+  const userId = await getUserIdFromRequest()
+  if (!userId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const body = await req.json()
+  const { productId, selectedColor, selectedVariant, quantity } = body
+
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return NextResponse.json(
+      { error: 'شناسه محصول نامعتبر است' },
+      { status: 400 }
+    )
+  }
+
+  const objectId = new mongoose.Types.ObjectId(productId)
+
+  const cart = await Cart.findOne({ userId })
+  if (!cart) {
+    return NextResponse.json({ error: 'Cart not found' }, { status: 404 })
+  }
+
+  const item = cart.items.find(
+    (item) =>
+      item.productId.toString() === objectId.toString() &&
+      item.selectedColor === selectedColor &&
+      item.selectedVariant === selectedVariant
+  )
+
+  if (!item) {
+    return NextResponse.json(
+      { error: 'محصول در سبد خرید پیدا نشد' },
+      { status: 404 }
+    )
+  }
+
+  item.quantity = quantity
+
+  await cart.save()
+
+  const populatedCart = await Cart.findOne({ userId }).populate(
+    'items.productId'
+  )
+
+  return NextResponse.json(populatedCart || { items: [] })
 }
 
 // DELETE /api/cart
