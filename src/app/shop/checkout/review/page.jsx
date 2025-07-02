@@ -86,7 +86,7 @@ export default function ReviewPage() {
       method: 'POST',
       body: JSON.stringify({
         amount: 10000,
-        callback_url: 'https://localhost:3000/payment/verify',
+        callback_url: 'https://kerman-kartkhan.com/payment/verify',
         description: 'خرید از فروشگاه',
       }),
       headers: {
