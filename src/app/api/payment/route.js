@@ -23,8 +23,6 @@ export async function POST(req) {
 
   const data = await response.json()
 
-  console.log('Zarinpal Response:', data)
-
   if (data.data && data.data.code === 100) {
     return NextResponse.json({
       authority: data.data.authority,

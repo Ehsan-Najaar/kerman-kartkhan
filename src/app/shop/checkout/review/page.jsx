@@ -85,7 +85,7 @@ export default function ReviewPage() {
     const res = await fetch('/api/payment', {
       method: 'POST',
       body: JSON.stringify({
-        amount: totalPrice,
+        amount: 10000,
         callback_url: 'https://localhost:3000/payment/verify',
         description: 'خرید از فروشگاه',
       }),
