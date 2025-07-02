@@ -6,7 +6,7 @@ export async function POST(req) {
   const merchant_id = process.env.ZARINPAL_MERCHANT_ID
 
   const response = await fetch(
-    'https://api.zarinpal.com/pg/v4/payment/request.json',
+    'https://sandbox.zarinpal.com/pg/v4/payment/request.json', // اینجا آدرس sandbox گذاشته شد
     {
       method: 'POST',
       headers: {
@@ -26,7 +26,7 @@ export async function POST(req) {
   if (data.data && data.data.code === 100) {
     return NextResponse.json({
       authority: data.data.authority,
-      url: `https://www.zarinpal.com/pg/StartPay/${data.data.authority}`,
+      url: `https://sandbox.zarinpal.com/pg/StartPay/${data.data.authority}`, // اینجا هم آدرس sandbox
     })
   } else {
     return NextResponse.json({ error: data.errors }, { status: 400 })

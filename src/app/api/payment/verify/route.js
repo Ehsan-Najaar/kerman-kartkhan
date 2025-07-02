@@ -1,5 +1,3 @@
-// /api/payment/verify/route.js
-
 import { NextResponse } from 'next/server'
 
 export async function POST(req) {
@@ -10,7 +8,7 @@ export async function POST(req) {
   }
 
   const verifyResponse = await fetch(
-    'https://api.zarinpal.com/pg/v4/payment/verify.json',
+    'https://sandbox.zarinpal.com/pg/v4/payment/verify.json', 
     {
       method: 'POST',
       headers: {
