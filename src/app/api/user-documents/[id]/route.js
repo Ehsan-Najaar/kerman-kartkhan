@@ -1,4 +1,4 @@
-import { connectDB } from '@/lib/db'
+import connectDB from '@/lib/db'
 import UserDocuments from '@/models/UserDocuments'
 
 export async function PATCH(req, { params }) {

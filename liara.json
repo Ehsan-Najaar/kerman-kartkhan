@@ -3,6 +3,9 @@
   "platform": "next",
   "app": "kerman-kartkhan",
   "build": {
+    "location": "germany"
+  },
+  "deployment": {
     "location": "iran"
   },
   "next": {
