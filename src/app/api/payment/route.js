@@ -1,5 +1,3 @@
-// /api/payment/route.js
-
 import { NextResponse } from 'next/server'
 
 export async function POST(req) {
@@ -25,7 +23,9 @@ export async function POST(req) {
 
   const data = await response.json()
 
-  if (data.data.code === 100) {
+  console.log('Zarinpal Response:', data)
+
+  if (data.data && data.data.code === 100) {
     return NextResponse.json({
       authority: data.data.authority,
       url: `https://www.zarinpal.com/pg/StartPay/${data.data.authority}`,
