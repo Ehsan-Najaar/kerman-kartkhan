@@ -1,9 +1,12 @@
 'use client'
 
 import { Loader3 } from '@/components/Loader'
+import DocCard from '@/components/shop/checkout/DocCard'
+import TomanIcon from '@/components/TomanIcon'
 import Button from '@/components/ui/Button'
 import StepProgressBar from '@/components/ui/StepProgressBar'
-import { Eye, HomeIcon, X } from 'lucide-react'
+import { formatPriceToPersian } from '@/utils/formatPrice'
+import { HomeIcon, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -20,10 +23,29 @@ export default function ReviewPage() {
   const [error, setError] = useState(null)
   const [modalImage, setModalImage] = useState(null)
 
-  const totalPrice = cart?.items?.reduce((sum, item) => {
-    const price = item.productId?.price || 0
-    return sum + price * item.quantity * 10
-  }, 0)
+  const totalPrice =
+    cart?.items?.reduce((sum, item) => {
+      const variants = item.productId?.variants || []
+      const matchedVariant = variants.find(
+        (v) => v.name === item.selectedVariant
+      )
+      const unitPrice = matchedVariant?.price || item.productId?.price || 0
+
+      return sum + unitPrice * item.quantity * 10
+    }, 0) || 0
+
+  // محاسبه کارمزد زرین پال
+  const zarinpalFeePercent = 0.005 // یعنی 0.5 درصد
+  const minFee = 350
+
+  // محاسبه کارمزد
+  let zarinpalFee = totalPrice * zarinpalFeePercent
+  if (zarinpalFee < minFee) {
+    zarinpalFee = minFee
+  }
+
+  // مبلغ نهایی با احتساب کارمزد زرین پال
+  const totalPriceWithZarinpalFee = totalPrice + zarinpalFee
 
   const images = [
     ['birthCertificate', 'تصویر شناسنامه'],
@@ -90,7 +112,7 @@ export default function ReviewPage() {
 
   return (
     <div className="min-h-screen min-w-screen grid place-items-center">
-      <div className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-4 shadow space-y-6">
+      <div className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-4 shadow space-y-5">
         <StepProgressBar
           currentStep={3}
           steps={[
@@ -105,59 +127,41 @@ export default function ReviewPage() {
         />
 
         <div className="flex gap-8 h-96 max-h-96 overflow-auto p-4">
-          <section className="w-3/4 h-screen bg-lightgray/35 rounded-lg p-4">
+          <section className="w-3/4 h-screen bg-lightgray/35 rounded-lg p-4 space-y-6">
             {/* اطلاعات هویتی */}
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <p>
-                <span className="text-gray">نام فروشگاه:</span> {data.shopName}
-              </p>
-              <p>
-                <span className="text-gray">شماره موبایل:</span> {data.phone}
-              </p>
-              <p>
-                <span className="text-gray">کد ملی:</span> {data.nationalCode}
-              </p>
-              <p>
-                <span className="text-gray">کد پستی:</span> {data.postalCode}
+
+            <div className="border-b border-gray/30 pb-6">
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <p>
+                  <span className="text-gray">نام فروشگاه:</span>{' '}
+                  {data.shopName}
+                </p>
+                <p>
+                  <span className="text-gray">شماره موبایل:</span> {data.phone}
+                </p>
+                <p>
+                  <span className="text-gray">کد ملی:</span> {data.nationalCode}
+                </p>
+                <p>
+                  <span className="text-gray">کد پستی:</span> {data.postalCode}
+                </p>
+              </div>
+              <p className="mt-3 text-sm">
+                <span className="text-gray">آدرس سکونت:</span> {data.address}
               </p>
             </div>
-            <p className="mt-2">
-              <span className="text-gray">آدرس تحویل دستگاه:</span>{' '}
-              {data.address}
-            </p>
 
             {/* تصاویر آپلود شده */}
-            <div className="grid grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-2 gap-4 mt-4">
               {images.map(([key, label]) => (
-                <div key={key} className="text-center">
-                  {data[key] ? (
-                    <figure className="relative w-40 h-40 border border-lightgray rounded p-2 overflow-hidden flex items-center justify-center">
-                      <Image
-                        src={data[key]}
-                        alt={label}
-                        width={160}
-                        height={160}
-                        className="rounded object-cover max-w-full max-h-full"
-                      />
-                      {/* دکمه نمایش بزرگ */}
-                      <button
-                        onClick={() => setModalImage(data[key])}
-                        className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-1 rounded hover:bg-opacity-75"
-                        aria-label={`نمایش بزرگ ${label}`}
-                        type="button"
-                      >
-                        <Eye size={20} />
-                      </button>
-                    </figure>
-                  ) : (
-                    <div className="w-40 h-40 border border-lightgray rounded flex items-center justify-center text-gray-400 text-xs">
-                      بدون تصویر
-                    </div>
-                  )}
-                  <span className="block text-xs mt-2 text-gray-600">
-                    {label}
-                  </span>
-                </div>
+                <DocCard
+                  key={key}
+                  imageSrc={data[key]}
+                  label={label}
+                  name={key}
+                  mode="summary"
+                  setPreviewImage={setModalImage}
+                />
               ))}
             </div>
 
@@ -170,7 +174,7 @@ export default function ReviewPage() {
                 aria-modal="true"
               >
                 <div
-                  className="relative max-w-[90vw] max-h-[90vh] bg-lightgray rounded shadow-lg"
+                  className="relative max-w-[90vw] max-h-[90vh] bg-light rounded shadow-lg"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
@@ -191,49 +195,84 @@ export default function ReviewPage() {
             )}
           </section>
 
-          <section className="w-1/4">
+          <section className="w-2/4 min-h-screen bg-lightgray/35 p-4 rounded-lg">
             {cart?.items.length ? (
-              <div className="space-y-6 pr-2">
-                {cart.items.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex flex-col items- gap-4 bg-lightgray/35 rounded-lg p-3"
-                  >
-                    <div className="w-24 h-24 relative flex-shrink-0 rounded-lg overflow-hidden border border-gray-300 bg-white">
-                      <Image
-                        src={item.productId?.images?.[0] || '/placeholder.png'}
-                        alt={item.productId?.name || 'product'}
-                        fill
-                        className="object-cover"
-                        sizes="96px"
-                      />
+              <div className="space-y-6">
+                {cart.items.map((item, idx) => {
+                  // 👇 محاسبه قیمت variant انتخابی
+                  const variants = item.productId?.variants || []
+                  const matchedVariant = variants.find(
+                    (v) => v.name === item.selectedVariant
+                  )
+                  const unitPrice =
+                    matchedVariant?.price || item.productId?.price || 0
+
+                  return (
+                    <div
+                      key={idx}
+                      className="flex items-start gap-4 not-last:border-b border-gray/30 pb-6"
+                    >
+                      <div className="w-22 h-22 relative flex-shrink-0 rounded-lg overflow-hidden border border-gray-300 bg-white">
+                        <Image
+                          src={
+                            item.productId?.images?.[0] || '/placeholder.png'
+                          }
+                          alt={item.productId?.name || 'product'}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-dark font-semibold">
+                          کارتخوان {item.productId?.name?.toUpperCase() || '-'}
+                        </h3>
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs text-gray-600">
+                            رنگ:{' '}
+                            <span className="font-medium">
+                              {item.selectedColor}
+                            </span>
+                          </p>
+
+                          <span className="text-gray">•</span>
+
+                          <p className="text-xs text-gray-600">
+                            تعداد:{' '}
+                            <span className="font-medium">{item.quantity}</span>
+                          </p>
+                          {item.selectedVariant && (
+                            <span className="text-gray">•</span>
+                          )}
+
+                          {item.selectedVariant && (
+                            <p className="text-xs text-gray-600">
+                              مدل:{' '}
+                              <span className="font-medium">
+                                {item.selectedVariant}
+                              </span>
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-6">
+                          <p className="flex items-center gap-px text-xs text-gray">
+                            {formatPriceToPersian(unitPrice)}{' '}
+                            <TomanIcon className="fill-gray" />
+                          </p>
+                          {item.quantity > 1 && (
+                            <div className="text-gray">-</div>
+                          )}
+                          {item.quantity > 1 && (
+                            <p className="flex items-center gap-px text-sm text-dark">
+                              {formatPriceToPersian(unitPrice * item.quantity)}{' '}
+                              <TomanIcon className="" />
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg text-gray-800">
-                        کارتخوان {item.productId?.name.toUpperCase() || '-'}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        برند: {item.productId?.brand || '-'}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        رنگ:{' '}
-                        <span className="font-medium">
-                          {item.selectedColor}
-                        </span>
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        ورژن:{' '}
-                        <span className="font-medium">
-                          {item.selectedVariant}
-                        </span>
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        تعداد:{' '}
-                        <span className="font-medium">{item.quantity}</span>
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             ) : (
               <p className="text-center text-gray-400 mt-12">
@@ -243,7 +282,22 @@ export default function ReviewPage() {
           </section>
         </div>
 
-        <div className="flex items-center justify-between border-t border-lightgray pt-2 mt-16">
+        <div className="flex gap-2 text-sm">
+          <div className="flex items-center gap-2">
+            <p>مجموع سبد خرید:</p>
+            <p>{formatPriceToPersian(totalPrice)} ریال</p>
+          </div>
+          <div className="flex items-center gap-2 text-amber-600">
+            <p>کارمزد زرین‌پال:</p>
+            <p>{formatPriceToPersian(zarinpalFee)} ریال</p>
+          </div>
+          <div className="flex items-center gap-2 font-bold text-green-700">
+            <p>مجموع پرداختی:</p>
+            <p>{formatPriceToPersian(totalPriceWithZarinpalFee)} ریال</p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between border-t border-lightgray pt-2">
           <Link href={'/shop'}>
             <HomeIcon className="text-gray cursor-pointer" />
           </Link>

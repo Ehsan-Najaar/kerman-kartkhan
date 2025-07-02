@@ -1,15 +1,15 @@
 'use client'
 
 import { Loader3 } from '@/components/Loader'
+import DocCard from '@/components/shop/checkout/DocCard'
 import Button from '@/components/ui/Button'
 import StepProgressBar from '@/components/ui/StepProgressBar'
-import { Eye, HomeIcon, Info, UploadCloud, X } from 'lucide-react'
+import { HomeIcon, Info, UploadCloud, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { FiTrash2 } from 'react-icons/fi'
 
 export default function DocumentsPage() {
   const router = useRouter()
@@ -247,39 +247,22 @@ export default function DocumentsPage() {
     return (
       <div className="relative w-42 h-42 border-2 border-dashed border-lightgray rounded-lg overflow-hidden flex items-center justify-center group">
         {file ? (
-          <>
-            <Image
-              src={typeof file === 'string' ? file : URL.createObjectURL(file)}
-              alt={label}
-              width={200}
-              height={200}
-              className="object-cover w-full h-full"
-            />
-
-            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex gap-2 items-center justify-center">
-              <button
-                type="button"
-                onClick={() =>
-                  setPreviewImage(
-                    typeof file === 'string' ? file : URL.createObjectURL(file)
-                  )
-                }
-                className="bg-white p-2 rounded-lg hover:bg-gray-200 cursor-pointer"
-              >
-                <Eye size={20} className="text-gray-800" />
-              </button>
-              <button
-                type="button"
-                onClick={() => removeFile(name)}
-                className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 cursor-pointer"
-              >
-                <FiTrash2 size={20} />
-              </button>
-            </div>
-            <p className="absolute bottom-0 left-0 right-0 p-1 bg-bg text-center text-dark text-xs truncate">
-              {typeof file === 'string' ? `${label}` : file.name}
-            </p>
-          </>
+          <DocCard
+            imageSrc={
+              file
+                ? typeof file === 'string'
+                  ? file
+                  : URL.createObjectURL(file)
+                : null
+            }
+            label={label}
+            name={name}
+            mode="upload"
+            file={file}
+            setPreviewImage={setPreviewImage}
+            removeFile={removeFile}
+            handleChange={handleChange}
+          />
         ) : (
           <>
             <label
@@ -353,13 +336,25 @@ export default function DocumentsPage() {
           className="mb-8"
         />
 
-        <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
-          <Info size={18} />
-          <p className="text-xs text-justify">
-            اگر کارت ملی هوشمند ندارید، تصویر رسید کارت ملی خود را در هر دو بخش
-            بارگذاری کنید.
-          </p>
-        </div>
+        <section className="space-y-2">
+          <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
+            <Info size={18} />
+            <p className="text-xs text-justify">
+              اگر کارت ملی هوشمند ندارید، تصویر رسید کارت ملی خود را در هر دو
+              بخش بارگذاری کنید.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
+            <Info size={29} />
+            <p className="text-xs text-justify">
+              داشتن جواز کسب الزامی نیست، اما توجه داشته باشید در صورت نداشتن
+              جواز، عنوان صنف شما فقط در دستگاه کارت‌خوان تغییر خواهد کرد. تأکید
+              می‌کنیم این تغییر صرفاً مربوط به اطلاعات نمایش داده‌شده روی دستگاه
+              است و در اسناد مالیاتی همچنان عنوان و صنف دلخواه شما ثبت می‌شود.
+            </p>
+          </div>
+        </section>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
           {renderFileUploadBox('birthCertificate', 'تصویر شناسنامه')}
@@ -369,7 +364,7 @@ export default function DocumentsPage() {
           {renderFileUploadBox('license', 'جواز (اختیاری)')}
         </div>
 
-        <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4 mt-48">
+        <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4 mt-32">
           <Link href={'/shop'}>
             <HomeIcon className="text-gray cursor-pointer" />
           </Link>

@@ -101,7 +101,7 @@ export default function IdentityForm() {
       <div className="min-h-screen min-w-screen grid place-items-center">
         <form
           onSubmit={handleSubmit}
-          className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-6 shadow space-y-6"
+          className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-6 shadow space-y-10"
         >
           <StepProgressBar
             currentStep={1}
@@ -128,14 +128,14 @@ export default function IdentityForm() {
               />
 
               <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
-                <Info size={80} />
+                <Info size={74} />
                 <p className="text-xs text-justify leading-6">
-                  اگر <b className="text-dark">جواز</b> نداشته باشید، فقط روی
-                  دستگاه صنف شما <b className="text-dark">سوپرمارکت</b> ثبت
-                  می‌شود، اما در مالیاتی همان نام دلخواه شما ثبت خواهد شد. مثلاً
-                  «تاکسی ابراهیمی» روی دستگاه به «سوپرمارکت ابراهیمی» تغییر
-                  می‌کند. ولی توی برگه مالیاتی شما همان «تاکسی ابراهیمی» ذخیره
-                  میشود.
+                  اگر جواز کسب نداشته باشید، عنوان صنف شما فقط در دستگاه
+                  کارت‌خوان به «سوپرمارکت» تغییر می‌کند، اما در اسناد مالیاتی
+                  همچنان نام دلخواه شما ثبت خواهد شد. به‌عنوان مثال، «تاکسی
+                  ابراهیمی» روی دستگاه به «سوپرمارکت ابراهیمی» نمایش داده
+                  می‌شود، اما در مدارک مالیاتی همان «تاکسی ابراهیمی» ذخیره خواهد
+                  شد.
                 </p>
               </div>
             </div>
@@ -151,14 +151,12 @@ export default function IdentityForm() {
               />
 
               <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
-                <Info size={40} />
+                <Info size={48} />
                 <p className="text-xs text-justify leading-6">
-                  لطفاً توجه داشته باشید که شماره موبایل واردشده باید به نام{' '}
-                  <b className="text-dark">صاحب حساب</b> باشد تا روند احراز هویت
-                  شما سریع‌تر و بدون مشکل انجام شود.
-                  <br />
-                  حساب بانکی شما در <b className="text-dark">مرحله بعدی</b>{' '}
-                  دریافت میشود.
+                  لطفاً توجه داشته باشید که شماره موبایل واردشده باید به نام
+                  صاحب حساب باشد تا فرایند احراز هویت شما سریع‌تر و بدون مشکل
+                  انجام شود. همچنین، اطلاعات حساب بانکی شما در مرحله بعد دریافت
+                  خواهد شد.
                 </p>
               </div>
             </div>
@@ -192,7 +190,7 @@ export default function IdentityForm() {
             />
           </div>
 
-          <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4 mt-16">
+          <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4">
             <Link href={'/shop'}>
               <HomeIcon className="text-gray cursor-pointer" />
             </Link>

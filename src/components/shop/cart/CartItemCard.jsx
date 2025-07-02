@@ -24,6 +24,13 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
     ? colorMap[product.selectedColor] || '#ccc'
     : null
 
+  // 👉 گرفتن قیمت variant انتخاب‌شده
+  const selectedVariant = product.selectedVariant
+  const variants = product.productId?.variants || []
+
+  const matchedVariant = variants.find((v) => v.name === selectedVariant)
+  const unitPrice = matchedVariant?.price || product.productId?.price || 0
+
   return (
     <div className="flex overflow-hidden bg-light rounded-lg border border-lightgray/35 shadow">
       <div className="w-full md:w-[90%] lg:w-[95%] flex flex-col md:flex-row md:items-center justify-between gap-4 p-4">
@@ -96,7 +103,7 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mt-2">
               <span className="text-gray text-xs sm:text-sm">
-                {formatPriceToPersian(product.productId?.price || 0)} تومان
+                {formatPriceToPersian(unitPrice)} تومان
               </span>
 
               <div className="w-max flex items-center border border-gray-300 rounded-lg">
@@ -118,10 +125,7 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
               </div>
 
               <span className="w-28 text-left text-dark text-xs sm:text-base font-semibold sm:ml-4">
-                {formatPriceToPersian(
-                  (product.productId?.price || 0) * product.quantity
-                )}{' '}
-                تومان
+                {formatPriceToPersian(unitPrice * product.quantity)} تومان
               </span>
             </div>
           </div>

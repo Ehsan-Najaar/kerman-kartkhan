@@ -15,10 +15,16 @@ export default function CartPage() {
   const totalItems =
     cart?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0
 
-  const totalPrice = cart?.items?.reduce((sum, item) => {
-    const price = item.productId?.price || 0
-    return sum + price * item.quantity
-  }, 0)
+  const totalPrice =
+    cart?.items?.reduce((sum, item) => {
+      const variants = item.productId?.variants || []
+      const matchedVariant = variants.find(
+        (v) => v.name === item.selectedVariant
+      )
+      const unitPrice = matchedVariant?.price || item.productId?.price || 0
+
+      return sum + unitPrice * item.quantity
+    }, 0) || 0
 
   const handleUpdateQuantity = (item, newQuantity) => {
     if (newQuantity <= 0) {
