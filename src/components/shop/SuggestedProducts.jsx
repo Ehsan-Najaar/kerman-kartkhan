@@ -1,6 +1,7 @@
 'use client'
 
 import { ProductCard } from '@/components/ProductCard'
+import ProductCardSkeleton from '@/components/ui/Skeleton'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useMemo, useRef } from 'react'
 import { Autoplay, Navigation } from 'swiper/modules'
@@ -15,16 +16,18 @@ export default function SuggestedProducts({ products }) {
   const prevRef = useRef(null)
   const nextRef = useRef(null)
 
-  // نام دقیق محصولات پیشنهادی
+  const loading = !products || products.length === 0
+
   const suggestions = ['T3', 'D210', 'I90', 'P3', 'D230', 'H9']
 
-  // فیلتر محصولات پیشنهادی بر اساس تطابق دقیق نام
   const suggestedProducts = useMemo(() => {
-    return products.filter((p) =>
-      suggestions.some(
-        (keyword) =>
-          p.name?.trim().toLowerCase() === keyword.trim().toLowerCase()
-      )
+    return products.filter(
+      (p) =>
+        p.stock > 0 &&
+        suggestions.some(
+          (keyword) =>
+            p.name?.trim().toLowerCase() === keyword.trim().toLowerCase()
+        )
     )
   }, [products])
 
@@ -37,6 +40,60 @@ export default function SuggestedProducts({ products }) {
       swiperRef.current.navigation.update()
     }
   }, [suggestedProducts])
+
+  // اگر لودینگ باشه، اسکلتون نشون بده
+  if (loading) {
+    return (
+      <section className="gap-4 py-12 px-24">
+        <h3 className="h3 text-center pr-4 relative after:content-[''] after:absolute after:right-0 after:-top-2 after:mt-2 after:w-2 after:h-8 after:rounded-full after:-z-10">
+          پیشنهادات ویژه کرمان کارتخوان
+        </h3>
+
+        <figure className="relative">
+          <Image
+            src="/images/SuggestedProducts-bg.svg"
+            alt="تصویر"
+            width={1432}
+            height={450}
+            property="true"
+            draggable="false"
+            className="absolute left-0 top-0"
+          />
+        </figure>
+
+        <div className="relative mt-12 max-w-[85%] mx-auto">
+          <h4 className="text-center relative z-10 mb-12">
+            در حال بارگذاری محصولات پیشنهادی...
+          </h4>
+
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            slidesPerView={4}
+            spaceBetween={16}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            dir="rtl"
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper
+            }}
+            navigation={{
+              prevEl: prevRef.current,
+              nextEl: nextRef.current,
+            }}
+            className="h-96"
+          >
+            {Array.from({ length: 8 }).map((_, index) => (
+              <SwiperSlide key={index} className="px-2">
+                <ProductCardSkeleton />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
+    )
+  }
 
   if (suggestedProducts.length === 0) return null
 

@@ -1,10 +1,13 @@
 'use client'
 
+import AuthModal from '@/components/shop/AuthModal'
 import Button from '@/components/ui/Button'
+import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
 import {
   FiArrowLeftCircle,
   FiCheck,
@@ -15,21 +18,21 @@ import {
   FiPlus,
   FiShoppingCart,
 } from 'react-icons/fi'
-import { useAppContext } from '../../../../context/AppContext'
 
-export default function ProductDetails({ product, inCart, isLoggedIn }) {
-  const { cart, removeFromCart, loadingCart, addToCart } = useAppContext()
+export default function ProductDetails({ product }) {
+  const { user, loadingCart, addToCart, isInCart } = useAppContext()
   const [selectedImage, setSelectedImage] = useState(product?.images[0] || '')
   const [productNumber, setProductNumber] = useState(1)
-  const [isInCart, setIsInCart] = useState(inCart)
   const [cartLoading, setCartLoading] = useState(false)
+  const [authModalOpen, setAuthModalOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('features')
   const [activeVariant, setActiveVariant] = useState(
     product?.variants?.[0] || null
   )
-  const [activeColor, setActiveColor] = useState(
-    product?.colors?.length > 1 ? product.colors[0] : null
-  )
+  const [activeColor, setActiveColor] = useState(null)
+
+  const productIsInCart =
+    !loadingCart && isInCart(product._id, activeVariant?.name || null)
 
   const colorMap = {
     قرمز: '#ff0000',
@@ -42,24 +45,36 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
     سورمه‌ای: '#1b1f5e',
     'آبی نفتی': '#3b6978',
     'آبی روشن': '#87cefa',
+
+    // ترکیب‌های دو رنگ
+    'سفید/مشکی': `linear-gradient(to right, #ffffff 50%, #000000 50%)`,
+    'سفید/طوسی روشن': `linear-gradient(to right, #ffffff 50%, #d3d3d3 50%)`,
+    'مشکی/طوسی روشن': `linear-gradient(to right, #000000 50%, #d3d3d3 50%)`,
   }
-
-  useEffect(() => {
-    setIsInCart(inCart)
-  }, [inCart])
-
-  const descriptionRef = useRef(null)
 
   const handleImageClick = (image) => setSelectedImage(image)
   const handleQuantityChange = (e) => setProductNumber(Number(e.target.value))
-  const updateCart = () => {
-    addToCart({
+
+  const updateCart = async () => {
+    if (!user) {
+      setAuthModalOpen(true)
+      return
+    }
+
+    if (!activeColor) {
+      toast.error('لطفا رنگ را انتخاب کنید')
+      return
+    }
+
+    setCartLoading(true)
+    await addToCart({
       productId: product._id,
       quantity: productNumber,
-      selectedColor: activeColor || product.colors?.[0] || null,
+      selectedColor: Array.isArray(activeColor) ? null : activeColor || null,
+      bodyColors: Array.isArray(activeColor) ? activeColor : [],
       selectedVariant: activeVariant?.name || null,
     })
-    isLoggedIn && setIsInCart(true)
+    setCartLoading(false)
   }
 
   const calculateTotalPrice = () => {
@@ -78,6 +93,20 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
 
   const handleColorClick = (color) => {
     setActiveColor(color)
+  }
+
+  const handleBodyColorClick = (colors) => {
+    setActiveColor(colors)
+  }
+
+  function getDualColorGradient(colors) {
+    if (!colors || colors.length !== 2) return '#ccc'
+
+    const [color1, color2] = colors
+    const hex1 = colorMap[color1] || '#ccc'
+    const hex2 = colorMap[color2] || '#ccc'
+
+    return `linear-gradient(to right, ${hex1} 50%, ${hex2} 50%)`
   }
 
   return (
@@ -168,29 +197,23 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
             </p>
           </div>
 
-          <section className="flex ">
-            {product.colors?.length > 0 && (
-              <div className="w-1/2 space-y-2">
-                <p className="font-medium flex items-center gap-2">
-                  انتخاب رنگ:
-                  <span className="text-dark underline">
-                    {activeColor || product.colors?.[0]}
-                  </span>
-                </p>
-
-                <div className="flex items-center gap-2">
-                  {product.colors.length === 1 ? (
-                    <div
-                      title={product.colors[0]}
-                      className="w-8 h-8 rounded-full"
-                      style={{
-                        backgroundColor: colorMap[product.colors[0]] || '#ccc',
-                      }}
-                    ></div>
-                  ) : (
-                    product.colors.map((color) => (
+          <section className="flex justify-between">
+            <div className="space-y-2">
+              <p className="font-medium flex items-center gap-2">
+                انتخاب رنگ:
+                <span className="text-dark underline">
+                  {Array.isArray(activeColor)
+                    ? activeColor.join(' / ')
+                    : activeColor || product.colors?.[0]}
+                </span>
+              </p>
+              <div className="flex gap-4">
+                {/* رنگ‌های تکی */}
+                {product.colors?.length > 0 && (
+                  <div className="flex items-center gap-2">
+                    {product.colors.map((color) => (
                       <div
-                        key={`color-${color}`}
+                        key={color}
                         className={`p-1 border rounded-full ${
                           activeColor === color
                             ? 'border-secondary'
@@ -213,11 +236,41 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
                           )}
                         </div>
                       </div>
-                    ))
-                  )}
-                </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* رنگ‌های دو‌تایی */}
+                {product.bodyColors?.length === 2 && (
+                  <div
+                    className={`p-1 border rounded-full ${
+                      Array.isArray(activeColor) &&
+                      activeColor.join('/') === product.bodyColors.join('/')
+                        ? 'border-secondary'
+                        : 'border-gray/50'
+                    }`}
+                  >
+                    <div
+                      onClick={() => handleBodyColorClick(product.bodyColors)}
+                      title={product.bodyColors.join(' / ')}
+                      className="w-8 h-8 rounded-full cursor-pointer relative"
+                      style={{
+                        background: getDualColorGradient(product.bodyColors),
+                      }}
+                    >
+                      {Array.isArray(activeColor) &&
+                        activeColor[0] === product.bodyColors[0] &&
+                        activeColor[1] === product.bodyColors[1] && (
+                          <FiCheck
+                            size={20}
+                            className="text-gray absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                          />
+                        )}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
 
             {product.variants?.length > 0 && (
               <div className="w-1/2 space-y-2">
@@ -275,7 +328,7 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
             </article>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-3">
                 <button
                   onClick={() =>
                     productNumber > 1 && setProductNumber(productNumber - 1)
@@ -297,21 +350,26 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
                   <FiPlus />
                 </button>
               </div>
-
               <Button
-                variant="primary"
+                variant={`${productIsInCart ? 'ghost' : 'primary'}`}
                 fontWeight="medium"
                 className="w-max"
-                onClick={() => !isInCart && updateCart()}
-                disabled={isInCart || cartLoading}
+                onClick={() =>
+                  !isInCart(product._id, activeVariant?.name || null) &&
+                  updateCart()
+                }
+                disabled={
+                  isInCart(product._id, activeVariant?.name || null) ||
+                  cartLoading
+                }
               >
                 {cartLoading ? (
                   <>
                     در حال افزودن <FiLoader className="animate-spin" />
                   </>
-                ) : isInCart ? (
+                ) : isInCart(product._id, activeVariant?.name || null) ? (
                   <>
-                    اضافه شد <FiCheck />
+                    موجود در سبد خرید شما <FiCheck />
                   </>
                 ) : (
                   <>
@@ -375,6 +433,13 @@ export default function ProductDetails({ product, inCart, isLoggedIn }) {
           </div>
         )}
       </section>
+
+      {authModalOpen && (
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+        />
+      )}
     </div>
   )
 }

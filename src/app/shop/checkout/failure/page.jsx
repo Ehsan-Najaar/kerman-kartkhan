@@ -1,6 +1,22 @@
 // app/shop/checkout/failure/page.js
+'use client'
+
+import { useAppContext } from '@/context/AppContext'
 
 export default function FailurePage() {
+  const { cart } = useAppContext()
+
+  const totalPrice =
+    cart?.items?.reduce((sum, item) => {
+      const variants = item.productId?.variants || []
+      const matchedVariant = variants.find(
+        (v) => v.name === item.selectedVariant
+      )
+      const unitPrice = matchedVariant?.price || item.productId?.price || 0
+
+      return sum + unitPrice * item.quantity * 10
+    }, 0) || 0
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center p-4">
       <h1 className="text-3xl font-bold text-red-600 mb-4">

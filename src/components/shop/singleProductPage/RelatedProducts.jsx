@@ -29,7 +29,8 @@ export default function RelatedProducts({ type, excludeId }) {
         const data = await res.json()
 
         const filtered = data.filter(
-          (item) => item._id !== excludeId && item.type === type
+          (item) =>
+            item._id !== excludeId && item.type === type && item.stock > 0
         )
 
         setRelatedProducts(filtered.slice(0, 10))

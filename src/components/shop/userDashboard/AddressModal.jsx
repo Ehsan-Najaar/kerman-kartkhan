@@ -2,10 +2,10 @@
 
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import { useAppContext } from '@/context/AppContext'
 import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useAppContext } from '../../../../context/AppContext'
 
 export default function AddressModal({ isOpen, onClose, editIndex = null }) {
   const { user, setUser } = useAppContext()
@@ -28,7 +28,7 @@ export default function AddressModal({ isOpen, onClose, editIndex = null }) {
   const handleSubmit = async () => {
     try {
       console.log('User ID:', user?._id)
-      const res = await fetch(`/api/users/${user._id}/address`, {
+      const res = await fetch(`/api/user/${user._id}/address`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ address: form, index: editIndex }),

@@ -2,19 +2,18 @@
 
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import { useAppContext } from '@/context/AppContext'
 import { MessageSquare, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FiEdit } from 'react-icons/fi'
-import { useAppContext } from '../../../context/AppContext'
 
 export default function AuthModal({ isOpen, onClose }) {
   const { user, setUser } = useAppContext()
   const router = useRouter()
   const [step, setStep] = useState('phone')
   const [phone, setPhone] = useState('')
-  const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false)
   const [seconds, setSeconds] = useState(60)
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
@@ -24,8 +23,9 @@ export default function AuthModal({ isOpen, onClose }) {
     if (!isOpen) {
       setStep('phone')
       setPhone('')
-      setCode('')
+      setOtp(['', '', '', '', '', ''])
       setLoading(false)
+      setSeconds(60)
     }
   }, [isOpen])
 
@@ -37,17 +37,40 @@ export default function AuthModal({ isOpen, onClose }) {
   }, [step, seconds])
 
   const handleChange = (e, index) => {
-    const value = e.target.value
+    let value = e.target.value
+
+    // اگر کاربر کل کد را paste کند (مثلاً 6 رقم یکجا)
+    if (value.length > 1) {
+      const values = value.slice(0, 6).split('')
+      const newOtp = [...otp]
+      for (let i = 0; i < values.length; i++) {
+        newOtp[i] = values[i]
+      }
+      setOtp(newOtp)
+
+      if (values.join('').length === 6) {
+        verifyOtp(values.join(''))
+      }
+
+      const lastIndex = values.length - 1
+      const nextInput = document.getElementById(`otp-${lastIndex}`)
+      if (nextInput) nextInput.focus()
+      return
+    }
+
     if (!/^\d?$/.test(value)) return
 
     const newOtp = [...otp]
     newOtp[index] = value
     setOtp(newOtp)
 
-    // رفتن به بعدی
     if (value && index < otp.length - 1) {
       const nextInput = document.getElementById(`otp-${index + 1}`)
       if (nextInput) nextInput.focus()
+    }
+
+    if (newOtp.join('').length === 6) {
+      verifyOtp(newOtp.join(''))
     }
   }
 
@@ -67,8 +90,8 @@ export default function AuthModal({ isOpen, onClose }) {
       },
     })
 
-    // ریست تایمر
     setSeconds(60)
+    toast.success('کد مجدداً ارسال شد')
   }
 
   async function sendOtp() {
@@ -92,8 +115,8 @@ export default function AuthModal({ isOpen, onClose }) {
     }
   }
 
-  const verifyOtp = async () => {
-    const code = otp.join('')
+  const verifyOtp = async (enteredCode) => {
+    const code = enteredCode || otp.join('')
     if (code.length !== 6) {
       toast.error('کد ۶ رقمی را کامل وارد کنید')
       return
@@ -111,15 +134,10 @@ export default function AuthModal({ isOpen, onClose }) {
     if (res.ok) {
       toast.success('ورود موفقیت‌آمیز بود!')
 
-      // ✅ ذخیره کاربر در localStorage و کانتکس
-      localStorage.setItem('user', JSON.stringify(data.user))
       setUser(data.user)
 
       onClose()
-
-      // ❌ دیگه نیازی به router.refresh نیست، چون کانتکس رفرش میشه
-      // ولی اگر واقعاً چیزی از سرور دوباره باید fetch شه، می‌تونی نگهش داری
-      // router.refresh()
+      router.push('/shop/dashboard/edit-account')
     } else {
       toast.error(data.error || 'کد نادرست است')
     }
@@ -145,6 +163,12 @@ export default function AuthModal({ isOpen, onClose }) {
               label="شماره موبایل"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  sendOtp()
+                }
+              }}
             />
             <Button
               onClick={sendOtp}
@@ -192,7 +216,11 @@ export default function AuthModal({ isOpen, onClose }) {
               ))}
             </div>
 
-            <Button onClick={verifyOtp} className="w-full" disabled={loading}>
+            <Button
+              onClick={() => verifyOtp()}
+              className="w-full"
+              disabled={loading}
+            >
               {loading ? 'در حال بررسی...' : 'تایید کد'}
             </Button>
 

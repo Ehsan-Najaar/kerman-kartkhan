@@ -16,9 +16,17 @@ export default function ProductsManagement() {
 
   const fetchProducts = () => {
     setLoading(true)
-    fetch('/api/admin/products')
+    fetch('/api/admin/products', {
+      credentials: 'include',
+    })
       .then((res) => res.json())
       .then((data) => {
+        if (data.error) {
+          toast.error(data.error)
+          setAllProducts([])
+          setLoading(false)
+          return
+        }
         setAllProducts(data)
         setLoading(false)
       })
@@ -106,6 +114,7 @@ export default function ProductsManagement() {
   }, [allProducts])
 
   useEffect(() => {
+    console.log('filteredProducts', filteredProducts)
     fetchProducts()
     fetchCategories()
   }, [])

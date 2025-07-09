@@ -4,34 +4,43 @@ import Footer from '@/components/Footer'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
 import DashboardPanelNavbar from '@/components/shop/userDashboard/DashboardPanelNavbar'
 import UserInformation from '@/components/shop/userDashboard/UserInformaitno'
+import { useAppContext } from '@/context/AppContext'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FiChevronLeft } from 'react-icons/fi'
-import { useAppContext } from '../../../../../context/AppContext'
 
 export default function EditAccount() {
-  const { user, setUser } = useAppContext()
+  const { user, loadingUser } = useAppContext()
 
   const [userInfo, setUserInfo] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    if (!user) return // صبر کن تا user آماده بشه
+    if (loadingUser) return
 
-    if (user.userId) {
-      setIsLoading(true)
-      fetch(`/api/users/${user.userId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setUserInfo(data)
-        })
-        .catch(() => {
-          setError('خطا در دریافت اطلاعات کاربر')
-        })
-        .finally(() => setIsLoading(false))
+    if (!user?._id) {
+      setIsLoading(false)
+      setError('کاربر یافت نشد')
+      return
     }
-  }, [user])
+
+    setIsLoading(true)
+    fetch(`/api/user/${user._id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('خطا در دریافت اطلاعات کاربر')
+        }
+        return res.json()
+      })
+      .then((data) => {
+        setUserInfo(data)
+      })
+      .catch(() => {
+        setError('خطا در دریافت اطلاعات کاربر')
+      })
+      .finally(() => setIsLoading(false))
+  }, [loadingUser, user])
 
   return (
     <div className="min-h-screen bg-light space-y-24">

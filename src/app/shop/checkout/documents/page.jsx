@@ -22,6 +22,14 @@ export default function DocumentsPage() {
     license: null,
   })
 
+  const documentLabels = {
+    birthCertificate: 'شناسنامه',
+    nationalCardFront: 'کارت ملی (پشت)',
+    nationalCardBack: 'کارت ملی (رو)',
+    bankCard: 'کارت بانکی',
+    license: 'جواز کسب',
+  }
+
   const [previewImage, setPreviewImage] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -42,11 +50,11 @@ export default function DocumentsPage() {
         const data = await res.json()
 
         setFiles({
-          birthCertificate: data.birthCertificate || null,
-          nationalCardFront: data.nationalCardFront || null,
-          nationalCardBack: data.nationalCardBack || null,
-          bankCard: data.bankCard || null,
-          license: data.license,
+          birthCertificate: data.document?.birthCertificate || null,
+          nationalCardFront: data.document?.nationalCardFront || null,
+          nationalCardBack: data.document?.nationalCardBack || null,
+          bankCard: data.document?.bankCard || null,
+          license: data.document?.license || null,
         })
       } catch (err) {
         console.error(err)
@@ -190,7 +198,7 @@ export default function DocumentsPage() {
       }
 
       const userData = await userRes.json()
-      const nationalCode = userData.nationalCode
+      const nationalCode = userData.document?.nationalCode
 
       if (!nationalCode) {
         toast.error('کد ملی یافت نشد')
@@ -201,12 +209,16 @@ export default function DocumentsPage() {
         const file = files[key]
 
         if (file && typeof file !== 'string') {
-          toast.loading(`در حال آپلود ${file.name}...`, { id: key })
+          toast.loading(`در حال آپلود ${documentLabels[key] || 'مدرک'}...`, {
+            id: key,
+          })
 
           const folderPath = `customers-documents/${nationalCode}`
           const url = await uploadFile(file, folderPath)
 
-          toast.success(`${file.name} با موفقیت آپلود شد`, { id: key })
+          toast.success(`${documentLabels[key] || 'مدرک'} با موفقیت آپلود شد`, {
+            id: key,
+          })
           urls[key] = url
         } else if (typeof file === 'string') {
           urls[key] = file

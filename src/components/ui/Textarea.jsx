@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 export default function Textarea({
   id,
+  name,
   label,
   value,
   onChange,
@@ -18,7 +19,7 @@ export default function Textarea({
     <div className="relative w-full">
       <textarea
         id={id}
-        name={id}
+        name={name}
         rows={rows}
         value={value}
         onChange={onChange}

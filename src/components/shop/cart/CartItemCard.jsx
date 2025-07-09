@@ -20,6 +20,7 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
     'آبی روشن': '#87cefa',
   }
 
+  const imageUrl = product?.productId?.images?.[0]
   const colorHex = product.selectedColor
     ? colorMap[product.selectedColor] || '#ccc'
     : null
@@ -30,6 +31,14 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
 
   const matchedVariant = variants.find((v) => v.name === selectedVariant)
   const unitPrice = matchedVariant?.price || product.productId?.price || 0
+
+  function getDualColorGradient(colors) {
+    if (!colors || colors.length !== 2) return '#ccc'
+    const [color1, color2] = colors
+    const hex1 = colorMap[color1] || '#ccc'
+    const hex2 = colorMap[color2] || '#ccc'
+    return `linear-gradient(to right, ${hex1} 50%, ${hex2} 50%)`
+  }
 
   return (
     <div className="flex overflow-hidden bg-light rounded-lg border border-lightgray/35 shadow">
@@ -42,18 +51,20 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
             className="relative w-20 h-20 sm:w-32 sm:h-32 md:w-32 md:h-32"
           >
             <figure className="relative w-20 h-20 lg:w-32 lg:h-32 flex items-center justify-center rounded-2xl overflow-hidden">
-              <Image
-                src={
-                  product?.productId?.images?.[0] || (
-                    <FiImage size={48} className="text-gray" />
-                  )
-                }
-                alt={product?.productId?.name || 'بدون نام'}
-                fill
-                priority
-                sizes="(max-width: 768px) 90px, 190px"
-                className="object-center object-contain"
-              />
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  alt={product.productId?.name || 'بدون نام'}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 90px, 190px"
+                  className="object-center object-contain"
+                />
+              ) : (
+                <div className="text-gray-400 text-4xl flex justify-center items-center w-full h-full">
+                  <FiImage />
+                </div>
+              )}
             </figure>
           </Link>
 
@@ -78,17 +89,39 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
                 </span>
               )}
 
-              {/* ✅ نمایش رنگ به‌صورت دایره رنگی */}
-              {colorHex && (
-                <span className="flex items-center gap-1 text-gray text-xs sm:text-sm">
-                  رنگ:
+              {product.bodyColors?.length === 2 ? (
+                <>
+                  <span className="flex items-center gap-1 text-gray text-xs sm:text-sm">
+                    رنگ:
+                  </span>
                   <span
-                    className="w-5 h-5 rounded-full border border-gray-300"
-                    style={{ backgroundColor: colorHex }}
+                    className="w-7 h-7 rounded-full p-1 border border-gray-300 flex items-center justify-center"
+                    title={product.bodyColors.join(' / ')}
+                  >
+                    <div
+                      className="w-full h-full rounded-full border"
+                      style={{
+                        background: getDualColorGradient(product.bodyColors),
+                      }}
+                    ></div>
+                  </span>
+                </>
+              ) : colorHex ? (
+                <>
+                  <span className="flex items-center gap-1 text-gray text-xs sm:text-sm">
+                    رنگ:
+                  </span>
+                  <span
+                    className="w-7 h-7 rounded-full p-1 border border-lightgray flex items-center justify-center"
                     title={product.selectedColor}
-                  ></span>
-                </span>
-              )}
+                  >
+                    <div
+                      className="w-full h-full border rounded-full"
+                      style={{ backgroundColor: colorHex }}
+                    ></div>
+                  </span>
+                </>
+              ) : null}
 
               {/* ✅ نمایش type اگر وجود داشته باشه */}
               {product.productId?.type && (

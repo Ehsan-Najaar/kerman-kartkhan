@@ -1,11 +1,12 @@
 // api/admin/categories/route.js
 
+import { checkAuth } from '@/lib/auth'
 import connectDB from '@/lib/db'
 import Category from '@/models/Category'
 import { NextResponse } from 'next/server'
 
 export async function GET(req) {
-  await connectDB() // اتصال به دیتابیس
+  await connectDB()
 
   try {
     const categories = await Category.find()
@@ -20,12 +21,21 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  await connectDB() // اتصال به دیتابیس
+  await connectDB()
+
+  // 🔐 بررسی احراز هویت و نقش admin
+  const { user, error, status } = await checkAuth(req)
+  if (error) {
+    return NextResponse.json({ error }, { status })
+  }
+
+  if (!user.roles?.includes('admin')) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
 
   try {
     const { title, slug, description, image, parent } = await req.json()
 
-    // بررسی مقادیر ورودی
     if (!title || !slug) {
       return NextResponse.json(
         { message: 'عنوان و شناسه الزامی است' },
@@ -33,7 +43,6 @@ export async function POST(req) {
       )
     }
 
-    // ایجاد دسته‌بندی جدید
     const newCategory = new Category({
       title,
       slug,

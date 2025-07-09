@@ -6,18 +6,17 @@ import RecentSearches from '@/components/shop/search/RecentSearches'
 import UserDropdown from '@/components/shop/UserDropdown'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import { useAppContext } from '@/context/AppContext'
+import { formatPriceToPersian } from '@/utils/formatPrice'
 import Fuse from 'fuse.js'
 import { Search, ShoppingCart, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import toast from 'react-hot-toast'
-import { useAppContext } from '../../../context/AppContext'
 
 export default function ShopPageHeader() {
-  const { user, setUser } = useAppContext()
-  const router = useRouter()
+  const { user, setUser, cart, logout } = useAppContext()
+  const cartCount = cart?.items?.length || 0
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [show, setShow] = useState(true)
@@ -57,9 +56,7 @@ export default function ShopPageHeader() {
         const res = await fetch('/api/products')
         const data = await res.json()
 
-        // مرتب‌سازی بر اساس پرفروش‌ترین
         data.sort((a, b) => b.soldCount - a.soldCount)
-
         setPopularProducts(data)
       } catch (err) {
         console.error('خطا در دریافت محصولات پرفروش', err)
@@ -94,16 +91,12 @@ export default function ShopPageHeader() {
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      // اگر کلیک خارج از dropdownRef بود، دراپ داون رو ببندیم
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        // با تأخیر کوتاه ببند تا کلیک داخلی کامل بشه
         setTimeout(() => {
           setIsDropdownOpen(false)
         }, 100)
       }
     }
-
-    console.log('user -> ', user)
 
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
@@ -122,26 +115,6 @@ export default function ShopPageHeader() {
     localStorage.removeItem('recentSearches')
   }
 
-  const handleLogout = async () => {
-    try {
-      const res = await fetch('/api/logout', {
-        method: 'POST',
-        credentials: 'include',
-      })
-
-      if (res.ok) {
-        setUser(null)
-        router.push('/shop')
-        toast.success('خروج از حساب کاربری موفقیت‌آمیز بود')
-      } else {
-        console.error('خطا در خروج از حساب')
-        toast.error('خطا در خروج از حساب')
-      }
-    } catch (err) {
-      console.error('خطای خروج از حساب:', err)
-    }
-  }
-
   return (
     <header className="w-full sticky top-0 z-50 bg-light rounded-b-lg overflow-visible">
       <div className="w-full py-4 px-24 flex items-center justify-between bg-light z-50 overflow-visible relative">
@@ -158,7 +131,6 @@ export default function ShopPageHeader() {
             </Link>
           </figure>
 
-          {/* باکس جستجو و منو */}
           <section className="w-full overflow-visible" ref={dropdownRef}>
             <Input
               id="search"
@@ -200,7 +172,7 @@ export default function ShopPageHeader() {
         {/* آیکون‌ها */}
         <div className="flex items-center gap-4">
           {user ? (
-            <UserDropdown user={user} onLogout={handleLogout} />
+            <UserDropdown user={user} onLogout={logout} />
           ) : (
             <Button
               variant="secondary"
@@ -214,9 +186,14 @@ export default function ShopPageHeader() {
             </Button>
           )}
 
-          <a href={'/shop/cart'}>
-            <button className="p-3 text-gray border border-lightgray/35 rounded-lg cursor-pointer">
+          <a href={'/shop/cart'} className="relative">
+            <button className="p-3 text-gray border border-lightgray/35 rounded-lg cursor-pointer relative">
               <ShoppingCart size={20} />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
+                  {formatPriceToPersian(cartCount)}
+                </span>
+              )}
             </button>
           </a>
         </div>

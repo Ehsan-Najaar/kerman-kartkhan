@@ -6,7 +6,7 @@ import CartItemCard from '@/components/shop/cart/CartItemCard'
 import CartSummary from '@/components/shop/cart/CartSummary'
 import EmptyCart from '@/components/shop/cart/EmptyCart'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
-import { useAppContext } from '../../../../context/AppContext'
+import { useAppContext } from '@/context/AppContext'
 
 export default function CartPage() {
   const { cart, removeFromCart, updateCartQuantity, loadingCart } =
@@ -32,12 +32,14 @@ export default function CartPage() {
         productId: item.productId._id,
         selectedColor: item.selectedColor,
         selectedVariant: item.selectedVariant,
+        bodyColors: item.bodyColors,
       })
     } else {
       updateCartQuantity({
         productId: item.productId._id,
         selectedColor: item.selectedColor,
         selectedVariant: item.selectedVariant,
+        bodyColors: item.bodyColors,
         quantity: newQuantity,
       })
     }
@@ -65,23 +67,26 @@ export default function CartPage() {
 
       <section className="flex gap-12 px-4 sm:px-6 lg:px-24 pt-12 min-h-96">
         <ul className="lg:w-[70%] space-y-4">
-          {cart.items.map((item, index) => (
-            <li key={index}>
-              <CartItemCard
-                product={item}
-                onUpdateQuantity={(newQuantity) =>
-                  handleUpdateQuantity(item, newQuantity)
-                }
-                onRemove={() =>
-                  removeFromCart({
-                    productId: item.productId._id,
-                    selectedColor: item.selectedColor,
-                    selectedVariant: item.selectedVariant,
-                  })
-                }
-              />
-            </li>
-          ))}
+          {cart.items.map((item, index) =>
+            item.productId ? (
+              <li key={index}>
+                <CartItemCard
+                  product={item}
+                  onUpdateQuantity={(newQuantity) =>
+                    handleUpdateQuantity(item, newQuantity)
+                  }
+                  onRemove={() =>
+                    removeFromCart({
+                      productId: item.productId._id,
+                      selectedColor: item.selectedColor,
+                      selectedVariant: item.selectedVariant,
+                      bodyColors: item.bodyColors || [],
+                    })
+                  }
+                />
+              </li>
+            ) : null
+          )}
         </ul>
 
         <CartSummary totalItems={totalItems} totalPrice={totalPrice} />

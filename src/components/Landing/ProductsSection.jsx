@@ -2,6 +2,7 @@
 
 import { ProductCard } from '@/components/ProductCard'
 import CustomRange from '@/components/ui/CustomRange'
+import ProductCardSkeleton from '@/components/ui/Skeleton'
 import { formatPriceToPersian } from '@/utils/formatPrice'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
@@ -12,6 +13,7 @@ const tabs = ['آکبند', 'استوک']
 export default function ProductsSection({
   products,
   activeTab,
+  loading,
   setActiveTab,
   activeStep,
   setActiveStep,
@@ -19,10 +21,13 @@ export default function ProductsSection({
 }) {
   const [price, setPrice] = useState(20000000)
 
-  // فیلتر محصولات بر اساس تب و قیمت انتخابی
+  // فیلتر محصولات بر اساس تب، قیمت و موجود بودن
   const filteredProducts = products
     .filter(
-      (product) => product.condition === activeTab && product.price <= price
+      (product) =>
+        product.condition === activeTab &&
+        product.price <= price &&
+        product.stock > 0
     )
     .sort((a, b) => b.price - a.price)
 
@@ -82,7 +87,13 @@ export default function ProductsSection({
 
         {/* لیست محصولات */}
         <div className="h-96 max-h-96 overflow-auto p-4">
-          {filteredProducts.length > 0 ? (
+          {loading ? (
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <ProductCardSkeleton key={index} />
+              ))}
+            </div>
+          ) : filteredProducts.length > 0 ? (
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
               {filteredProducts.map((product) => (
                 <ProductCard key={product._id} product={product} />

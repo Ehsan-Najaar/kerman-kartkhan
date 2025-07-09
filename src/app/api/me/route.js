@@ -1,19 +1,33 @@
-// /app/api/me/route.js
-import { getUserFromToken } from '@/lib/auth'
 import connectDB from '@/lib/db'
-// ایمپورت کردن اسکیما کاربر
 import User from '@/models/User'
+import jwt from 'jsonwebtoken'
+import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
 
-export async function GET(req) {
-  await connectDB()
+export async function GET() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')?.value
 
-  const user = await getUserFromToken(req)
-
-  if (!user) {
-    return new Response(JSON.stringify({ error: 'توکن نامعتبر یا منقضی' }), {
-      status: 401,
-    })
+  if (!token) {
+    return NextResponse.json(null, { status: 401 })
   }
 
-  return new Response(JSON.stringify({ user }), { status: 200 })
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+    await connectDB()
+
+    const user = await User.findById(decoded.userId).lean()
+
+    if (!user) {
+      return NextResponse.json(null, { status: 404 })
+    }
+
+    const { password, ...rest } = user
+
+    return NextResponse.json(rest)
+  } catch (error) {
+    console.error(error)
+    return NextResponse.json(null, { status: 401 })
+  }
 }

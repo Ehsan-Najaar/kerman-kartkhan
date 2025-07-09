@@ -2,10 +2,10 @@
 
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import { useAppContext } from '@/context/AppContext'
 import { Loader } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useAppContext } from '../../../../context/AppContext'
 
 export default function UserInformation({ userInfo, isLoading, error }) {
   const { user, setUser } = useAppContext()
@@ -43,7 +43,7 @@ export default function UserInformation({ userInfo, isLoading, error }) {
     }
 
     try {
-      const res = await fetch(`/api/users/${userInfo._id}`, {
+      const res = await fetch(`/api/user/${userInfo._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedUserData),
@@ -96,13 +96,7 @@ export default function UserInformation({ userInfo, isLoading, error }) {
             onChange={handleChange}
             disabled={isLoading}
           />
-          <Input
-            type="email"
-            className="input"
-            placeholder="ایمیل"
-            value={userInfo?.email || ''}
-            readOnly
-          />
+
           <Input
             type="tel"
             className="input"

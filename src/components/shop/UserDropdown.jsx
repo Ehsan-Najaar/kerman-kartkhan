@@ -38,7 +38,7 @@ export default function UserDropdown({ user, onLogout }) {
         <div className="border-b border-lightgray">
           <Link href={dashboardLink}>
             <h3 className="flex items-center justify-between body-text hover:bg-gray-100 px-4 py-2 cursor-pointer">
-              {user.name || 'کاربر'}
+              {user.name || user.phone}
               <ChevronLeft size={20} />
             </h3>
           </Link>

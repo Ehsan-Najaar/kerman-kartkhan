@@ -1,21 +1,36 @@
-import User from '@/models/User'
-import jwt from 'jsonwebtoken'
+import { jwtVerify } from 'jose'
 
-export async function getUserFromToken(req) {
+const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET)
+
+export async function checkAuth(req, requiredRole = null) {
   const cookie = req.headers.get('cookie')
+
+  if (!cookie) {
+    console.log('❌ No cookie found')
+    return { user: null, error: 'Unauthorized', status: 401 }
+  }
+
   const token = cookie
-    ?.split(';')
-    .find((c) => c.trim().startsWith('token='))
+    .split('; ')
+    .find((row) => row.startsWith('token='))
     ?.split('=')[1]
 
-  if (!token) return null
+  if (!token) {
+    console.log('❌ No token found in cookie')
+    return { user: null, error: 'Unauthorized', status: 401 }
+  }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    const user = await User.findById(decoded.userId).lean()
-    return user
-  } catch (err) {
-    console.error('JWT error:', err)
-    return null
+    const { payload } = await jwtVerify(token, SECRET_KEY)
+
+    if (requiredRole && !payload.roles?.includes(requiredRole)) {
+      console.log('❌ User does not have required role:', requiredRole)
+      return { user: null, error: 'Forbidden', status: 403 }
+    }
+
+    return { user: payload, error: null }
+  } catch (e) {
+    console.log('❌ JWT Verification failed:', e.message)
+    return { user: null, error: 'Invalid token', status: 401 }
   }
 }

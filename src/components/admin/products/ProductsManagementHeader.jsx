@@ -11,7 +11,7 @@ export default function ProductsManagementHeader({
 }) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-4 lg:gap-0 pt-4">
-      <div className="w-full lg:w-max flex items-center gap-2">
+      <div className="w-full lg:w-1/3 flex items-center gap-2">
         <button
           onClick={() => (window.location.href = '/admin')}
           className="lg:hidden p-2 rounded-full bg-lightgray/50 hover:bg-gray-300"
@@ -23,7 +23,7 @@ export default function ProductsManagementHeader({
       </div>
 
       <div className="w-full lg:w-1/3 flex items-center gap-2">
-        <div className="w-full flex items-center gap-2 px-4 py-2 bg-light shadow-sm rounded-full placeholder:text-gray/50">
+        <div className="w-full flex items-center gap-2 px-4 py-2 bg-light rounded-lg border border-lightgray placeholder:text-gray/50">
           <input
             type="text"
             placeholder="جستجو نام محصول..."
@@ -44,12 +44,14 @@ export default function ProductsManagementHeader({
         </Link>
       </div>
 
-      <Link href={'/admin/products/add-product'} className="hidden lg:flex">
-        <Button fontWeight="medium">
-          <FiPlus size={24} />
-          افزودن محصول
-        </Button>
-      </Link>
+      <div className="hidden lg:flex lg:w-1/3 justify-end">
+        <Link href={'/admin/products/add-product'}>
+          <Button size="sm">
+            <FiPlus size={24} />
+            افزودن محصول
+          </Button>
+        </Link>
+      </div>
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import AddressModal from '@/components/shop/userDashboard/AddressModal'
 import Button from '@/components/ui/Button'
+import { useAppContext } from '@/context/AppContext'
 import { MapPin, Plus, Signpost } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { FaRoad } from 'react-icons/fa'
 import { FiEdit } from 'react-icons/fi'
-import { useAppContext } from '../../../../context/AppContext'
 
 export default function UserAddresses() {
   const { user, setUser } = useAppContext()
@@ -16,7 +16,7 @@ export default function UserAddresses() {
     if (!user || user.address) return // اگه آدرس داره یا user نیست، کاری نکن
 
     setLoading(true)
-    fetch(`/api/users/${user.userId}`) // فرض کردم API شما این مسیر رو داره
+    fetch(`/api/user/${user.userId}`) // فرض کردم API شما این مسیر رو داره
       .then((res) => res.json())
       .then((fullUser) => {
         setUser(fullUser) // داده کامل کاربر رو توی کانتکست ست کن

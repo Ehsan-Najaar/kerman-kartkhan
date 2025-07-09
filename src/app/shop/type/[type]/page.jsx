@@ -1,4 +1,3 @@
-// app/products/type/[type]/page.js
 'use client'
 
 import Footer from '@/components/Footer'
@@ -6,6 +5,7 @@ import { ProductCard } from '@/components/ProductCard'
 import FilterSidebar from '@/components/shop/FilterSidebar'
 import ProductListToolbar from '@/components/shop/ProductListToolbar'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
+import ProductCardSkeleton from '@/components/ui/Skeleton'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -27,8 +27,12 @@ export default function TypePage() {
           `/api/products?type=${encodeURIComponent(type)}`
         )
         const data = await res.json()
-        setProducts(data)
-        setFilteredProducts(data)
+
+        // فقط محصولاتی که stock > 0 دارن
+        const inStockProducts = data.filter((p) => p.stock > 0)
+
+        setProducts(inStockProducts)
+        setFilteredProducts(inStockProducts)
       } catch (error) {
         console.error('خطا در واکشی محصولات:', error)
       } finally {
@@ -69,7 +73,7 @@ export default function TypePage() {
     } else if (sortValue === 'price-desc') {
       sorted.sort((a, b) => b.price - a.price)
     } else if (sortValue === 'mostSold') {
-      sorted.sort((a, b) => b.soldCount - a.soldCount)
+      sorted.sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0))
     } else if (sortValue === 'default') {
       sorted = [...products]
     }
@@ -77,7 +81,6 @@ export default function TypePage() {
     setFilteredProducts(sorted)
   }
 
-  // وقتی فیلترها حذف شدن:
   const handleClearFilters = () => {
     setFilters({})
     setFilteredProducts([...products])
@@ -112,13 +115,21 @@ export default function TypePage() {
             activeSort={activeSort}
           />
           {loading ? (
-            <p>در حال بارگذاری...</p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <li key={index}>
+                  <ProductCardSkeleton />
+                </li>
+              ))}
+            </ul>
           ) : filteredProducts.length === 0 ? (
             <p>محصولی یافت نشد.</p>
           ) : (
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               {filteredProducts.map((product) => (
-                <ProductCard key={product._id} product={product} />
+                <li key={product._id}>
+                  <ProductCard product={product} />
+                </li>
               ))}
             </ul>
           )}

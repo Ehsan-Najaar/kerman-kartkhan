@@ -1,8 +1,11 @@
+import AuthModal from '@/components/shop/AuthModal'
 import Button from '@/components/ui/Button'
+import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
 import {
   BatteryCharging,
   Box,
+  Check,
   Plug,
   Plus,
   ShoppingCart,
@@ -14,6 +17,28 @@ import { useEffect, useRef, useState } from 'react'
 import { FiEdit, FiPlus, FiTrash2 } from 'react-icons/fi'
 
 export function ProductCard({ product }) {
+  const { user, addToCart, isInCart, loadingCart } = useAppContext()
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+
+  const inCart = !loadingCart && isInCart(product._id.toString())
+
+  const handleAddToCart = () => {
+    if (!user) {
+      setAuthModalOpen(true)
+      return
+    }
+
+    const item = {
+      productId: product._id.toString(),
+      quantity: 1,
+      selectedColor: product.colors?.[0] || null,
+      selectedVariant: product.variants?.[0]?.name || null,
+      bodyColors: product.bodyColors || null,
+    }
+
+    addToCart(item)
+  }
+
   return (
     <div className="w-56 bg-light p-2 rounded-lg border border-lightgray/50 shadow-sm space-y-4">
       <section>
@@ -34,20 +59,17 @@ export function ProductCard({ product }) {
       </section>
 
       <section className="text-xs text-gray mt-2 space-y-1">
-        {/* نوع دستگاه (آکبند یا استوک) */}
         <article className="flex items-center gap-1">
           <Box size={14} className="text-secondary" />
           <span>{product.type}</span>
         </article>
 
-        {/* سرعت تراکنش */}
         <article className="flex items-center gap-1">
           <Zap size={14} className="text-secondary" />
           <span>{product.specs[0]?.value}</span>
           <span>{product.specs[0]?.key}</span>
         </article>
 
-        {/* آیکون باتری یا کارتخوان */}
         <article className="flex items-center gap-1">
           {product.type === 'ثابت' ? (
             <Plug size={14} className="text-secondary" />
@@ -80,16 +102,43 @@ export function ProductCard({ product }) {
           </Button>
         </Link>
 
-        <button className="p-2 rounded-lg bg-section/50 text-secondary cursor-pointer">
+        <button
+          onClick={handleAddToCart}
+          disabled={loadingCart || inCart}
+          className={`p-2 rounded-lg ${
+            loadingCart
+              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              : inCart
+              ? 'bg-section/35 text-secondary cursor-default'
+              : 'bg-section/50 text-secondary cursor-pointer'
+          }`}
+          aria-label="افزودن به سبد خرید"
+        >
           <span className="relative">
-            <ShoppingCart size={20} />
-            <Plus
-              size={12}
-              className="absolute -top-1 -right-4 bg-light rounded-full text-secondary"
-            />
+            {loadingCart ? (
+              // می‌تونی اینجا یک آیکون لودینگ بزاری یا یه انیمیشن کوچیک
+              <span className="animate-spin inline-block w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full"></span>
+            ) : inCart ? (
+              <Check size={20} className="text-secondary" />
+            ) : (
+              <>
+                <ShoppingCart size={20} />
+                <Plus
+                  size={12}
+                  className="absolute -top-1 -right-4 bg-light rounded-full text-secondary"
+                />
+              </>
+            )}
           </span>
         </button>
       </section>
+
+      {authModalOpen && (
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+        />
+      )}
     </div>
   )
 }

@@ -1,11 +1,38 @@
 import connectDB from '@/lib/db'
 import User from '@/models/User'
+import jwt from 'jsonwebtoken'
+import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+
+const SECRET_KEY = process.env.JWT_SECRET
+
+async function getAuthUser() {
+  const token = cookies().get('token')?.value
+  if (!token) return null
+
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY)
+    return decoded
+  } catch {
+    return null
+  }
+}
 
 export async function PUT(req, { params }) {
   await connectDB()
 
-  const userId = await params.id
+  const authUser = await getAuthUser()
+  if (!authUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const userId = params.id
+
+  // فقط admin یا خود کاربر حق تغییر دارد
+  if (authUser.userId !== userId && !authUser.roles?.includes('admin')) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
   const { address: newAddress, index } = await req.json()
 
   try {

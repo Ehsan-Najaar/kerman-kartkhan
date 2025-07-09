@@ -48,7 +48,7 @@ export default function RegisterGuide() {
         >
           {showVideo ? (
             <video
-              src="https://kerman-kartkhan-2.storage.c2.liara.space/VID_20250613_052336_128.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=6b96162b-d379-44a7-ae3f-e3cd178bbf19%2F20250625%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250625T122321Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=2509cbe1bc1785792dd4bafa49dc51cd840dea521d2b2ec06902ed299129e2ab"
+              src="https://kerman-kartkhan-2.storage.c2.liara.space/VID_20250613_052336_128.mp4"
               controls
               autoPlay
               className="rounded-lg w-full h-auto"

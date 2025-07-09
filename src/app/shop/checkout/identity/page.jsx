@@ -8,14 +8,19 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { Loader3 } from '@/components/Loader'
+import Textarea from '@/components/ui/Textarea'
+import { useAppContext } from '@/context/AppContext'
 import { HomeIcon, Info } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 export default function IdentityForm() {
+  const { user } = useAppContext()
   const router = useRouter()
 
   const [loading, setLoading] = useState(true)
 
   const [formData, setFormData] = useState({
+    userName: '',
     phone: '',
     nationalCode: '',
     postalCode: '',
@@ -33,13 +38,17 @@ export default function IdentityForm() {
 
         if (res.ok) {
           const data = await res.json()
-          if (data) {
+
+          if (data.exists && data.document) {
+            const doc = data.document
+
             setFormData({
-              phone: data.phone || '',
-              nationalCode: data.nationalCode || '',
-              postalCode: data.postalCode || '',
-              shopName: data.shopName || '',
-              address: data.address || '',
+              userName: doc.userName || '',
+              phone: doc.phone || '',
+              nationalCode: doc.nationalCode || '',
+              postalCode: doc.postalCode || '',
+              shopName: doc.shopName || '',
+              address: doc.address || '',
             })
           }
         }
@@ -63,12 +72,22 @@ export default function IdentityForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (!user?.phone) {
+      alert('کاربر نامشخص است یا شماره موبایل ثبت نشده است.')
+      return
+    }
+
+    const finalData = {
+      ...formData,
+      phone: user.phone,
+    }
+
     try {
       const res = await fetch('/api/user-documents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify(formData),
+        body: JSON.stringify(finalData),
       })
 
       if (!res.ok) {
@@ -78,6 +97,7 @@ export default function IdentityForm() {
       }
 
       const savedDoc = await res.json()
+      toast.success('اطلاعات با موفقیت ذخیره شدند')
       router.push('/shop/checkout/documents?docId=' + savedDoc._id)
     } catch (error) {
       alert('خطای شبکه یا سرور')
@@ -86,7 +106,7 @@ export default function IdentityForm() {
   }
 
   const isFormValid =
-    formData.phone.trim() &&
+    formData.userName.trim() &&
     formData.nationalCode.trim() &&
     formData.postalCode.trim() &&
     formData.shopName.trim() &&
@@ -101,7 +121,7 @@ export default function IdentityForm() {
       <div className="min-h-screen min-w-screen grid place-items-center">
         <form
           onSubmit={handleSubmit}
-          className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-6 shadow space-y-10"
+          className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-6 shadow space-y-3"
         >
           <StepProgressBar
             currentStep={1}
@@ -116,27 +136,35 @@ export default function IdentityForm() {
             className="mb-8"
           />
 
-          <div className="grid grid-cols-2 gap-4 space-y-6">
+          <div className="grid grid-cols-2 gap-4 -space-y-1">
             <div className="space-y-2">
               <Input
                 type="text"
-                name="shopName"
-                label={'نام فروشگاه شما'}
-                value={formData.shopName}
+                name="userName"
+                label={'نام و نام خانوادگی'}
+                value={formData.userName}
                 onChange={handleChange}
                 className="border w-full p-2"
               />
 
-              <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
-                <Info size={74} />
-                <p className="text-xs text-justify leading-6">
-                  اگر جواز کسب نداشته باشید، عنوان صنف شما فقط در دستگاه
-                  کارت‌خوان به «سوپرمارکت» تغییر می‌کند، اما در اسناد مالیاتی
-                  همچنان نام دلخواه شما ثبت خواهد شد. به‌عنوان مثال، «تاکسی
-                  ابراهیمی» روی دستگاه به «سوپرمارکت ابراهیمی» نمایش داده
-                  می‌شود، اما در مدارک مالیاتی همان «تاکسی ابراهیمی» ذخیره خواهد
-                  شد.
-                </p>
+              <div className="space-y-2">
+                <Input
+                  type="text"
+                  name="shopName"
+                  label={'نام فروشگاه شما'}
+                  value={formData.shopName}
+                  onChange={handleChange}
+                  className="border w-full p-2"
+                />
+
+                <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
+                  <Info size={40} />
+                  <p className="text-xs text-justify leading-6">
+                    اگر جواز کسب نداشته باشید، عنوان صنف شما روی دستگاه
+                    کارت‌خوان «سوپرمارکت» نمایش داده می‌شود، اما در مدارک
+                    مالیاتی همچنان نام واقعی کسب‌وکار شما ثبت خواهد شد.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -145,7 +173,8 @@ export default function IdentityForm() {
                 type="text"
                 name="phone"
                 label={'شماره موبایل'}
-                value={formData.phone}
+                value={user.phone}
+                readOnly
                 onChange={handleChange}
                 className="border w-full p-2"
               />
@@ -178,17 +207,16 @@ export default function IdentityForm() {
               onChange={handleChange}
               className="border w-full p-2"
             />
-
-            {/* فیلد آدرس */}
-            <Input
-              type="text"
-              name="address"
-              label={'آدرس محل سکونت'}
-              value={formData.address}
-              onChange={handleChange}
-              className="border w-full p-2"
-            />
           </div>
+
+          {/* فیلد آدرس */}
+          <Textarea
+            id="address"
+            name="address"
+            label={'آدرس محل سکونت'}
+            value={formData.address}
+            onChange={handleChange}
+          />
 
           <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4">
             <Link href={'/shop'}>

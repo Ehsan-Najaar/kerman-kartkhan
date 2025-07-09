@@ -1,9 +1,9 @@
 import { Loader1 } from '@/components/Loader'
 import AuthModal from '@/components/shop/AuthModal'
+import { useAppContext } from '@/context/AppContext'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useAppContext } from '../../context/AppContext'
 
 const ProtectedRoute = ({ children }) => {
   const { user, setUser } = useAppContext()

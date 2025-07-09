@@ -2,6 +2,7 @@ import connectDB from '@/lib/db'
 import otpStorage from '@/lib/otpStorage'
 import User from '@/models/User'
 import jwt from 'jsonwebtoken'
+import { cookies } from 'next/headers'
 
 export async function POST(req) {
   const { phone, code } = await req.json()
@@ -37,9 +38,11 @@ export async function POST(req) {
     await connectDB()
 
     let user = await User.findOne({ phone })
+    let isNewUser = false
 
     if (!user) {
       user = await User.create({ phone })
+      isNewUser = true
       console.log('کاربر جدید ایجاد شد:', user)
     } else {
       console.log('ورود کاربر قدیمی:', user)
@@ -48,7 +51,6 @@ export async function POST(req) {
     otpStorage.delete(phone)
     console.log('OTP data for', phone, ':', otpData)
 
-    // ✅ ساخت توکن بعد از اینکه user آماده شد
     const token = jwt.sign(
       {
         userId: user._id,
@@ -60,20 +62,21 @@ export async function POST(req) {
       { expiresIn: '7d' }
     )
 
-    const response = new Response(
-      JSON.stringify({ status: 'verified', user }),
-      {
-        status: 200,
-      }
-    )
+    // ✅ ست کردن کوکی به روش Next.js
+    cookies().set({
+      name: 'token',
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    })
 
-    // ✅ ذخیره توکن در کوکی HTTP-only
-    response.headers.set(
-      'Set-Cookie',
-      `token=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=604800`
+    return new Response(
+      JSON.stringify({ status: 'verified', user, isNewUser }),
+      { status: 200 }
     )
-
-    return response
   } catch (err) {
     console.error('خطا در ذخیره کاربر:', err)
     return new Response(JSON.stringify({ error: 'خطا در سرور' }), {

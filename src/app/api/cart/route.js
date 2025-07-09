@@ -3,7 +3,6 @@
 import connectDB from '@/lib/db'
 import Cart from '@/models/Cart'
 // ایمپورت کردن اسکیما محصول
-import Product from '@/models/Product'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import { cookies } from 'next/headers'
@@ -47,9 +46,14 @@ export async function POST(req) {
   }
 
   const body = await req.json()
-  let { productId, quantity = 1, selectedColor, selectedVariant } = body
+  let {
+    productId,
+    quantity = 1,
+    selectedColor,
+    selectedVariant,
+    bodyColors,
+  } = body
 
-  // اعتبارسنجی productId
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     return NextResponse.json(
       { error: 'شناسه محصول نامعتبر است' },
@@ -66,10 +70,11 @@ export async function POST(req) {
       userId,
       items: [
         {
-          productId: objectId,
+          productId,
           quantity,
           selectedColor,
           selectedVariant,
+          bodyColors,
         },
       ],
     })
@@ -78,7 +83,9 @@ export async function POST(req) {
       (item) =>
         item.productId.toString() === objectId.toString() &&
         item.selectedColor === selectedColor &&
-        item.selectedVariant === selectedVariant
+        item.selectedVariant === selectedVariant &&
+        JSON.stringify(item.bodyColors || []) ===
+          JSON.stringify(bodyColors || [])
     )
 
     if (existingItem) {
@@ -89,11 +96,15 @@ export async function POST(req) {
         quantity,
         selectedColor,
         selectedVariant,
+        bodyColors,
       })
     }
   }
 
   await cart.save()
+  const populatedCart = await Cart.findOne({ userId }).populate(
+    'items.productId'
+  )
   return NextResponse.json(cart)
 }
 
@@ -106,7 +117,8 @@ export async function PUT(req) {
   }
 
   const body = await req.json()
-  const { productId, selectedColor, selectedVariant, quantity } = body
+  const { productId, selectedColor, selectedVariant, quantity, bodyColors } =
+    body
 
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     return NextResponse.json(
@@ -126,7 +138,8 @@ export async function PUT(req) {
     (item) =>
       item.productId.toString() === objectId.toString() &&
       item.selectedColor === selectedColor &&
-      item.selectedVariant === selectedVariant
+      item.selectedVariant === selectedVariant &&
+      JSON.stringify(item.bodyColors || []) === JSON.stringify(bodyColors || [])
   )
 
   if (!item) {
@@ -157,7 +170,7 @@ export async function DELETE(req) {
   }
 
   const body = await req.json()
-  const { productId, selectedColor, selectedVariant } = body
+  const { productId, selectedColor, selectedVariant, bodyColors } = body
 
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     return NextResponse.json(
@@ -177,9 +190,13 @@ export async function DELETE(req) {
     (item) =>
       item.productId.toString() !== objectId.toString() ||
       item.selectedColor !== selectedColor ||
-      item.selectedVariant !== selectedVariant
+      item.selectedVariant !== selectedVariant ||
+      JSON.stringify(item.bodyColors || []) !== JSON.stringify(bodyColors || [])
   )
 
   await cart.save()
+  const populatedCart = await Cart.findOne({ userId }).populate(
+    'items.productId'
+  )
   return NextResponse.json(cart)
 }

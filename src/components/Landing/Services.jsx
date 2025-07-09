@@ -69,17 +69,6 @@ export default function Services() {
           </div>
         </div>
       </div>
-
-      <div className="hidden xl:block w-[calc(100%+28%)] absolute top-0 -right-[163px] scale-105 -z-10">
-        <Image
-          src="/images/middle-rectangle.png"
-          alt="مستطیل پس‌زمینه"
-          width={1700}
-          height={700}
-          draggable="false"
-          loading="lazy"
-        />
-      </div>
     </section>
   )
 }

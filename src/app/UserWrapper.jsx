@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
-import AppContextProvider from '../../context/AppContext' // default import
+import AppContextProvider from '../context/AppContext' // default import
 
 export default async function UserWrapper({ children }) {
   const cookieStore = await cookies()

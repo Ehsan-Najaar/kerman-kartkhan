@@ -33,8 +33,6 @@ export async function POST(req) {
       result = await response.json()
     } catch {}
 
-    console.log('Response from SMS API:', result)
-
     if (!response.ok || !result?.code) {
       return NextResponse.json(
         { error: 'ارسال پیامک ناموفق بود', result },
@@ -47,8 +45,6 @@ export async function POST(req) {
       code: result.code,
       expires: Date.now() + 5 * 60 * 1000,
     })
-
-    console.log(`OTP code saved for ${phone}: ${result.code}`)
 
     return NextResponse.json({ status: 'ok' }, { status: 200 })
   } catch (error) {

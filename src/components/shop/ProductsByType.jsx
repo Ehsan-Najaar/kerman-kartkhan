@@ -1,6 +1,7 @@
 'use client'
 
 import { ProductCard } from '@/components/ProductCard'
+import ProductCardSkeleton from '@/components/ui/Skeleton'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -12,34 +13,40 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 export default function ProductsByType({ products }) {
   const prevRef = useRef(null)
   const nextRef = useRef(null)
-  const swiperRef = useRef(null) // ذخیره رفرنس swiper
+  const swiperRef = useRef(null)
   const [selectedType, setSelectedType] = useState('همه')
 
-  // استخراج typeهای یکتا
+  const loading = !products || products.length === 0
+
   const types = useMemo(() => {
-    const unique = new Set(products.map((p) => p.type?.trim()).filter(Boolean))
+    const unique = new Set(
+      products
+        .filter((p) => p.stock > 0)
+        .map((p) => p.type?.trim())
+        .filter(Boolean)
+    )
     return ['همه', ...unique]
   }, [products])
 
-  // فیلتر محصولات
   const filteredProducts = useMemo(() => {
-    if (!selectedType || selectedType === 'همه') return products
-    return products.filter(
+    let filtered = products.filter((p) => p.stock > 0)
+
+    if (!selectedType || selectedType === 'همه') return filtered
+
+    return filtered.filter(
       (p) => p.type?.trim().toLowerCase() === selectedType.trim().toLowerCase()
     )
   }, [products, selectedType])
 
-  // بعد از رندر، دکمه‌ها رو به navigation وصل کن
   useEffect(() => {
     if (swiperRef.current && swiperRef.current.params) {
       swiperRef.current.params.navigation.prevEl = prevRef.current
       swiperRef.current.params.navigation.nextEl = nextRef.current
-      // init navigation
       swiperRef.current.navigation.destroy()
       swiperRef.current.navigation.init()
       swiperRef.current.navigation.update()
     }
-  }, [selectedType]) // هر بار selectedType تغییر کرد این اتفاق بیفته
+  }, [selectedType])
 
   const activeClass = 'bg-secondary text-light'
   const normalClass = 'bg-gray-100 hover:bg-gray-200'
@@ -120,11 +127,17 @@ export default function ProductsByType({ products }) {
             }}
             className="h-96"
           >
-            {filteredProducts.map((product) => (
-              <SwiperSlide key={product._id}>
-                <ProductCard product={product} />
-              </SwiperSlide>
-            ))}
+            {loading
+              ? Array.from({ length: 8 }).map((_, index) => (
+                  <SwiperSlide key={index}>
+                    <ProductCardSkeleton />
+                  </SwiperSlide>
+                ))
+              : filteredProducts.map((product) => (
+                  <SwiperSlide key={product._id}>
+                    <ProductCard product={product} />
+                  </SwiperSlide>
+                ))}
           </Swiper>
         </div>
       </section>

@@ -5,17 +5,16 @@ import DocCard from '@/components/shop/checkout/DocCard'
 import TomanIcon from '@/components/TomanIcon'
 import Button from '@/components/ui/Button'
 import StepProgressBar from '@/components/ui/StepProgressBar'
+import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
 import { HomeIcon, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useAppContext } from '../../../../../context/AppContext'
 
 export default function ReviewPage() {
-  const { cart, removeFromCart, updateCartQuantity, loadingCart } =
-    useAppContext()
+  const { cart } = useAppContext()
 
   const router = useRouter()
   const [data, setData] = useState(null)
@@ -34,19 +33,6 @@ export default function ReviewPage() {
       return sum + unitPrice * item.quantity * 10
     }, 0) || 0
 
-  // محاسبه کارمزد زرین پال
-  const zarinpalFeePercent = 0.005 // یعنی 0.5 درصد
-  const minFee = 350
-
-  // محاسبه کارمزد
-  let zarinpalFee = totalPrice * zarinpalFeePercent
-  if (zarinpalFee < minFee) {
-    zarinpalFee = minFee
-  }
-
-  // مبلغ نهایی با احتساب کارمزد زرین پال
-  const totalPriceWithZarinpalFee = totalPrice + zarinpalFee
-
   const images = [
     ['birthCertificate', 'تصویر شناسنامه'],
     ['nationalCardFront', 'کارت ملی (رو)'],
@@ -62,14 +48,17 @@ export default function ReviewPage() {
           method: 'GET',
           credentials: 'include',
         })
+
         if (!res.ok) {
           const errorData = await res.json()
           setError(errorData.error || 'خطا در دریافت اطلاعات')
           setLoading(false)
           return
         }
+
         const result = await res.json()
-        setData(result)
+
+        setData(result.document)
         setLoading(false)
       } catch (err) {
         console.error(err)
@@ -85,8 +74,8 @@ export default function ReviewPage() {
     const res = await fetch('/api/payment', {
       method: 'POST',
       body: JSON.stringify({
-        amount: 10000,
-        callback_url: 'https://kerman-kartkhan.com/payment/verify',
+        amount: totalPrice,
+        callback_url: 'http://localhost:3000/payment/verify',
         description: 'خرید از فروشگاه',
       }),
       headers: {
@@ -96,6 +85,7 @@ export default function ReviewPage() {
 
     const data = await res.json()
     if (data.url) {
+      localStorage.setItem('zarinpal_amount', totalPrice.toString())
       window.location.href = data.url
     } else {
       alert('خطا در پرداخت')
@@ -129,7 +119,6 @@ export default function ReviewPage() {
         <div className="flex gap-8 h-96 max-h-96 overflow-auto p-4">
           <section className="w-3/4 h-screen bg-lightgray/35 rounded-lg p-4 space-y-6">
             {/* اطلاعات هویتی */}
-
             <div className="border-b border-gray/30 pb-6">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <p>
@@ -199,7 +188,6 @@ export default function ReviewPage() {
             {cart?.items.length ? (
               <div className="space-y-6">
                 {cart.items.map((item, idx) => {
-                  // 👇 محاسبه قیمت variant انتخابی
                   const variants = item.productId?.variants || []
                   const matchedVariant = variants.find(
                     (v) => v.name === item.selectedVariant
@@ -232,6 +220,11 @@ export default function ReviewPage() {
                             <span className="font-medium">
                               {item.selectedColor}
                             </span>
+                            {item.bodyColors && (
+                              <span className="font-medium">
+                                {item.bodyColors[0]} - {item.bodyColors[1]}
+                              </span>
+                            )}
                           </p>
 
                           <span className="text-gray">•</span>
@@ -265,7 +258,7 @@ export default function ReviewPage() {
                           {item.quantity > 1 && (
                             <p className="flex items-center gap-px text-sm text-dark">
                               {formatPriceToPersian(unitPrice * item.quantity)}{' '}
-                              <TomanIcon className="" />
+                              <TomanIcon />
                             </p>
                           )}
                         </div>
@@ -282,18 +275,12 @@ export default function ReviewPage() {
           </section>
         </div>
 
-        <div className="flex gap-2 text-sm">
+        <div className="flex justify-end gap-2 text-sm">
           <div className="flex items-center gap-2">
-            <p>مجموع سبد خرید:</p>
-            <p>{formatPriceToPersian(totalPrice)} ریال</p>
-          </div>
-          <div className="flex items-center gap-2 text-amber-600">
-            <p>کارمزد زرین‌پال:</p>
-            <p>{formatPriceToPersian(zarinpalFee)} ریال</p>
-          </div>
-          <div className="flex items-center gap-2 font-bold text-green-700">
-            <p>مجموع پرداختی:</p>
-            <p>{formatPriceToPersian(totalPriceWithZarinpalFee)} ریال</p>
+            <p className="text-gray">مجموع سبد خرید:</p>
+            <p className="font-medium text-dark">
+              {formatPriceToPersian(totalPrice)} ریال
+            </p>
           </div>
         </div>
 

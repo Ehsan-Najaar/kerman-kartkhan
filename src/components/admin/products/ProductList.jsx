@@ -53,7 +53,11 @@ export default function ProductList({
     )
 
   if (!filteredProducts.length)
-    return <p className="text-center text-gray-500">محصولی یافت نشد.</p>
+    return (
+      <div className="h-[calc(100%-220px)] grid place-items-center text-gray">
+        هیچ محصولی مطابق جستجو یا فیلتر پیدا نشد.
+      </div>
+    )
 
   return (
     <div className="space-y-4 p-4 overflow-auto lg:h-[450px]">

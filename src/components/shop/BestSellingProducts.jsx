@@ -1,6 +1,7 @@
 'use client'
 
 import { ProductCard } from '@/components/ProductCard'
+import ProductCardSkeleton from '@/components/ui/Skeleton'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useMemo, useRef } from 'react'
 import { Autoplay, Navigation } from 'swiper/modules'
@@ -15,9 +16,11 @@ export default function BestSellingProducts({ products }) {
   const prevRef = useRef(null)
   const nextRef = useRef(null)
 
-  // مرتب‌سازی و محدود کردن به 8 محصول
+  const loading = !products || products.length === 0
+
   const bestSellingProducts = useMemo(() => {
-    return [...products]
+    return products
+      .filter((p) => p.stock > 0)
       .sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0))
       .slice(0, 8)
   }, [products])
@@ -31,6 +34,59 @@ export default function BestSellingProducts({ products }) {
       swiperRef.current.navigation.update()
     }
   }, [bestSellingProducts])
+
+  if (loading) {
+    return (
+      <section className="py-12 px-24">
+        <h3 className="h3 text-center relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
+          پرفروش ترین های کرمان کارتخوان
+        </h3>
+
+        <figure className="relative">
+          <Image
+            src="/images/BestSellingProducts-bg.svg"
+            alt="تصویر"
+            width={1432}
+            height={450}
+            property="true"
+            draggable="false"
+            className="absolute left-0 top-0"
+          />
+        </figure>
+
+        <div className="relative mt-12 max-w-[85%] mx-auto">
+          <h4 className="text-center relative z-10 mb-12">
+            در حال بارگذاری پرفروش‌ترین محصولات...
+          </h4>
+
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            slidesPerView={4}
+            spaceBetween={16}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            dir="rtl"
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper
+            }}
+            navigation={{
+              prevEl: prevRef.current,
+              nextEl: nextRef.current,
+            }}
+            className="h-96"
+          >
+            {Array.from({ length: 8 }).map((_, index) => (
+              <SwiperSlide key={index} className="px-2">
+                <ProductCardSkeleton />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
+    )
+  }
 
   if (bestSellingProducts.length === 0) return null
 

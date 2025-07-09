@@ -13,6 +13,7 @@ export default function HeroSection() {
   const controlsLeft = useAnimation()
   const controlsRight = useAnimation()
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true })
+  const [loading, setLoading] = useState(true)
 
   // محصولات دریافتی از API
   const [products, setProducts] = useState([])
@@ -40,6 +41,8 @@ export default function HeroSection() {
         setProducts(Array.isArray(data) ? data : data.products)
       } catch (error) {
         console.error('خطا در دریافت محصولات:', error)
+      } finally {
+        setLoading(false)
       }
     }
     fetchProducts()
@@ -55,6 +58,7 @@ export default function HeroSection() {
       <ProductsSection
         products={products}
         activeTab={activeTab}
+        loading={loading}
         setActiveTab={setActiveTab}
         activeStep={activeStep}
         setActiveStep={setActiveStep}

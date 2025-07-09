@@ -1,5 +1,7 @@
 'use client'
 
+import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input'
 import { FiPlus, FiTrash2 } from 'react-icons/fi'
 
 export default function ProductVariantInputs({ variants, onChange }) {
@@ -22,15 +24,18 @@ export default function ProductVariantInputs({ variants, onChange }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="font-bold text-dark">مدل‌های محصول (Variants)</p>
-        <button
+        <p className="block text-base">مدل‌های محصول (Variants)</p>
+
+        <Button
           type="button"
           onClick={handleAddVariant}
-          className="flex items-center gap-2 text-primary hover:text-primary-dark"
+          variant="secondary"
+          outline="true"
+          size="sm"
         >
           <FiPlus />
-          افزودن مدل جدید
-        </button>
+          افزودن مدل
+        </Button>
       </div>
 
       {variants.length === 0 && (
@@ -38,32 +43,35 @@ export default function ProductVariantInputs({ variants, onChange }) {
       )}
 
       {variants.map((variant, index) => (
-        <div
-          key={index}
-          className="flex gap-4 items-center border border-gray-300 p-3 rounded-lg"
-        >
-          <input
+        <div key={index} className="flex gap-4 items-center p-3 rounded-lg">
+          <Input
             type="text"
-            placeholder="نام مدل (مثلاً 2G)"
+            label="نام مدل (مثلاً 2G)"
             value={variant.name}
             onChange={(e) => handleChange(index, 'name', e.target.value)}
             className="flex-1 p-2 border border-gray-300 rounded"
           />
 
-          <input
-            type="number"
-            placeholder="قیمت (تومان)"
-            value={variant.price}
-            onChange={(e) => handleChange(index, 'price', e.target.value)}
+          <Input
+            type="text"
+            label="قیمت (تومان)"
+            value={variant.price ?? ''}
+            onChange={(e) =>
+              handleChange(
+                index,
+                'price',
+                e.target.value === '' ? '' : Number(e.target.value)
+              )
+            }
             className="w-40 p-2 border border-gray-300 rounded"
           />
 
           <button
             type="button"
             onClick={() => handleRemoveVariant(index)}
-            className="text-red-500 hover:text-red-700"
+            className="text-gray hover:text-red-500 cursor-pointer"
           >
-            <FiTrash2 />
+            <FiTrash2 size={18} />
           </button>
         </div>
       ))}
