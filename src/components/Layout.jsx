@@ -1,5 +1,6 @@
 'use client'
 
+import BottomNavbar from '@/components/BottomNavbar'
 import { usePathname } from 'next/navigation'
 import { Toaster } from 'react-hot-toast'
 
@@ -15,6 +16,7 @@ export default function Layout({ children }) {
     <main className={shouldApplyContainer ? 'max-w-6xl mx-auto' : ''}>
       {children}
       <Toaster />
+      <BottomNavbar />
     </main>
   )
 }

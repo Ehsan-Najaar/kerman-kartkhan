@@ -7,11 +7,22 @@ export default function InstallPrompt() {
   const [showInstall, setShowInstall] = useState(false)
 
   useEffect(() => {
-    window.addEventListener('beforeinstallprompt', (e) => {
+    const handler = (e) => {
       e.preventDefault()
       setDeferredPrompt(e)
       setShowInstall(true)
-    })
+
+      // بعد از 15 ثانیه toast رو مخفی کن
+      setTimeout(() => {
+        setShowInstall(false)
+      }, 15000)
+    }
+
+    window.addEventListener('beforeinstallprompt', handler)
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler)
+    }
   }, [])
 
   const handleInstall = () => {
@@ -32,18 +43,21 @@ export default function InstallPrompt() {
     <>
       {showInstall && (
         <div
+          onClick={handleInstall}
           style={{
             position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
+            bottom: '1.5rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
             background: '#ff697c',
             color: '#fff',
-            padding: '1rem',
-            textAlign: 'center',
+            padding: '1rem 2rem',
+            borderRadius: '8px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
             cursor: 'pointer',
+            transition: 'opacity 0.3s ease-in-out',
+            zIndex: 9999,
           }}
-          onClick={handleInstall}
         >
           اپلیکیشن را نصب کنید!
         </div>

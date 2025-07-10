@@ -13,22 +13,22 @@ const AdminPanelNavbar = () => {
     {
       name: 'محصولات',
       href: '/admin/products',
-      icon: '/icons/Box_fill_duotone.svg',
+      icon: '/icons/custom/Box_fill_duotone.svg',
     },
     {
       name: 'دسته‌بندی‌ها',
       href: '/admin/categories',
-      icon: '/icons/lable_duotone_fill.svg',
+      icon: '/icons/custom/lable_duotone_fill.svg',
     },
     {
       name: 'سفارشات',
       href: '/admin/orders',
-      icon: '/icons/Bag_alt_duotone.svg',
+      icon: '/icons/custom/Bag_alt_duotone.svg',
     },
     {
       name: 'کاربران',
       href: '/admin/users',
-      icon: '/icons/Group_duotone_fill.svg',
+      icon: '/icons/custom/Group_duotone_fill.svg',
     },
     {
       name: 'هزینه ارسال',

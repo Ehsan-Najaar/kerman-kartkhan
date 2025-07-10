@@ -52,7 +52,7 @@ export default function ProductsByType({ products }) {
   const normalClass = 'bg-gray-100 hover:bg-gray-200'
 
   return (
-    <div className="gap-4 px-24 py-12">
+    <div className="gap-4 lg:px-24 py-12">
       <h3 className="text-center text-xl font-semibold mb-2">
         محصولات ما بر اساس نوع کارت‌خوان
       </h3>
@@ -70,7 +70,7 @@ export default function ProductsByType({ products }) {
       </figure>
 
       <section className="mt-12" dir="rtl">
-        <h4 className="text-center relative z-10">
+        <h4 className="hidden lg:block text-center relative z-10">
           نوع کارت‌خوان مورد نظرت رو انتخاب کن تا محصول مناسب رو پیدا کنی.
         </h4>
 
@@ -80,7 +80,7 @@ export default function ProductsByType({ products }) {
             <span
               key={type}
               onClick={() => setSelectedType(type.trim())}
-              className={`w-24 px-4 py-2 rounded-full text-sm text-center shadow-sm cursor-pointer transition-all duration-300 ${
+              className={`lg:w-24 px-4 py-2 rounded-full text-xs md:text-sm text-center shadow-sm cursor-pointer transition-all duration-300 ${
                 selectedType.trim().toLowerCase() === type.trim().toLowerCase()
                   ? activeClass
                   : normalClass
@@ -111,7 +111,7 @@ export default function ProductsByType({ products }) {
           <Swiper
             key={selectedType}
             modules={[Navigation, Autoplay]}
-            slidesPerView={4}
+            slidesPerView={1.2} // default
             spaceBetween={16}
             autoplay={{
               delay: 4000,
@@ -124,6 +124,17 @@ export default function ProductsByType({ products }) {
             navigation={{
               prevEl: prevRef.current,
               nextEl: nextRef.current,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+              1280: {
+                slidesPerView: 4,
+              },
             }}
             className="h-96"
           >

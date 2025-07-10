@@ -117,10 +117,10 @@ export default function ShopPageHeader() {
 
   return (
     <header className="w-full sticky top-0 z-50 bg-light rounded-b-lg overflow-visible">
-      <div className="w-full py-4 px-24 flex items-center justify-between bg-light z-50 overflow-visible relative">
+      <div className="w-full py-4 px-4 md:px-24 flex items-center justify-between bg-light z-50 overflow-visible relative">
         {/* لوگو و جستجو */}
-        <section className="w-2/3 flex items-center gap-10 overflow-visible">
-          <figure>
+        <section className="w-full md:w-2/3 flex items-center gap-10 overflow-visible">
+          <figure className="hidden md:flex">
             <Link href={'/shop'}>
               <Image
                 src="/images/logo.png"
@@ -170,7 +170,7 @@ export default function ShopPageHeader() {
         </section>
 
         {/* آیکون‌ها */}
-        <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4">
           {user ? (
             <UserDropdown user={user} onLogout={logout} />
           ) : (
@@ -201,7 +201,7 @@ export default function ShopPageHeader() {
 
       {/* منوی پایین: routes و دسته‌ها */}
       <nav
-        className={`absolute top-full left-0 w-full bg-light -z-10 px-24 py-2 flex items-center gap-20 text-sm font-medium overflow-x-auto transition-transform duration-300 ${
+        className={`hidden absolute top-full left-0 w-full bg-light -z-10 px-24 py-2 xl:flex items-center gap-20 text-sm font-medium overflow-x-auto transition-transform duration-300 ${
           show ? 'translate-y-0' : '-translate-y-full'
         }`}
       >

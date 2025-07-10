@@ -16,7 +16,7 @@ export default function CartSummary({ totalItems, totalPrice }) {
       <div className="flex items-center justify-center gap-2">
         <h3 className="text-lg text-center font-bold text-dark">سبد خرید</h3>
         <Image
-          src={'/icons/Basket_alt_3_duotone.svg'}
+          src={'/icons/custom/Basket_alt_3_duotone.svg'}
           alt="سبد خرید"
           width={32}
           height={32}
