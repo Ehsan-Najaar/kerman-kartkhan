@@ -1,23 +1,27 @@
 'use client'
 
+import MobileDrawer from '@/components/MobileDrawer'
 import AuthModal from '@/components/shop/AuthModal'
 import PopularOrSearchProducts from '@/components/shop/search/PopularOrSearchProducts'
 import RecentSearches from '@/components/shop/search/RecentSearches'
 import UserDropdown from '@/components/shop/UserDropdown'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import { routes } from '@/constants/routes'
 import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
+import { motion } from 'framer-motion'
 import Fuse from 'fuse.js'
-import { Search, ShoppingCart, User } from 'lucide-react'
+import { Menu, Search, Shapes, ShoppingCart, User, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
 export default function ShopPageHeader() {
-  const { user, setUser, cart, logout } = useAppContext()
+  const { user, cart, logout } = useAppContext()
   const cartCount = cart?.items?.length || 0
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [show, setShow] = useState(true)
   const [recentSearches, setRecentSearches] = useState([])
@@ -33,7 +37,7 @@ export default function ShopPageHeader() {
     { name: 'لوازم جانبی', href: '/category/accessories' },
   ]
 
-  const routes = [
+  const headerRoutes = [
     { name: 'اصلی', href: '/' },
     { name: 'فروشگاه', href: '/shop' },
     { name: 'درباره ما', href: '/about-us' },
@@ -102,6 +106,16 @@ export default function ShopPageHeader() {
     return () => document.removeEventListener('click', handleClickOutside)
   }, [])
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.mobile-menu') && !e.target.closest('.menu-btn')) {
+        setIsDrawerOpen(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+  }, [])
+
   const handleSearchSubmit = () => {
     if (search.trim() && !recentSearches.includes(search)) {
       const updated = [search, ...recentSearches].slice(0, 5)
@@ -131,7 +145,25 @@ export default function ShopPageHeader() {
             </Link>
           </figure>
 
-          <section className="w-full overflow-visible" ref={dropdownRef}>
+          <section
+            className="w-full flex items-center gap-4 overflow-visible"
+            ref={dropdownRef}
+          >
+            <button
+              aria-label="باز کردن منوی موبایل"
+              onClick={() => setIsDrawerOpen(true)}
+              className="menu-btn lg:hidden bg-bg p-3 rounded-lg text-gray border border-lightgray/35"
+            >
+              <Menu size={24} />
+            </button>
+
+            {isDrawerOpen && (
+              <MobileDrawer
+                routes={routes}
+                onClose={() => setIsDrawerOpen(false)}
+              />
+            )}
+
             <Input
               id="search"
               name="search"
@@ -149,22 +181,80 @@ export default function ShopPageHeader() {
               icon={<Search size={20} className="text-gray" />}
             />
 
-            {isDropdownOpen && (
-              <div className="absolute bg-white border border-lightgray rounded-lg shadow-md w-[44%] mt-2 p-4 z-50 space-y-4">
-                <RecentSearches
-                  items={recentSearches}
-                  onSelect={(item) => {
-                    setSearch(item)
-                    setIsDropdownOpen(false)
-                  }}
-                  onClear={clearRecentSearches}
-                />
+            <button
+              aria-label="باز کردن منوی موبایل"
+              className="bg-bg lg:hidden p-3 rounded-lg text-gray border border-lightgray/35"
+            >
+              <Shapes size={24} />
+            </button>
 
-                <PopularOrSearchProducts
-                  search={search}
-                  products={search ? filteredProducts : popularProducts}
-                />
-              </div>
+            {isDropdownOpen && (
+              <>
+                {/* حالت موبایل */}
+                <motion.div
+                  className="fixed inset-0 z-[999] bg-white p-4 overflow-y-auto md:hidden space-y-8"
+                  initial={{ y: '100%' }}
+                  animate={{ y: 0 }}
+                  exit={{ y: '100%' }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <Input
+                      id="search"
+                      name="search"
+                      placeholder="جستجو در محصولات..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      onFocus={() => setIsDropdownOpen(true)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault()
+                          handleSearchSubmit()
+                          setIsDropdownOpen(false)
+                        }
+                      }}
+                      icon={<Search size={20} className="text-gray" />}
+                    />
+                    <button
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="text-gray border border-lightgray rounded p-2"
+                    >
+                      <X />
+                    </button>
+                  </div>
+
+                  <RecentSearches
+                    items={recentSearches}
+                    onSelect={(item) => {
+                      setSearch(item)
+                      setIsDropdownOpen(false)
+                    }}
+                    onClear={clearRecentSearches}
+                  />
+
+                  <PopularOrSearchProducts
+                    search={search}
+                    products={search ? filteredProducts : popularProducts}
+                  />
+                </motion.div>
+
+                {/* حالت دسکتاپ */}
+                <div className="absolute top-16 bg-white border border-lightgray rounded-lg shadow-md w-[44%] mt-2 p-4 z-50 space-y-4 hidden md:block">
+                  <RecentSearches
+                    items={recentSearches}
+                    onSelect={(item) => {
+                      setSearch(item)
+                      setIsDropdownOpen(false)
+                    }}
+                    onClear={clearRecentSearches}
+                  />
+
+                  <PopularOrSearchProducts
+                    search={search}
+                    products={search ? filteredProducts : popularProducts}
+                  />
+                </div>
+              </>
             )}
           </section>
         </section>
@@ -199,7 +289,7 @@ export default function ShopPageHeader() {
         </div>
       </div>
 
-      {/* منوی پایین: routes و دسته‌ها */}
+      {/* منوی پایین: headerRoutes و دسته‌ها */}
       <nav
         className={`hidden absolute top-full left-0 w-full bg-light -z-10 px-24 py-2 xl:flex items-center gap-20 text-sm font-medium overflow-x-auto transition-transform duration-300 ${
           show ? 'translate-y-0' : '-translate-y-full'
@@ -210,7 +300,7 @@ export default function ShopPageHeader() {
             صفحات
           </span>
           <div className="h-6 w-px bg-lightgray rounded-full"></div>
-          {routes.map((route) => (
+          {headerRoutes.map((route) => (
             <Link
               key={route.href}
               href={route.href}

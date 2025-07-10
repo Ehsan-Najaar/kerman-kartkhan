@@ -13,7 +13,7 @@ export default function Layout({ children }) {
   const shouldApplyContainer = !isShopRoute && !isAdminPanel && !isLoginPage
 
   return (
-    <main className={shouldApplyContainer ? 'max-w-6xl mx-auto' : ''}>
+    <main className={shouldApplyContainer ? 'max-w-6xl mx-auto' : 'pb-16'}>
       {children}
       <Toaster />
       <BottomNavbar />
