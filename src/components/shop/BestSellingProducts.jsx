@@ -133,14 +133,14 @@ export default function BestSellingProducts({ products }) {
 
         <button
           ref={prevRef}
-          className="absolute -right-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
+          className="hidden lg:block absolute -right-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
         >
           <ChevronRight />
         </button>
 
         <button
           ref={nextRef}
-          className="absolute -left-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
+          className="hidden lg:block absolute -left-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
         >
           <ChevronLeft />
         </button>
