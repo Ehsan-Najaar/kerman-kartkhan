@@ -4,10 +4,9 @@ import Footer from '@/components/Footer'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
 import DashboardPanelNavbar from '@/components/shop/userDashboard/DashboardPanelNavbar'
 import OrderItem from '@/components/shop/userDashboard/OrderItem'
-import { Loader } from 'lucide-react'
+import { ArrowRight, Loader } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { FiChevronLeft } from 'react-icons/fi'
 
 const TABS = [
   { label: 'همه', value: 'all' },
@@ -48,28 +47,33 @@ export default function MyOrdersPage() {
       : orders.filter((o) => o.orderStatus === selectedTab)
 
   return (
-    <div className="min-h-screen bg-light space-y-24">
-      <ShopPageHeader />
+    <div className="min-h-screen bg-light space-y-24" style={{ margin: 0 }}>
+      <div className="hidden lg:flex">
+        <ShopPageHeader />
+      </div>
+
       <div className="lg:flex gap-12 px-4 sm:px-12 lg:px-24">
-        <DashboardPanelNavbar />
+        <div className="hidden lg:flex">
+          <DashboardPanelNavbar />
+        </div>
 
         <div className="flex-1">
           {/* هدر موبایل */}
-          <div className="lg:hidden flex items-center justify-between bg-light rounded-lg shadow p-2 mb-4">
-            <h2 className="h4">سفارشات من</h2>
-            <Link href="/dashboard">
-              <FiChevronLeft size={32} />
+          <div className="lg:hidden flex items-center gap-2 bg-light text-dark rounded-lg p-4 mb-4">
+            <Link href="/shop/dashboard">
+              <ArrowRight size={24} />
             </Link>
+            <h2 className="h4">سفارشات من</h2>
           </div>
 
-          <div className="min-h-96 h-auto bg-light text-dark rounded-2xl flex flex-col items-center p-6 shadow border border-lightgray/35 gap-4">
+          <div className="min-h-96 h-auto bg-light text-dark rounded-2xl flex flex-col items-center lg:p-6 lg:shadow lg:border border-lightgray/35 gap-4">
             {/* تب‌ها */}
-            <div className="w-full flex flex-wrap gap-2 mb-2">
+            <div className="w-full flex flex-nowrap gap-2 mb-2 overflow-x-auto scrollbar-hide">
               {TABS.map((tab) => (
                 <button
                   key={tab.value}
                   onClick={() => setSelectedTab(tab.value)}
-                  className={`px-4 py-2 rounded-full border transition-all duration-200 text-sm cursor-pointer ${
+                  className={`whitespace-nowrap px-4 py-2 rounded-full border transition-all duration-200 text-sm cursor-pointer ${
                     selectedTab === tab.value
                       ? 'bg-secondary text-white border-secondary'
                       : 'bg-white text-gray border-gray-300 hover:bg-gray-50'

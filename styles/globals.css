@@ -66,3 +66,11 @@ body {
 }
 
 /* 44880ef7-4fed-4f60-ace0-84081c5643ce */
+
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

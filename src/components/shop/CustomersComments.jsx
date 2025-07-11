@@ -55,12 +55,17 @@ export default function CustomersComments() {
   }
 
   return (
-    <div className="bg-gradient-to-t from-section/15 to-light py-16 rounded-2xl">
-      <h3 className="h3 text-center relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
+    <div
+      className="py-16 rounded-2xl"
+      style={{
+        background: `linear-gradient(to top, transparent 0%, #fbf5f6 30%, #fbf5f6 70%, transparent 100%)`,
+      }}
+    >
+      <h3 className="lg:text-center lg:text-xl px-4 lg:px-0 font-semibold mb-2">
         نظرات مشتریان کرمان کارتخوان
       </h3>
 
-      <div className="relative mt-12">
+      <div className="relative lg:mt-12 mt-4">
         <Swiper
           modules={[Navigation, Autoplay]}
           navigation={{
@@ -73,29 +78,46 @@ export default function CustomersComments() {
             delay: 4000,
             disableOnInteraction: false,
           }}
-          slidesPerView={3}
-          spaceBetween={30}
-          className="px-8 h-52"
+          slidesPerView={1}
+          spaceBetween={16}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+          }}
+          className="px-8 py-2 h-56"
           onSlideChange={handleSlideStyle}
           onSwiper={handleSlideStyle}
         >
           {comments.map((item, index) => (
             <SwiperSlide key={index} className="transition-all duration-300">
-              <div className="bg-light border border-section/80 text-dark rounded-xl px-6 py-8 text-right h-full relative">
+              <div
+                className="bg-light shadow text-dark rounded-xl scale-95 
+                      px-6 py-8 text-right h-full relative 
+                      md:px-6 md:py-8 
+                      sm:px-3 sm:py-4"
+              >
                 {/* Avatar + Rating */}
                 <div className="flex gap-2 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-section/50 flex items-center justify-center text-sm font-bold">
-                    <User size={24} className="text-dark" />
+                  <div className="w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-section/50 flex items-center justify-center text-sm font-bold">
+                    <User size={20} className="text-dark" />
                   </div>
                   {/* Name + Job */}
                   <div>
-                    <h3 className="font-bold mb-1 text-dark">{item.name}</h3>
+                    <h3 className="font-bold mb-1 text-dark text-sm sm:text-xs">
+                      {item.name}
+                    </h3>
                     <p className="text-xs text-gray/80 mb-4">{item.job}</p>
                   </div>
                 </div>
 
                 {/* Comment */}
-                <p className="text-sm leading-relaxed">{item.comment}</p>
+                <p className="text-sm sm:text-xs leading-relaxed">
+                  {item.comment}
+                </p>
               </div>
             </SwiperSlide>
           ))}

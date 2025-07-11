@@ -131,7 +131,7 @@ export default function ShopPageHeader() {
 
   return (
     <header className="w-full sticky top-0 z-50 bg-light rounded-b-lg overflow-visible">
-      <div className="w-full py-4 px-4 md:px-24 flex items-center justify-between bg-light z-50 overflow-visible relative">
+      <div className="w-full py-4 px-4 md:px-12 lg:px-24 flex items-center justify-between bg-light z-50 overflow-visible relative">
         {/* لوگو و جستجو */}
         <section className="w-full md:w-2/3 flex items-center gap-10 overflow-visible">
           <figure className="hidden md:flex">
@@ -152,17 +152,10 @@ export default function ShopPageHeader() {
             <button
               aria-label="باز کردن منوی موبایل"
               onClick={() => setIsDrawerOpen(true)}
-              className="menu-btn lg:hidden bg-bg p-3 rounded-lg text-gray border border-lightgray/35"
+              className="menu-btn md:hidden bg-bg p-3 rounded-lg text-gray border border-lightgray/35"
             >
               <Menu size={24} />
             </button>
-
-            {isDrawerOpen && (
-              <MobileDrawer
-                routes={routes}
-                onClose={() => setIsDrawerOpen(false)}
-              />
-            )}
 
             <Input
               id="search"
@@ -179,11 +172,12 @@ export default function ShopPageHeader() {
                 }
               }}
               icon={<Search size={20} className="text-gray" />}
+              className="flex-1"
             />
 
             <button
               aria-label="باز کردن منوی موبایل"
-              className="bg-bg lg:hidden p-3 rounded-lg text-gray border border-lightgray/35"
+              className="bg-bg md:hidden p-3 rounded-lg text-gray border border-lightgray/35"
             >
               <Shapes size={24} />
             </button>
@@ -327,6 +321,10 @@ export default function ShopPageHeader() {
           ))}
         </section>
       </nav>
+
+      {isDrawerOpen && (
+        <MobileDrawer routes={routes} onClose={() => setIsDrawerOpen(false)} />
+      )}
 
       {/* مودال ورود */}
       <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

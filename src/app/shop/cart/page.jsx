@@ -65,7 +65,7 @@ export default function CartPage() {
     <div className="min-h-screen bg-light">
       <ShopPageHeader />
 
-      <section className="flex gap-12 px-4 sm:px-6 lg:px-24 pt-12 min-h-96">
+      <section className="flex flex-col lg:flex-row gap-12 px-4 sm:px-6 lg:px-24 lg:pt-12 min-h-96">
         <ul className="lg:w-[70%] space-y-4">
           {cart.items.map((item, index) =>
             item.productId ? (

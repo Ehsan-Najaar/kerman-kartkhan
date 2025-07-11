@@ -1,5 +1,6 @@
 'use client'
 
+import TomanIcon from '@/components/TomanIcon'
 import { formatPriceToPersian } from '@/utils/formatPrice'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -78,7 +79,7 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
               کارتخوان {product.productId?.name?.toUpperCase() || 'بدون نام'}
             </Link>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 mt-2">
+            <div className="flex sm:items-center gap-4 mt-2">
               {/* ✅ نمایش variant اگر وجود داشته باشه */}
               {product.selectedVariant && (
                 <span className="text-gray text-xs sm:text-sm">
@@ -95,7 +96,7 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
                     رنگ:
                   </span>
                   <span
-                    className="w-7 h-7 rounded-full p-1 border border-gray-300 flex items-center justify-center"
+                    className="md:w-7 md:h-7 w-4 h-4 rounded-full md:p-1 border border-lightgray flex items-center justify-center"
                     title={product.bodyColors.join(' / ')}
                   >
                     <div
@@ -112,7 +113,7 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
                     رنگ:
                   </span>
                   <span
-                    className="w-7 h-7 rounded-full p-1 border border-lightgray flex items-center justify-center"
+                    className="md:w-7 md:h-7 w-4 h-4 rounded-full md:p-1 border border-lightgray flex items-center justify-center"
                     title={product.selectedColor}
                   >
                     <div
@@ -135,17 +136,28 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
             </div>
 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mt-2">
-              <span className="text-gray text-xs sm:text-sm">
-                {formatPriceToPersian(unitPrice)} تومان
+              <span className="flex items-center gap-1 text-gray text-xs sm:text-sm">
+                {formatPriceToPersian(unitPrice)}
+                <TomanIcon className="fill-gray" />
               </span>
 
               <div className="w-max flex items-center border border-gray-300 rounded-lg">
-                <button
-                  onClick={() => onUpdateQuantity(product.quantity - 1)}
-                  className="px-2 py-2 text-gray-600 cursor-pointer"
-                >
-                  <FiMinus />
-                </button>
+                {product.quantity === 1 ? (
+                  <button
+                    onClick={() => onRemove(product)}
+                    className="px-2 py-2 text-red-600 hover:text-red-800 cursor-pointer"
+                  >
+                    <FiTrash2 />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => onUpdateQuantity(product.quantity - 1)}
+                    className="px-2 py-2 text-gray-600 cursor-pointer"
+                  >
+                    <FiMinus />
+                  </button>
+                )}
+
                 <span className="w-10 text-center text-gray-700">
                   {product.quantity}
                 </span>
@@ -157,20 +169,14 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
                 </button>
               </div>
 
-              <span className="w-28 text-left text-dark text-xs sm:text-base font-semibold sm:ml-4">
-                {formatPriceToPersian(unitPrice * product.quantity)} تومان
+              <span className="flex items-center gap-1 w-28 text-left text-dark text-xs sm:text-base sm:ml-4">
+                {formatPriceToPersian(unitPrice * product.quantity)}
+                <TomanIcon width={16} height={16} className="fill-dark" />
               </span>
             </div>
           </div>
         </div>
       </div>
-
-      <button
-        onClick={() => onRemove(product)}
-        className="md:w-[5%] w-[15%] grid place-items-center text-gray bg-lightgray hover:bg-red-600 hover:text-light transition-all duration-300 cursor-pointer"
-      >
-        <FiTrash2 size={24} />
-      </button>
     </div>
   )
 }

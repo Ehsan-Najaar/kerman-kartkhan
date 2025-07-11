@@ -37,8 +37,8 @@ const FooterPageLink = ({ href, label }) => (
 export default function Footer() {
   const [open, setOpen] = useState(false)
   return (
-    <footer className="mt-12">
-      <section className="bg-light text-dark small-text rounded-4xl border border-lightgray shadow-md overflow-hidden">
+    <footer className="hidden lg:block mt-12">
+      <section className="bg-light text-dark small-text lg:rounded-4xl border border-lightgray shadow-md overflow-hidden">
         {/* بخش بالایی شامل: برند، دسترسی سریع، صفحات، نمادها */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4 gap-8 p-4">
           {/* برند و توضیحات */}

@@ -52,12 +52,12 @@ export default function ProductsByType({ products }) {
   const normalClass = 'bg-gray-100 hover:bg-gray-200'
 
   return (
-    <div className="gap-4 lg:px-24 py-12">
-      <h3 className="text-center text-xl font-semibold mb-2">
+    <section className="gap-4 py-12 lg:px-24">
+      <h3 className="lg:text-center lg:text-xl px-4 lg:px-0 font-semibold mb-2">
         محصولات ما بر اساس نوع کارت‌خوان
       </h3>
 
-      <figure className="relative">
+      <figure className="hidden lg:block relative">
         <Image
           src="/images/ProductsByCategories-bg.svg"
           alt="تصویر"
@@ -69,13 +69,13 @@ export default function ProductsByType({ products }) {
         />
       </figure>
 
-      <section className="mt-12" dir="rtl">
+      <div className="relative lg:mt-12 mt-4 lg:max-w-[85%] mx-auto">
         <h4 className="hidden lg:block text-center relative z-10">
           نوع کارت‌خوان مورد نظرت رو انتخاب کن تا محصول مناسب رو پیدا کنی.
         </h4>
 
         {/* لیست انواع کارت‌خوان */}
-        <div className="flex flex-wrap justify-center gap-4 my-4 relative z-10">
+        <div className="flex flex-wrap lg:justify-center gap-4 my-4 px-4 lg:px-0 relative z-10">
           {types.map((type) => (
             <span
               key={type}
@@ -92,66 +92,68 @@ export default function ProductsByType({ products }) {
           ))}
         </div>
 
-        {/* اسلایدر */}
-        <div className="relative mt-12 max-w-[85%] mx-auto">
-          <button
-            ref={prevRef}
-            className="hidden lg:block absolute -right-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
-          >
-            <ChevronRight />
-          </button>
+        <button
+          ref={prevRef}
+          className="hidden lg:block absolute -right-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
+        >
+          <ChevronRight />
+        </button>
 
-          <button
-            ref={nextRef}
-            className="hidden lg:block absolute -left-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
-          >
-            <ChevronLeft />
-          </button>
+        <button
+          ref={nextRef}
+          className="hidden lg:block absolute -left-16 top-1/2 -translate-y-1/2 z-10 bg-light text-dark shadow p-2 rounded-lg cursor-pointer"
+        >
+          <ChevronLeft />
+        </button>
 
-          <Swiper
-            key={selectedType}
-            modules={[Navigation, Autoplay]}
-            slidesPerView={1.2} // default
-            spaceBetween={16}
-            autoplay={{
-              delay: 4000,
-              disableOnInteraction: false,
-            }}
-            dir="rtl"
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper
-            }}
-            navigation={{
-              prevEl: prevRef.current,
-              nextEl: nextRef.current,
-            }}
-            breakpoints={{
-              640: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
-              1280: {
-                slidesPerView: 4,
-              },
-            }}
-            className="h-96"
-          >
-            {loading
-              ? Array.from({ length: 8 }).map((_, index) => (
-                  <SwiperSlide key={index}>
-                    <ProductCardSkeleton />
-                  </SwiperSlide>
-                ))
-              : filteredProducts.map((product) => (
-                  <SwiperSlide key={product._id}>
-                    <ProductCard product={product} />
-                  </SwiperSlide>
-                ))}
-          </Swiper>
-        </div>
-      </section>
-    </div>
+        <Swiper
+          key={selectedType}
+          modules={[Navigation, Autoplay]}
+          spaceBetween={16}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          dir="rtl"
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper
+          }}
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
+          breakpoints={{
+            0: {
+              slidesPerView: 1.5,
+            },
+            480: {
+              slidesPerView: 2.3,
+            },
+            640: {
+              slidesPerView: 2.6,
+            },
+            1024: {
+              slidesPerView: 3.1,
+            },
+            1280: {
+              slidesPerView: 4,
+            },
+          }}
+          className="h-96"
+        >
+          {loading
+            ? Array.from({ length: 8 }).map((_, index) => (
+                <SwiperSlide key={index}>
+                  <ProductCardSkeleton />
+                </SwiperSlide>
+              ))
+            : filteredProducts.map((product) => (
+                <SwiperSlide key={product._id} className="px-4">
+                  <ProductCard product={product} />
+                </SwiperSlide>
+              ))}
+        </Swiper>
+      </div>
+    </section>
   )
 }

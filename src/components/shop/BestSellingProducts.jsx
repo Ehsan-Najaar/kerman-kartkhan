@@ -37,12 +37,12 @@ export default function BestSellingProducts({ products }) {
 
   if (loading) {
     return (
-      <section className="py-12 px-24">
-        <h3 className="h3 text-center relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
+      <section className="gap-4 py-12 lg:px-24">
+        <h3 className="lg:text-center lg:text-xl px-4 lg:px-0 font-semibold mb-2">
           پرفروش ترین های کرمان کارتخوان
         </h3>
 
-        <figure className="relative">
+        <figure className="hidden lg:block relative">
           <Image
             src="/images/BestSellingProducts-bg.svg"
             alt="تصویر"
@@ -54,14 +54,14 @@ export default function BestSellingProducts({ products }) {
           />
         </figure>
 
-        <div className="relative mt-12 max-w-[85%] mx-auto">
+        <div className="relative lg:mt-12 mt-4 lg:max-w-[85%] mx-auto">
           <h4 className="text-center relative z-10 mb-12">
             در حال بارگذاری پرفروش‌ترین محصولات...
           </h4>
 
           <Swiper
             modules={[Navigation, Autoplay]}
-            slidesPerView={4}
+            slidesPerView={1.5}
             spaceBetween={16}
             autoplay={{
               delay: 4000,
@@ -74,6 +74,23 @@ export default function BestSellingProducts({ products }) {
             navigation={{
               prevEl: prevRef.current,
               nextEl: nextRef.current,
+            }}
+            breakpoints={{
+              0: {
+                slidesPerView: 1.5,
+              },
+              480: {
+                slidesPerView: 2.3,
+              },
+              640: {
+                slidesPerView: 2.6,
+              },
+              1024: {
+                slidesPerView: 3.1,
+              },
+              1280: {
+                slidesPerView: 4,
+              },
             }}
             className="h-96"
           >
@@ -91,12 +108,12 @@ export default function BestSellingProducts({ products }) {
   if (bestSellingProducts.length === 0) return null
 
   return (
-    <section className="py-12 px-24">
-      <h3 className="h3 text-center relative after:content-[''] after:absolute after:right-0 after:top-0 after:mt-2 after:w-2 after:h-8 after:bg-secondary after:rounded-full after:-z-10">
-        پرفروش ترین های کرمان کارتخوان
+    <section className="gap-4 py-12 lg:px-24">
+      <h3 className="lg:text-center lg:text-xl px-4 lg:px-0 font-semibold mb-2">
+        پرفروش ترین محصولات ما
       </h3>
 
-      <figure className="relative">
+      <figure className="hidden lg:block relative">
         <Image
           src="/images/BestSellingProducts-bg.svg"
           alt="تصویر"
@@ -108,8 +125,8 @@ export default function BestSellingProducts({ products }) {
         />
       </figure>
 
-      <div className="relative mt-12 max-w-[85%] mx-auto">
-        <h4 className="text-center relative z-10 mb-12">
+      <div className="relative lg:mt-12 mt-4 lg:max-w-[85%] mx-auto">
+        <h4 className="hidden lg:block text-center relative z-10 mb-12">
           این‌ها پرفروش‌ترین دستگاه‌های کارت‌خوان ما تا این لحظه هستن که مورد
           اعتماد بیشتر مشتری‌ها قرار گرفتن.
         </h4>
@@ -130,7 +147,6 @@ export default function BestSellingProducts({ products }) {
 
         <Swiper
           modules={[Navigation, Autoplay]}
-          slidesPerView={4}
           spaceBetween={16}
           autoplay={{
             delay: 4000,
@@ -144,10 +160,27 @@ export default function BestSellingProducts({ products }) {
             prevEl: prevRef.current,
             nextEl: nextRef.current,
           }}
+          breakpoints={{
+            0: {
+              slidesPerView: 1.5,
+            },
+            480: {
+              slidesPerView: 2.3,
+            },
+            640: {
+              slidesPerView: 2.6,
+            },
+            1024: {
+              slidesPerView: 3.1,
+            },
+            1280: {
+              slidesPerView: 4,
+            },
+          }}
           className="h-96"
         >
           {bestSellingProducts.map((product) => (
-            <SwiperSlide key={product._id} className="px-2">
+            <SwiperSlide key={product._id} className="px-4">
               <ProductCard product={product} />
             </SwiperSlide>
           ))}

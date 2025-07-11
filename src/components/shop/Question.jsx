@@ -4,20 +4,22 @@ import Link from 'next/link'
 
 export default function Question() {
   return (
-    <div className="bg-gray-200 h-96 flex items-center justify-center px-8">
+    <div className="bg-gray-200 h-96 flex flex-col md:flex-row items-center justify-center px-8">
       {/* Image */}
-      <div className="w-1/2 flex justify-center">
+      <div className="w-1/2 sm:w-1/3 flex justify-center">
         <Image src="/images/question.png" alt="سوال" width={350} height={350} />
       </div>
 
       {/* Text & Buttons */}
-      <div className="w-1/2 flex flex-col justify-center items-start text-right space-y-4">
-        <h2 className="text-2xl font-bold">سوالی دارید؟</h2>
-        <p className="text-gray-700">
+      <div className="sm:w-1/2 flex flex-col justify-center items-start text-right space-y-4">
+        <h3 className="w-full text-center lg:text-right lg:text-xl px-4 lg:px-0 font-semibold mb-2">
+          سوالی دارید؟
+        </h3>
+        <p className="text-gray text-center lg:text-right">
           اگر سوالی در ذهن دارید یا نیاز به راهنمایی بیشتر دارید، ما اینجا هستیم
           تا کمک کنیم.
         </p>
-        <div className="flex gap-4 mt-4">
+        <div className="w-full flex items-center justify-center lg:justify-start gap-4 mt-4">
           <Link href={'/faq'}>
             <Button variant="light" fontWeight="medium" size="sm">
               سوالات متداول

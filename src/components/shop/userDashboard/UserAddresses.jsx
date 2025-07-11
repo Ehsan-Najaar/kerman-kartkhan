@@ -41,7 +41,7 @@ export default function UserAddresses() {
   }
 
   return (
-    <div className="h-96 lg:h-auto lg:w-4/5 bg-light text-dark rounded-2xl p-6 flex flex-col items-center shadow border border-lightgray/35">
+    <div className="h-96 lg:h-auto lg:w-4/5 bg-light text-dark rounded-2xl p-6 flex flex-col items-center lg:shadow lg:border border-lightgray/35">
       <div className="w-full max-w-3xl">
         {user?.address?.length === 0 && (
           <div className="flex flex-col items-center gap-4">
@@ -63,7 +63,7 @@ export default function UserAddresses() {
         {user?.address?.map((addr, i) => (
           <div
             key={i}
-            className="border border-lightgray p-4 rounded-md mb-4 flex justify-between items-center"
+            className="border border-lightgray p-4 rounded-md mb-4 flex flex-col lg:flex-row justify-between items-center"
           >
             <div className="space-y-3">
               <div className="flex items-center gap-2">
@@ -84,10 +84,12 @@ export default function UserAddresses() {
                 <span className="text-gray-500">{addr.postalCode || '-'}</span>
               </div>
             </div>
-            <Button onClick={() => handleEdit(i)} variant="ghost" size="sm">
-              ویرایش
-              <FiEdit size={17} />
-            </Button>
+            <div className="w-full lg:w-max flex justify-end mt-4 lg:mt-0">
+              <Button onClick={() => handleEdit(i)} variant="ghost" size="sm">
+                ویرایش
+                <FiEdit size={17} />
+              </Button>
+            </div>
           </div>
         ))}
       </div>

@@ -190,8 +190,16 @@ export default function Faq() {
       {pathname === '/landing' && (
         <div className="flex justify-center mt-10">
           <Link href="/faq">
-            <Button variant="ghost" fontWeight="medium">
-              سوال شما اینجا نیست؟ مشاهده همه سوالات
+            <Button
+              variant="ghost"
+              outline="true"
+              fontWeight="medium"
+              className="text-sm"
+            >
+              <p className="hidden md:block">
+                سوال شما اینجا نیست؟ مشاهده همه سوالات
+              </p>
+              <p className="md:hidden">مشاهده همه سوالات متداول</p>
               <FiArrowLeft size={20} />
             </Button>
           </Link>

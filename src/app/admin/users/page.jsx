@@ -3,6 +3,7 @@
 import AdminPanelNavbar from '@/components/AdminPanelNavbar'
 import { Loader2 } from '@/components/Loader'
 import UsersHeader from '@/components/admin/users/UsersHeader'
+import ConfirmDialog from '@/components/ui/ConfirmDialog'
 import { formatPriceToPersian } from '@/utils/formatPrice'
 import {
   BadgeCheck,
@@ -24,6 +25,8 @@ export default function UsersManagment() {
   const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
   const [filterRole, setFilterRole] = useState('all')
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const [userIdToDelete, setUserIdToDelete] = useState(null)
 
   useEffect(() => {
     fetchUsers()
@@ -98,17 +101,19 @@ export default function UsersManagment() {
     }
   }
 
-  const handleDeleteUser = async (userId) => {
-    if (!window.confirm('آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟'))
-      return
+  const handleDeleteUser = (userId) => {
+    setUserIdToDelete(userId)
+    setConfirmOpen(true)
+  }
 
+  const confirmDeleteUser = async () => {
     try {
       const res = await fetch('/api/admin/users', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId }),
+        body: JSON.stringify({ userId: userIdToDelete }),
       })
 
       const data = await res.json()
@@ -123,6 +128,9 @@ export default function UsersManagment() {
     } catch (error) {
       console.error(error)
       toast.error('خطا در حذف کاربر')
+    } finally {
+      setConfirmOpen(false)
+      setUserIdToDelete(null)
     }
   }
 
@@ -167,8 +175,8 @@ export default function UsersManagment() {
         )}
 
         {!loading && !error && filteredUsers.length > 0 && (
-          <div className="overflow-auto max-h-[600px] mt-4">
-            <div className="w-full border border-lightgray/50 rounded overflow-hidden">
+          <div className="overflow-x-auto max-h-[600px] mt-4">
+            <div className="min-w-[800px] w-full border border-lightgray/50 rounded overflow-hidden">
               {/* Header Row */}
               <div className="grid grid-cols-7 bg-gray-50 text-gray/70 text-xs text-right rtl border-b border-gray-200">
                 <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
@@ -278,6 +286,17 @@ export default function UsersManagment() {
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        isOpen={confirmOpen}
+        title="حذف کاربر"
+        message="آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟"
+        onConfirm={confirmDeleteUser}
+        onCancel={() => {
+          setConfirmOpen(false)
+          setUserIdToDelete(null)
+        }}
+      />
     </div>
   )
 }

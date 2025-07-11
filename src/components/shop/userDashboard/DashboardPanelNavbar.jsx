@@ -57,7 +57,7 @@ export default function DashboardPanelNavbar() {
           ? 'hidden lg:flex'
           : ''
       }
-         lg:h-96 lg:w-1/5 bg-light text-dark rounded-2xl flex flex-col items-center p-4 shadow border border-lightgray/35`}
+         lg:h-96  lg:w-[250px] bg-light text-dark rounded-2xl flex flex-col items-center p-4 lg:shadow lg:border border-lightgray/35`}
     >
       <figure className="p-4 bg-bg rounded-full mb-4">
         <User size={40} />
@@ -69,7 +69,7 @@ export default function DashboardPanelNavbar() {
             <Link
               key={index}
               href={item.route}
-              className={`flex items-center gap-2 p-3 w-full rounded-lg transition bg-bg ${
+              className={`flex items-center gap-2 p-3 w-full rounded-lg transition border border-lightgray/35 bg-bg ${
                 pathname === item.route
                   ? 'bg-secondary text-light'
                   : 'lg:bg-transparent hover:bg-bg hover:pr-6 transition-all duration-300'

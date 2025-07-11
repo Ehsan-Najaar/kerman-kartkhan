@@ -28,7 +28,7 @@ export default function BottomNavbar() {
     },
     {
       label: 'پروفایل',
-      href: '/shop/dashboard/edit-account',
+      href: '/shop/dashboard',
       icon: '/icons/custom/User.svg',
       activeIcon: '/icons/custom/User-active.svg',
     },

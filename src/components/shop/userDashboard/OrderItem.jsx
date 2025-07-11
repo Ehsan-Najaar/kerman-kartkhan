@@ -29,17 +29,23 @@ export default function OrderItem({ order }) {
         onClick={() => setOpen(!open)}
         className="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 cursor-pointer"
       >
-        {/* وضعیت سفارش */}
+        {/* بخش وضعیت سفارش */}
         <div
-          className={`flex items-center justify-center w-1/5 gap-2 text-xs font-medium px-2 py-1 rounded-full ${
-            {
-              processing: 'bg-orange-100 text-orange-800',
-              registration: 'bg-purple-100 text-purple-800',
-              shipped: 'bg-blue-100 text-blue-800',
-              cancelled: 'bg-red-100 text-red-800',
-              completed: 'bg-green-100 text-green-800',
-            }[order.orderStatus] || 'bg-gray-100 text-gray-800'
-          }`}
+          className={`
+      flex items-center justify-center
+      text-xs font-medium
+      px-2 py-1 rounded-full
+      sm:w-1/5 w-full
+      ${
+        {
+          processing: 'bg-orange-100 text-orange-800',
+          registration: 'bg-purple-100 text-purple-800',
+          shipped: 'bg-blue-100 text-blue-800',
+          cancelled: 'bg-red-100 text-red-800',
+          completed: 'bg-green-100 text-green-800',
+        }[order.orderStatus] || 'bg-gray-100 text-gray-800'
+      }
+    `}
         >
           <span
             className="w-2 h-2 rounded-full inline-block"
@@ -63,40 +69,43 @@ export default function OrderItem({ order }) {
           }[order.orderStatus] || '-'}
         </div>
 
-        {/* تاریخ */}
-        <div className="w-1/5 text-gray text-xs text-center">
-          {order.createdAt
-            ? new Date(order.createdAt).toLocaleDateString('fa-IR')
-            : '-'}
-        </div>
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-4/5">
+          {/* تاریخ */}
+          <div className="w-full sm:w-1/4 text-gray text-xs text-center sm:text-right">
+            {order.createdAt
+              ? new Date(order.createdAt).toLocaleDateString('fa-IR')
+              : '-'}
+          </div>
 
-        {/* کد سفارش */}
-        <div className="w-1/5 text-xs">
-          <span className="text-gray">کد سفارش</span>{' '}
-          <span>{order.paymentRefId || '-'}</span>
-        </div>
+          {/* کد سفارش */}
+          <div className="w-full sm:w-1/4 text-xs">
+            <span className="text-gray">کد سفارش</span>{' '}
+            <span>{order.paymentRefId || '-'}</span>
+          </div>
 
-        {/* مبلغ کل */}
-        <div className="flex items-center gap-px w-1/5 text-xs">
-          <span className="text-gray">مبلغ کل</span>{' '}
-          <span className="flex items-center gap-1">
-            {formatPriceToPersian(order.totalAmount)}
-            <TomanIcon className="fill-dark" />
-          </span>
-        </div>
+          {/* مبلغ کل */}
+          <div className="w-full sm:w-1/4 flex items-center justify-between sm:justify-start gap-1 text-xs">
+            <span className="text-gray">مبلغ کل</span>{' '}
+            <span className="flex items-center gap-1">
+              {formatPriceToPersian(order.totalAmount)}
+              <TomanIcon className="fill-dark" />
+            </span>
+          </div>
 
-        <button
-          onClick={() => setOpen(!open)}
-          className="w-1/5 flex items-center justify-center gap-1 text-gray cursor-pointer"
-        >
-          <span className="text-xs">مشاهده جزئیات</span>
-          <ChevronDown
-            size={14}
-            className={`transition-transform duration-300 ${
-              open ? 'rotate-180' : ''
-            }`}
-          />
-        </button>
+          {/* دکمه مشاهده جزئیات */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="w-full sm:w-1/4 flex items-center justify-between sm:justify-center gap-1 text-gray cursor-pointer"
+          >
+            <span className="text-xs">مشاهده جزئیات</span>
+            <ChevronDown
+              size={14}
+              className={`transition-transform duration-300 ${
+                open ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       {/* جزئیات */}
@@ -172,7 +181,7 @@ export default function OrderItem({ order }) {
                     )}
                     <div className="flex flex-col gap-1">
                       <span className="text-gray-800 text-sm font-medium">
-                        کارتخوان {productName}
+                        کارتخوان {productName.toUpperCase()}
                       </span>
                       <span className="text-xs text-gray-500">
                         تعداد: {item.quantity || '-'}

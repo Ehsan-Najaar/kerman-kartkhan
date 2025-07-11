@@ -115,7 +115,6 @@ export default function OrdersManagement() {
   }
 
   const filteredOrders = orders.filter((order) => {
-    const name = order.userId?.name || ''
     const nationalCode = order.shippingAddress?.nationalCode || ''
     const refId = order.paymentRefId || ''
 
@@ -151,56 +150,60 @@ export default function OrdersManagement() {
           <p>هیچ سفارشی ثبت نشده است.</p>
         )}
 
-        {/* Header Row */}
-        <div className="grid grid-cols-8 bg-gray-50 text-gray/70 text-xs text-right border border-b-0 border-lightgray/50 rounded-t-lg">
-          <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
-            <span>#</span>
-          </div>
-          <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
-            <Hash size={14} />
-            <span>کد سفارش</span>
-          </div>
-          <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
-            <User size={14} />
-            <span>نام</span>
-          </div>
-          <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
-            <CoinsIcon size={14} />
-            <span>مجموع پرداختی</span>
-          </div>
-          <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
-            <BadgeCheck size={14} />
-            <span>وضعیت پرداخت</span>
-          </div>
-          <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
-            <Truck size={14} />
-            <span>وضعیت سفارش</span>
-          </div>
-          <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
-            <Calendar size={14} />
-            <span>تاریخ ثبت</span>
-          </div>
-          <div className="px-3 py-2 flex items-center gap-1 justify-center">
-            <Eye size={14} />
-            <span>جزئیات</span>
-          </div>
-        </div>
-
-        {!loading && !error && filteredOrders.length > 0 && (
-          <div className="h-[610px] overflow-auto">
-            <div>
-              {filteredOrders.map((order, index) => (
-                <OrderCard
-                  key={order._id}
-                  order={{ ...order, rowNumber: index + 1 }}
-                  onDelete={() => handleDelete(order._id)}
-                  deleting={deletingOrderId === order._id}
-                  updateOrderStatus={handleUpdateOrderStatus(order._id)}
-                  statusFlow={statusFlow}
-                  statusLabels={statusLabels}
-                />
-              ))}
+        {!loading && !error && (
+          <div className="w-full overflow-x-auto">
+            {/* Header Row */}
+            <div className="min-w-[900px] grid grid-cols-8 bg-gray-50 text-gray/70 text-xs text-right border border-b-0 border-lightgray/50 rounded-t-lg">
+              <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
+                <span>#</span>
+              </div>
+              <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
+                <Hash size={14} />
+                <span>کد سفارش</span>
+              </div>
+              <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
+                <User size={14} />
+                <span>نام</span>
+              </div>
+              <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
+                <CoinsIcon size={14} />
+                <span>مجموع پرداختی</span>
+              </div>
+              <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
+                <BadgeCheck size={14} />
+                <span>وضعیت پرداخت</span>
+              </div>
+              <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
+                <Truck size={14} />
+                <span>وضعیت سفارش</span>
+              </div>
+              <div className="px-3 py-2 border-l border-gray-200 flex items-center gap-1 justify-center">
+                <Calendar size={14} />
+                <span>تاریخ ثبت</span>
+              </div>
+              <div className="px-3 py-2 flex items-center gap-1 justify-center">
+                <Eye size={14} />
+                <span>جزئیات</span>
+              </div>
             </div>
+
+            {!loading && !error && filteredOrders.length > 0 && (
+              <div className="h-[610px] overflow-auto">
+                <div className="min-w-[900px]">
+                  {filteredOrders.map((order, index) => (
+                    <OrderCard
+                      key={order._id}
+                      order={{ ...order, rowNumber: index + 1 }}
+                      onDelete={() => handleDelete(order._id)}
+                      deleting={deletingOrderId === order._id}
+                      updateOrderStatus={handleUpdateOrderStatus(order._id)}
+                      statusFlow={statusFlow}
+                      statusLabels={statusLabels}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 

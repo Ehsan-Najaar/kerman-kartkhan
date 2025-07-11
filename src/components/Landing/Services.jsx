@@ -35,7 +35,7 @@ export default function Services() {
           </article>
         </div>
 
-        <div className="overflow-x-auto xl:overflow-visible p-4 -mx-4">
+        <div className="overflow-x-auto xl:overflow-visible scrollbar-hide p-4 -mx-4">
           <div ref={ref} className="flex gap-6 flex-nowrap min-w-max">
             {services.map((service, index) => {
               let positionClass = ''

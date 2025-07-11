@@ -7,7 +7,6 @@ import { Loader2 } from '@/components/Loader'
 import ConfirmDialog from '@/components/ui/ConfirmDialog'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { FiArrowRight } from 'react-icons/fi'
 
 export default function CategoryManagement() {
   const [categoryData, setCategoryData] = useState({
@@ -116,16 +115,6 @@ export default function CategoryManagement() {
           <div className="space-y-20">
             {error && <p className="text-red-500 text-center">{error}</p>}
             <section className="space-y-4">
-              <div className="w-full lg:w-max flex items-center gap-2">
-                <button
-                  onClick={() => (window.location.href = '/admin')}
-                  className="lg:hidden p-2 rounded-full bg-lightgray/50 hover:bg-gray-300"
-                >
-                  <FiArrowRight size={24} />
-                </button>
-                <h3 className="lg:hidden h3">افزودن و ویرایش دسته‌بندی‌ها</h3>
-              </div>
-
               <h3 className="hidden lg:block h3 pb-4 border-b border-lightgray">
                 افزودن و ویرایش دسته‌بندی‌ها
               </h3>

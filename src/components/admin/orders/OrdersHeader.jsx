@@ -12,34 +12,41 @@ export default function OrdersHeader({
   total,
 }) {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center gap-4 p-4">
+    <div className="flex flex-col justify-between items-center gap-4 lg:p-4 pb-4 border-b border-gray-200">
       {/* Right: Title */}
-      <div className="w-1/3 flex items-center gap-2 text-dark">
+      <div className="lg:hidden lg:w-1/3 flex items-center gap-2 text-dark">
         <h3 className="h3">مدیریت سفارشات</h3>
         <small>({total} سفارش)</small>
       </div>
 
-      {/* Center: Search */}
-      <div className="w-1/3 flex items-center gap-2 px-4 py-2 bg-light rounded-lg border border-lightgray placeholder:text-gray/50">
-        <input
-          type="text"
-          placeholder="جستجو کد ملی یا موبایل کاربر..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-transparent focus:outline-none"
-        />
-        <FiSearch size={24} className="text-gray-500" />
-      </div>
+      <div className="w-full flex items-center justify-between gap-2">
+        {/* Right: Title */}
+        <div className="hidden w-1/3 lg:flex items-center gap-2 text-dark">
+          <h3 className="h3">مدیریت سفارشات</h3>
+          <small>({total} سفارش)</small>
+        </div>
 
-      {/* Left: Export & Filters */}
-      <div className="w-1/3 flex items-center justify-end gap-2">
-        <Button variant="secondary" outline="true" size="sm">
-          استخراج اکسل
-          <DownloadCloud size={18} />
-        </Button>
+        {/* Center: Search */}
+        <div className="lg:w-1/3 flex items-center gap-2 px-4 py-2 bg-light rounded-lg border border-lightgray placeholder:text-gray/50">
+          <input
+            type="text"
+            placeholder="جستجو کد سفارش یا کد ملی ..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full bg-transparent focus:outline-none placeholder:text-xs md:placeholder:text-sm"
+          />
+          <FiSearch size={24} className="text-gray-500" />
+        </div>
 
-        {/* فیلتر وضعیت سفارش */}
-        {/* 
+        {/* Left: Export & Filters */}
+        <div className="lg:w-1/3 flex items-center justify-end">
+          <Button variant="secondary" outline="true" size="sm">
+            <p className="hidden lg:flex">استخراج اکسل</p>
+            <DownloadCloud size={18} />
+          </Button>
+
+          {/* فیلتر وضعیت سفارش */}
+          {/* 
           اگر Dropdown کامپوننت آماده‌ات را داشته باشی، این کد را آنکامنت کن:
           
           <Dropdown
@@ -57,6 +64,7 @@ export default function OrdersHeader({
             label="وضعیت سفارش"
           />
         */}
+        </div>
       </div>
     </div>
   )

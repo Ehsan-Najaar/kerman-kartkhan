@@ -69,7 +69,7 @@ export default function UserInformation({ userInfo, isLoading, error }) {
 
   if (isLoading) {
     return (
-      <div className="h-96 lg:h-auto lg:w-4/5 bg-light text-dark rounded-2xl shadow grid place-items-center">
+      <div className="h-96 lg:h-auto lg:w-4/5 bg-light text-dark rounded-2xl lg:shadow grid place-items-center">
         <Loader className="animate-spin" />
       </div>
     )
@@ -77,14 +77,14 @@ export default function UserInformation({ userInfo, isLoading, error }) {
 
   if (error) {
     return (
-      <div className="h-96 lg:h-auto lg:w-4/5 bg-light text-dark rounded-2xl flex flex-col items-center p-6 shadow gap-4">
+      <div className="h-96 lg:h-auto lg:w-4/5 bg-light text-dark rounded-2xl flex flex-col items-center p-6 lg:shadow gap-4">
         <p>{error}</p>
       </div>
     )
   }
 
   return (
-    <div className="h-auto lg:w-4/5 bg-light text-dark rounded-2xl flex flex-col items-center p-6 shadow border border-lightgray/35 gap-4">
+    <div className="h-auto lg:w-4/5 bg-light text-dark rounded-2xl flex flex-col items-center p-6 lg:shadow lg:border border-lightgray/35 gap-4">
       <form onSubmit={handleSubmit} className="w-full">
         <div className="w-full grid lg:grid-cols-2 gap-4">
           <Input

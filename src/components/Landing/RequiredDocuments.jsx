@@ -59,7 +59,7 @@ export default function RequiredDocuments() {
       </div>
 
       {/* list of documents */}
-      <div className="w-full xl:w-max overflow-x-auto p-4 xl:overflow-visible">
+      <div className="w-full xl:w-max overflow-x-auto scrollbar-hide p-4 xl:overflow-visible">
         <div className="flex gap-6 flex-nowrap min-w-max">
           {documents.map((doc) => (
             <div

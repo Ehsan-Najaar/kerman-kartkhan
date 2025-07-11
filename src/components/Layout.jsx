@@ -1,5 +1,6 @@
 'use client'
 
+import AdminPanelBottomNavbar from '@/components/AdminPanelBottomNavbar'
 import BottomNavbar from '@/components/BottomNavbar'
 import { usePathname } from 'next/navigation'
 import { Toaster } from 'react-hot-toast'
@@ -13,10 +14,13 @@ export default function Layout({ children }) {
   const shouldApplyContainer = !isShopRoute && !isAdminPanel && !isLoginPage
 
   return (
-    <main className={shouldApplyContainer ? 'max-w-6xl mx-auto' : 'pb-16'}>
+    <main
+      className={shouldApplyContainer ? 'max-w-6xl mx-auto' : 'pb-16 md:pb-0'}
+    >
       {children}
       <Toaster />
-      <BottomNavbar />
+
+      {!isAdminPanel ? <BottomNavbar /> : <AdminPanelBottomNavbar />}
     </main>
   )
 }

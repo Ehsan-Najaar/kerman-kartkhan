@@ -5,9 +5,9 @@ import ShopPageHeader from '@/components/shop/ShopPageHeader'
 import DashboardPanelNavbar from '@/components/shop/userDashboard/DashboardPanelNavbar'
 import UserInformation from '@/components/shop/userDashboard/UserInformaitno'
 import { useAppContext } from '@/context/AppContext'
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { FiChevronLeft } from 'react-icons/fi'
 
 export default function EditAccount() {
   const { user, loadingUser } = useAppContext()
@@ -44,16 +44,20 @@ export default function EditAccount() {
 
   return (
     <div className="min-h-screen bg-light space-y-24">
-      <ShopPageHeader />
-      <div className="lg:flex gap-12 px-24">
-        <DashboardPanelNavbar />
+      <div className="hidden lg:flex">
+        <ShopPageHeader />
+      </div>
+      <div className="lg:flex gap-12 lg:px-24">
+        <div className="hidden lg:flex">
+          <DashboardPanelNavbar />
+        </div>
 
         {/* هدر موبایل */}
-        <div className="lg:hidden flex items-center justify-between bg-light rounded-lg shadow p-2 mb-4">
-          <h2 className="h4">ویرایش اطلاعات</h2>
-          <Link href="/dashboard">
-            <FiChevronLeft size={32} />
+        <div className="lg:hidden flex items-center gap-2 bg-light text-dark rounded-lg p-4 mb-4">
+          <Link href="/shop/dashboard">
+            <ArrowRight size={24} />
           </Link>
+          <h2 className="h4">ویرایش اطلاعات</h2>
         </div>
 
         <UserInformation

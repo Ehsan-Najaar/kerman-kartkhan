@@ -13,6 +13,7 @@ export default function Input({
   type = 'text',
   icon = null,
   readOnly = false,
+  className = '',
 }) {
   const [focused, setFocused] = useState(false)
 
@@ -22,7 +23,7 @@ export default function Input({
     <div
       className={`relative flex items-center ${
         icon ? 'rounded-lg px-4 bg-[#fff9f9] border border-lightgray/35' : ''
-      }`}
+      } flex-1`}
     >
       {icon && <div>{icon}</div>}
 
@@ -51,7 +52,7 @@ export default function Input({
         htmlFor={id}
         className={`absolute right-4 text-xs transition-all duration-300 cursor-text ${
           shouldFloatLabel
-            ? '-top-2 text-secondary text-sm bg-light'
+            ? '-top-2 text-secondary md:text-sm text-xs bg-light'
             : 'top-4 text-gray/50'
         }`}
       >
