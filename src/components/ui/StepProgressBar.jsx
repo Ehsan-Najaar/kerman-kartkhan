@@ -19,7 +19,7 @@ export default function StepProgressBar({
           <div key={step.id} className="flex flex-col items-center flex-1 px-1">
             <span
               className={clsx(
-                'mb-2 text-center font-medium',
+                'mb-2 text-center text-xs lg:text-base',
                 isActive ? 'text-secondary' : 'text-gray-400'
               )}
             >

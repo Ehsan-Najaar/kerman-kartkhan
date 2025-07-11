@@ -118,10 +118,10 @@ export default function IdentityForm() {
 
   return (
     <>
-      <div className="min-h-screen min-w-screen grid place-items-center">
+      <div className="min-h-screen min-w-screen bg-light grid place-items-center">
         <form
           onSubmit={handleSubmit}
-          className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-6 shadow space-y-3"
+          className="md:w-[65%] max-w-6xl md:h-[76%] bg-light lg:border border-lightgray/35 rounded-2xl lg:p-6 p-4 lg:shadow space-y-3"
         >
           <StepProgressBar
             currentStep={1}

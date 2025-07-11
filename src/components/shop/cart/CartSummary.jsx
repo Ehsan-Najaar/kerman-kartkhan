@@ -45,7 +45,7 @@ export default function CartSummary({ totalItems, totalPrice }) {
       {/* حالت موبایل تا md */}
       <div
         className="
-          fixed bottom-16 left-0 right-0 z-50
+          fixed bottom-16 left-0 right-0 z-20
           bg-light
           p-4 flex sm:flex-row items-center justify-between
           gap-4

@@ -305,7 +305,7 @@ export default function DocumentsPage() {
   }
 
   return (
-    <div className="min-h-screen min-w-screen grid place-items-center">
+    <div className="min-h-screen min-w-screen bg-light grid place-items-center">
       <Toaster />
 
       {previewImage && (
@@ -333,7 +333,7 @@ export default function DocumentsPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-6 shadow space-y-6 mx-auto"
+        className="md:w-[65%] max-w-6xl md:h-[76%] bg-light lg:border border-lightgray/35 rounded-2xl p-6 lg:shadow space-y-6 mx-auto"
       >
         <StepProgressBar
           currentStep={2}
@@ -368,7 +368,7 @@ export default function DocumentsPage() {
           </div>
         </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
           {renderFileUploadBox('birthCertificate', 'تصویر شناسنامه')}
           {renderFileUploadBox('nationalCardFront', 'کارت ملی (رو)')}
           {renderFileUploadBox('nationalCardBack', 'کارت ملی (پشت)')}

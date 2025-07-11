@@ -1,7 +1,9 @@
 import Button from '@/components/ui/Button'
 import ScrollToTopButton from '@/components/ui/ScrollToTopButton'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+
 import {
   FaBookOpen,
   FaInfo,
@@ -35,9 +37,29 @@ const FooterPageLink = ({ href, label }) => (
 )
 
 export default function Footer() {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
+
+  const isLandingPage = pathname.startsWith('/landing')
+  const isGuidePage = pathname.startsWith('/guide')
+  const isAboutPage = pathname.startsWith('/about-us')
+  const isContactPage = pathname.startsWith('/contact')
+  const isTermsPage = pathname.startsWith('/terms')
+  const isFaqPage = pathname.startsWith('/faq')
+
   return (
-    <footer className="hidden lg:block mt-12">
+    <footer
+      className={`${
+        isLandingPage ||
+        isGuidePage ||
+        isAboutPage ||
+        isContactPage ||
+        isTermsPage ||
+        isFaqPage
+          ? 'block pb-16'
+          : 'hidden'
+      } lg:block mt-12`}
+    >
       <section className="bg-light text-dark small-text lg:rounded-4xl border border-lightgray shadow-md overflow-hidden">
         {/* بخش بالایی شامل: برند، دسترسی سریع، صفحات، نمادها */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4 gap-8 p-4">

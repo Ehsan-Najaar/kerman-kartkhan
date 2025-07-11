@@ -3,6 +3,7 @@
 import connectDB from '@/lib/db'
 import Cart from '@/models/Cart'
 // ایمپورت کردن اسکیما محصول
+import Product from '@/models/Product'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import { cookies } from 'next/headers'

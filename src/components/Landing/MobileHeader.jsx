@@ -86,7 +86,7 @@ export default function MobileHeader() {
         </div>
         <Link href="/order-steps">
           <Button
-            variant={isLanding ? (scrolled ? 'primary' : 'light') : ''}
+            variant={isLanding ? (scrolled ? 'primary' : 'light') : 'primary'}
             size="sm"
             customColor={isLanding && !scrolled ? 'text-secondary' : ''}
           >

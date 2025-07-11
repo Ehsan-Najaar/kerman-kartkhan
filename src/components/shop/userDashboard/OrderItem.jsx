@@ -33,6 +33,7 @@ export default function OrderItem({ order }) {
         <div
           className={`
       flex items-center justify-center
+      gap-2
       text-xs font-medium
       px-2 py-1 rounded-full
       sm:w-1/5 w-full

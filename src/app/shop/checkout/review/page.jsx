@@ -102,7 +102,7 @@ export default function ReviewPage() {
 
   return (
     <div className="min-h-screen min-w-screen grid place-items-center">
-      <div className="md:w-[65%] md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-4 shadow space-y-5">
+      <div className="md:w-[65%] max-w-6xl md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-4 shadow space-y-5">
         <StepProgressBar
           currentStep={3}
           steps={[

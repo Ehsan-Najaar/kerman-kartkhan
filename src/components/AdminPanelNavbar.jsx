@@ -1,6 +1,5 @@
 'use client'
 
-import { Truck } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -13,27 +12,22 @@ const AdminPanelNavbar = () => {
     {
       name: 'محصولات',
       href: '/admin/products',
-      icon: '/icons/custom/Box_fill_duotone.svg',
+      icon: '/icons/custom/Products.svg',
     },
     {
       name: 'دسته‌بندی‌ها',
       href: '/admin/categories',
-      icon: '/icons/custom/lable_duotone_fill.svg',
+      icon: '/icons/custom/Category.svg',
     },
     {
       name: 'سفارشات',
       href: '/admin/orders',
-      icon: '/icons/custom/Bag_alt_duotone.svg',
+      icon: '/icons/custom/Paper.svg',
     },
     {
       name: 'کاربران',
       href: '/admin/users',
-      icon: '/icons/custom/Group_duotone_fill.svg',
-    },
-    {
-      name: 'هزینه ارسال',
-      href: '/admin/shipping',
-      icon: <Truck size={24} />,
+      icon: '/icons/custom/Users.svg',
     },
   ]
 
@@ -60,27 +54,35 @@ const AdminPanelNavbar = () => {
         {navLinks.map((link) => {
           const isActive = pathname.startsWith(link.href)
 
+          // آیکون اکتیو را بساز
+          const iconSrc =
+            typeof link.icon === 'string'
+              ? isActive
+                ? link.icon.replace('.svg', '-active.svg')
+                : link.icon
+              : link.icon
+
           return (
             <Link
               key={link.href}
               href={link.href}
               className={`flex items-center gap-3 px-6 py-4 rounded-xl bg-bg ${
                 isActive
-                  ? 'bg-light'
+                  ? 'bg-section/50'
                   : 'lg:bg-transparent hover:bg-dark/5 hover:pr-8 transition-all duration-300'
               }`}
             >
               {/* نمایش آیکون به صورت تصویر یا JSX */}
-              {typeof link.icon === 'string' ? (
+              {typeof iconSrc === 'string' ? (
                 <Image
-                  src={link.icon}
+                  src={iconSrc}
                   alt={link.name}
                   priority
                   width={32}
                   height={32}
                 />
               ) : (
-                link.icon
+                iconSrc
               )}
               <span>{link.name}</span>
             </Link>

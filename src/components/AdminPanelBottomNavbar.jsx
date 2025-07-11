@@ -54,21 +54,29 @@ export default function AdminPanelBottomNavbar() {
           <Link
             key={item.href}
             href={item.href}
-            className="flex flex-col items-center text-xs gap-2"
+            className="flex flex-col items-center text-xs gap-1"
           >
-            {typeof item.icon === 'string' ? (
-              <Image
-                src={isActive && item.activeIcon ? item.activeIcon : item.icon}
-                alt={item.label}
-                width={24}
-                height={24}
-                draggable={false}
-              />
-            ) : (
-              item.icon
-            )}
-
-            <span className={isActive ? 'text-secondary' : 'text-gray'}>
+            <div className="w-8 h-8 flex items-center justify-center">
+              {typeof item.icon === 'string' ? (
+                <Image
+                  src={
+                    isActive && item.activeIcon ? item.activeIcon : item.icon
+                  }
+                  alt={item.label}
+                  width={32}
+                  height={32}
+                  draggable={false}
+                  className="w-6 h-6 object-contain"
+                />
+              ) : (
+                <span className="w-6 h-6 flex items-center justify-center text-gray">
+                  {item.icon}
+                </span>
+              )}
+            </div>
+            <span
+              className={`text-xs ${isActive ? 'text-secondary' : 'text-gray'}`}
+            >
               {item.label}
             </span>
           </Link>
