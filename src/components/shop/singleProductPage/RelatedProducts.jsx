@@ -45,8 +45,8 @@ export default function RelatedProducts({ type, excludeId }) {
   if (!relatedProducts.length) return null
 
   return (
-    <div className="px-24">
-      <div className="flex items-center justify-between bg-lightgray/35 py-4 px-3 rounded-t-2xl">
+    <div className="lg:px-24">
+      <div className="flex items-center justify-between bg-lightgray/35 py-4 px-3 lg:rounded-t-2xl">
         <h3 className="h3">محصولات مرتبط</h3>
 
         {/* دکمه‌های کنترلی */}
@@ -81,7 +81,7 @@ export default function RelatedProducts({ type, excludeId }) {
           updateSwiperState(swiper)
         }}
         onSlideChange={updateSwiperState}
-        className="w-full h-72 lg:h-96 bg-lightgray/35 rounded-b-2xl"
+        className="w-full h-96 bg-lightgray/35 rounded-b-2xl"
         loop={false}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
         breakpoints={{

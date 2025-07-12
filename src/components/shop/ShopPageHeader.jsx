@@ -28,6 +28,7 @@ export default function ShopPageHeader() {
   const [popularProducts, setPopularProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isShapesDrawerOpen, setIsShapesDrawerOpen] = useState(false)
   const dropdownRef = useRef(null)
 
   const categories = [
@@ -177,10 +178,81 @@ export default function ShopPageHeader() {
 
             <button
               aria-label="باز کردن منوی موبایل"
+              onClick={() => setIsShapesDrawerOpen(true)}
               className="bg-bg md:hidden p-3 rounded-lg text-gray border border-lightgray/35"
             >
               <Shapes size={24} />
             </button>
+
+            {isShapesDrawerOpen && (
+              <div className="fixed inset-0 z-[999] bg-black/40 md:hidden">
+                {/* لایه کلیک بیرونی برای بستن */}
+                <div
+                  className="w-full h-1/2"
+                  onClick={() => setIsShapesDrawerOpen(false)}
+                ></div>
+
+                {/* اسلایدآپ سفید پایین */}
+                <motion.div
+                  initial={{ y: '100%' }}
+                  animate={{ y: 0 }}
+                  exit={{ y: '100%' }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  className="fixed bottom-0 left-0 right-0 h-1/2 bg-white rounded-t-2xl border-t border-lightgray p-6 z-[999]"
+                >
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="text-lg font-bold text-gray-800">
+                      انواع کارتخوان ها
+                    </span>
+                    <button
+                      onClick={() => setIsShapesDrawerOpen(false)}
+                      className="p-2 border border-lightgray/35 rounded text-gray"
+                    >
+                      <X />
+                    </button>
+                  </div>
+
+                  <ul className="space-y-4">
+                    <li>
+                      <Link
+                        href="/shop/type/ثابت"
+                        className="block w-full py-3 px-4 rounded-lg border border-lightgray/35 bg-bg transition-colors"
+                        onClick={() => setIsShapesDrawerOpen(false)}
+                      >
+                        کارتخوان‌های ثابت
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/shop/type/سیار"
+                        className="block w-full py-3 px-4 rounded-lg border border-lightgray/35 bg-bg transition-colors"
+                        onClick={() => setIsShapesDrawerOpen(false)}
+                      >
+                        کارتخوان‌های سیار
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/shop/type/اندرویدی"
+                        className="block w-full py-3 px-4 rounded-lg border border-lightgray/35 bg-bg transition-colors"
+                        onClick={() => setIsShapesDrawerOpen(false)}
+                      >
+                        کارتخوان‌های اندرویدی
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/category/accessories"
+                        className="block w-full py-3 px-4 rounded-lg border border-lightgray/35 bg-bg transition-colors"
+                        onClick={() => setIsShapesDrawerOpen(false)}
+                      >
+                        لوازم جانبی
+                      </Link>
+                    </li>
+                  </ul>
+                </motion.div>
+              </div>
+            )}
 
             {isDropdownOpen && (
               <>

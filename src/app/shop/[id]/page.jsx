@@ -40,7 +40,7 @@ export default function SingleProductPage() {
   if (!product) return <div className="p-4 text-red-600">محصول یافت نشد.</div>
 
   return (
-    <div className="bg-light space-y-16">
+    <div className="bg-light space-y-16 -mt-20 lg:-mt-0">
       <ShopPageHeader />
 
       <ProductDetails product={product} />

@@ -29,7 +29,7 @@ export default function Textarea({
         required={required}
         className={clsx(
           'peer w-full pt-6 pb-2 px-3 border border-lightgray rounded-lg resize-none',
-          'focus:outline-none focus:border-section transition-all duration-200',
+          'focus:outline-none focus:border-section transition-all duration-200 text-xs sm:text-sm',
           'placeholder-transparent'
         )}
       />

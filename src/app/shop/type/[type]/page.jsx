@@ -6,6 +6,12 @@ import FilterSidebar from '@/components/shop/FilterSidebar'
 import ProductListToolbar from '@/components/shop/ProductListToolbar'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
 import ProductCardSkeleton from '@/components/ui/Skeleton'
+import { motion } from 'framer-motion'
+import {
+  SlidersHorizontal as FilterIcon,
+  SortAsc as SortIcon,
+  X,
+} from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -18,6 +24,8 @@ export default function TypePage() {
   const [filteredProducts, setFilteredProducts] = useState([])
   const [filters, setFilters] = useState({})
   const [loading, setLoading] = useState(true)
+  const [isMobileSortOpen, setIsMobileSortOpen] = useState(false)
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
 
   useEffect(() => {
     async function fetchProducts() {
@@ -91,11 +99,11 @@ export default function TypePage() {
   const allConditions = [...new Set(products.map((p) => p.condition))]
 
   return (
-    <div className="min-h-screen bg-light space-y-24">
+    <div className="min-h-screen bg-light lg:space-y-24">
       <ShopPageHeader />
 
-      <div className="flex gap-4 px-24">
-        <aside className="w-1/4 sticky top-24 self-start h-fit">
+      <div className="flex gap-4 lg:px-24 px-4">
+        <aside className="hidden lg:block w-1/4 sticky top-24 self-start h-fit">
           <FilterSidebar
             brands={allBrands}
             conditions={allConditions}
@@ -109,27 +117,184 @@ export default function TypePage() {
         </aside>
 
         <section className="flex-1">
+          <div className="flex lg:hidden items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setIsMobileFilterOpen(true)}
+                className="flex items-center gap-2 p-2 rounded border border-lightgray/35 text-gray
+               justify-center"
+              >
+                <FilterIcon size={20} />
+                <span className="text-sm">فیلترها</span>
+              </button>
+              <button
+                onClick={() => setIsMobileSortOpen(true)}
+                className="flex items-center gap-2 p-2 rounded border border-lightgray/35 text-gray justify-center"
+              >
+                <SortIcon size={20} />
+                <span className="text-sm">مرتب‌سازی</span>
+              </button>
+            </div>
+
+            <p className="text-sm text-gray">{filteredProducts.length} محصول</p>
+          </div>
+
+          {isMobileFilterOpen && (
+            <div className="fixed inset-0 z-[999] lg:hidden bg-black/40">
+              {/* کلیک روی نیمه بالا برای بستن */}
+              <div
+                className="w-full h-1/2"
+                onClick={() => setIsMobileFilterOpen(false)}
+              ></div>
+
+              <motion.div
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                className="fixed bottom-0 left-0 right-0 h-1/2 bg-white rounded-t-2xl border-t border-lightgray/35 overflow-y-auto p-6"
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-lg font-bold text-gray-800">
+                    فیلتر محصولات
+                  </span>
+                  <button
+                    onClick={() => setIsMobileFilterOpen(false)}
+                    className="p-2 border border-lightgray/35 rounded text-gray"
+                  >
+                    <X />
+                  </button>
+                </div>
+
+                {/* محتوای FilterSidebar موبایل */}
+                <FilterSidebar
+                  brands={allBrands}
+                  conditions={allConditions}
+                  priceMin={0}
+                  priceMax={20000000}
+                  filters={filters}
+                  setFilters={setFilters}
+                  onApplyFilters={(activeFilters) => {
+                    handleApplyFilters(activeFilters)
+                    setIsMobileFilterOpen(false)
+                  }}
+                  onClearFilters={handleClearFilters}
+                />
+              </motion.div>
+            </div>
+          )}
+
+          {isMobileSortOpen && (
+            <div className="fixed inset-0 z-[999] lg:hidden bg-black/40">
+              {/* کلیک روی نیمه بالا برای بستن */}
+              <div
+                className="w-full h-1/2"
+                onClick={() => setIsMobileSortOpen(false)}
+              ></div>
+
+              <motion.div
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                className="fixed bottom-0 left-0 right-0 h-1/2 bg-white rounded-t-2xl border-t border-lightgray/35 p-6"
+              >
+                <div className="flex justify-between items-center mb-6">
+                  <span className="text-lg font-bold text-gray-800">
+                    مرتب‌سازی محصولات
+                  </span>
+                  <button
+                    onClick={() => setIsMobileSortOpen(false)}
+                    className="p-2 border border-lightgray/35 rounded text-gray"
+                  >
+                    <X />
+                  </button>
+                </div>
+
+                <ul className="space-y-4">
+                  <li>
+                    <button
+                      className={`w-full text-right py-3 px-4 rounded-lg border border-lightgray/35 hover:bg-bg transition-colors ${
+                        activeSort === 'default'
+                          ? 'bg-secondary text-light'
+                          : ''
+                      }`}
+                      onClick={() => {
+                        handleSortChange('default')
+                        setIsMobileSortOpen(false)
+                      }}
+                    >
+                      پیش‌فرض
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`w-full text-right py-3 px-4 rounded-lg border border-lightgray/35 hover:bg-bg transition-colors ${
+                        activeSort === 'price-asc'
+                          ? 'bg-secondary text-light'
+                          : ''
+                      }`}
+                      onClick={() => {
+                        handleSortChange('price-asc')
+                        setIsMobileSortOpen(false)
+                      }}
+                    >
+                      ارزان‌ترین
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`w-full text-right py-3 px-4 rounded-lg border border-lightgray/35 hover:bg-bg transition-colors ${
+                        activeSort === 'price-desc'
+                          ? 'bg-secondary text-light'
+                          : ''
+                      }`}
+                      onClick={() => {
+                        handleSortChange('price-desc')
+                        setIsMobileSortOpen(false)
+                      }}
+                    >
+                      گران‌ترین
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`w-full text-right py-3 px-4 rounded-lg border border-lightgray/35 hover:bg-bg transition-colors ${
+                        activeSort === 'mostSold'
+                          ? 'bg-secondary text-light'
+                          : ''
+                      }`}
+                      onClick={() => {
+                        handleSortChange('mostSold')
+                        setIsMobileSortOpen(false)
+                      }}
+                    >
+                      پرفروش‌ترین
+                    </button>
+                  </li>
+                </ul>
+              </motion.div>
+            </div>
+          )}
+
           <ProductListToolbar
             title={`کارتخوان‌های ${type}`}
             onSortChange={handleSortChange}
             activeSort={activeSort}
           />
+
           {loading ? (
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2">
               {Array.from({ length: 8 }).map((_, index) => (
-                <li key={index}>
-                  <ProductCardSkeleton />
-                </li>
+                <ProductCardSkeleton key={index} />
               ))}
             </ul>
           ) : filteredProducts.length === 0 ? (
             <p>محصولی یافت نشد.</p>
           ) : (
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2">
               {filteredProducts.map((product) => (
-                <li key={product._id}>
-                  <ProductCard product={product} />
-                </li>
+                <ProductCard key={product._id} product={product} />
               ))}
             </ul>
           )}

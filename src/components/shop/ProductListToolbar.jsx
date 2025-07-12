@@ -20,7 +20,7 @@ export default function ProductListToolbar({
   }
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+    <div className="hidden lg:flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
       <h1 className="text-2xl font-bold mb-4 sm:mb-0">{title}</h1>
 
       <div className="flex gap-2 flex-wrap">

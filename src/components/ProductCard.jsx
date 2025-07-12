@@ -40,7 +40,7 @@ export function ProductCard({ product }) {
   }
 
   return (
-    <div className="w-56 bg-light p-2 rounded-lg border border-lightgray/50 shadow-sm space-y-4">
+    <div className="w-full sm:w-56 bg-light p-2 rounded-lg border border-lightgray/50 shadow-sm space-y-4">
       <section>
         <figure className="rounded-lg border-b-2 border-section p-1">
           <Image
@@ -52,13 +52,13 @@ export function ProductCard({ product }) {
             className="object-contain h-36 w-36 mx-auto"
           />
         </figure>
-        <div className="flex items-center gap-1 mt-4 font-semibold text-sm text-dark">
+        <div className="flex items-center gap-1 mt-4 font-semibold text-xs sm:text-sm text-dark">
           <span>کارتخوان</span>
           {product.model || 'D210'}
         </div>
       </section>
 
-      <section className="text-xs text-gray mt-2 space-y-1">
+      <section className="text-[10px] sm:text-xs text-gray mt-2 space-y-1">
         <article className="flex items-center gap-1">
           <Box size={14} className="text-secondary" />
           <span>{product.type}</span>
@@ -98,7 +98,8 @@ export function ProductCard({ product }) {
           href={`/shop/${`${product.brand}-${product.name}`.toLowerCase()}`}
         >
           <Button variant="primary" size="xs" fontWeight="medium">
-            مشاهده محصول
+            <p>مشاهده</p>
+            <p className="-mr-1 hidden sm:block">محصول</p>
           </Button>
         </Link>
 

@@ -44,20 +44,37 @@ export default function SuccessPage() {
 
   useEffect(() => {
     if (refId && !loadingUserDocks && cart?.items?.length > 0 && userDocks) {
-      const orderData = {
-        userId: userDocks._id || null,
-        items: cart.items.map((item) => ({
+      const items = cart.items.map((item) => {
+        let unitPrice = item.productId.price || 0
+
+        if (item.selectedVariant) {
+          const variant = item.productId.variants?.find(
+            (v) => v.name === item.selectedVariant
+          )
+          if (variant?.price) {
+            unitPrice = variant.price
+          }
+        }
+
+        return {
           productId: item.productId._id || item.productId,
           quantity: item.quantity,
           selectedColor: item.selectedColor || '',
           selectedVariant: item.selectedVariant || '',
           bodyColors: item.bodyColors || '',
-          price: item.productId.price || 0,
-        })),
-        totalAmount: cart.items.reduce(
-          (sum, item) => sum + (item.productId.price || 0) * item.quantity,
-          0
-        ),
+          price: unitPrice,
+        }
+      })
+
+      const totalAmount = items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      )
+
+      const orderData = {
+        userId: userDocks._id || null,
+        items,
+        totalAmount,
         paymentStatus: 'paid',
         paymentRefId: refId,
         userName: userDocks.userName || '',

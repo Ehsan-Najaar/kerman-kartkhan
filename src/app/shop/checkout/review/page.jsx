@@ -101,8 +101,8 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="min-h-screen min-w-screen grid place-items-center">
-      <div className="md:w-[65%] max-w-6xl md:h-[76%] bg-light border border-lightgray/35 rounded-2xl p-4 shadow space-y-5">
+    <div className="min-h-screen w-full grid place-items-center lg:p-4">
+      <div className="w-full md:max-w-[65%] md:h-[80%] bg-light border border-lightgray/35 rounded-2xl p-4 shadow space-y-5">
         <StepProgressBar
           currentStep={3}
           steps={[
@@ -116,11 +116,13 @@ export default function ReviewPage() {
           className="mb-8"
         />
 
-        <div className="flex gap-8 h-96 max-h-96 overflow-auto p-4">
-          <section className="w-3/4 h-screen bg-lightgray/35 rounded-lg p-4 space-y-6">
+        {/* Grid for summary and cart */}
+        <div className="md:h-96 md:max-h-96 overflow-auto grid grid-cols-1 lg:grid-cols-2 gap-8 p-2 lg:p-4">
+          {/* اطلاعات هویتی + عکس‌ها */}
+          <section className="bg-lightgray/35 rounded-lg p-4 space-y-6">
             {/* اطلاعات هویتی */}
             <div className="border-b border-gray/30 pb-6">
-              <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <p>
                   <span className="text-gray">نام فروشگاه:</span>{' '}
                   {data.shopName}
@@ -141,7 +143,7 @@ export default function ReviewPage() {
             </div>
 
             {/* تصاویر آپلود شده */}
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-4 mt-4">
               {images.map(([key, label]) => (
                 <DocCard
                   key={key}
@@ -184,7 +186,8 @@ export default function ReviewPage() {
             )}
           </section>
 
-          <section className="w-2/4 min-h-screen bg-lightgray/35 p-4 rounded-lg">
+          {/* سبد خرید */}
+          <section className="bg-lightgray/35 p-4 rounded-lg">
             {cart?.items.length ? (
               <div className="space-y-6">
                 {cart.items.map((item, idx) => {
@@ -198,9 +201,9 @@ export default function ReviewPage() {
                   return (
                     <div
                       key={idx}
-                      className="flex items-start gap-4 not-last:border-b border-gray/30 pb-6"
+                      className="flex sm:flex-row items-start gap-4 not-last:border-b border-gray/30 pb-6"
                     >
-                      <div className="w-22 h-22 relative flex-shrink-0 rounded-lg overflow-hidden border border-gray-300 bg-white">
+                      <div className="w-32 h-32 relative flex-shrink-0 rounded-lg overflow-hidden border border-gray-300 bg-white">
                         <Image
                           src={
                             item.productId?.images?.[0] || '/placeholder.png'
@@ -210,56 +213,57 @@ export default function ReviewPage() {
                           className="object-cover"
                         />
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-2 w-full">
                         <h3 className="text-dark font-semibold">
                           کارتخوان {item.productId?.name?.toUpperCase() || '-'}
                         </h3>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           <p className="text-xs text-gray-600">
                             رنگ:{' '}
                             <span className="font-medium">
                               {item.selectedColor}
                             </span>
                             {item.bodyColors && (
-                              <span className="font-medium">
-                                {item.bodyColors[0]} - {item.bodyColors[1]}
+                              <span className="font-medium ml-2">
+                                {item.bodyColors[0]} {item.bodyColors[1]}
                               </span>
                             )}
                           </p>
-
-                          <span className="text-gray">•</span>
-
+                          <span className="text-gray hidden sm:inline">•</span>
                           <p className="text-xs text-gray-600">
                             تعداد:{' '}
                             <span className="font-medium">{item.quantity}</span>
                           </p>
                           {item.selectedVariant && (
-                            <span className="text-gray">•</span>
-                          )}
-
-                          {item.selectedVariant && (
-                            <p className="text-xs text-gray-600">
-                              مدل:{' '}
-                              <span className="font-medium">
-                                {item.selectedVariant}
+                            <>
+                              <span className="text-gray hidden sm:inline">
+                                •
                               </span>
-                            </p>
+                              <p className="text-xs text-gray-600">
+                                مدل:{' '}
+                                <span className="font-medium">
+                                  {item.selectedVariant}
+                                </span>
+                              </p>
+                            </>
                           )}
                         </div>
 
-                        <div className="flex items-center gap-6">
-                          <p className="flex items-center gap-px text-xs text-gray">
+                        <div className="flex flex-wrap items-center gap-4">
+                          <p className="flex items-center gap-1 text-xs text-gray">
                             {formatPriceToPersian(unitPrice)}{' '}
                             <TomanIcon className="fill-gray" />
                           </p>
                           {item.quantity > 1 && (
-                            <div className="text-gray">-</div>
-                          )}
-                          {item.quantity > 1 && (
-                            <p className="flex items-center gap-px text-sm text-dark">
-                              {formatPriceToPersian(unitPrice * item.quantity)}{' '}
-                              <TomanIcon />
-                            </p>
+                            <>
+                              <span className="text-gray">-</span>
+                              <p className="flex items-center gap-1 text-sm text-dark">
+                                {formatPriceToPersian(
+                                  unitPrice * item.quantity
+                                )}{' '}
+                                <TomanIcon />
+                              </p>
+                            </>
                           )}
                         </div>
                       </div>
@@ -275,7 +279,7 @@ export default function ReviewPage() {
           </section>
         </div>
 
-        <div className="flex justify-end gap-2 text-sm">
+        <div className="flex justify-end flex-wrap gap-2 text-sm">
           <div className="flex items-center gap-2">
             <p className="text-gray">مجموع سبد خرید:</p>
             <p className="font-medium text-dark">
@@ -284,11 +288,11 @@ export default function ReviewPage() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-t border-lightgray pt-2">
+        <div className="flex sm:flex-row items-center justify-between border-t border-lightgray pt-4 gap-4">
           <Link href={'/shop'}>
             <HomeIcon className="text-gray cursor-pointer" />
           </Link>
-          <section className="space-x-4">
+          <section className="flex gap-4 w-full sm:w-auto justify-end">
             <Button
               variant="ghost"
               outline

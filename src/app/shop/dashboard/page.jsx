@@ -6,7 +6,7 @@ import DashboardPanelNavbar from '@/components/shop/userDashboard/DashboardPanel
 
 export default function dashboardPage() {
   return (
-    <div className="min-h-screen bg-light space-y-24">
+    <div className="min-h-screen space-y-24">
       <ShopPageHeader />
 
       <DashboardPanelNavbar />

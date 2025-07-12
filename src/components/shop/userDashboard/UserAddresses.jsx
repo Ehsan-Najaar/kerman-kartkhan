@@ -41,7 +41,7 @@ export default function UserAddresses() {
   }
 
   return (
-    <div className="h-96 lg:h-auto lg:w-4/5 bg-light text-dark rounded-2xl p-6 flex flex-col items-center lg:shadow lg:border border-lightgray/35">
+    <div className="h-96 lg:h-auto lg:w-4/5 bg-light text-dark rounded-2xl lg:p-6 p-4 flex flex-col items-center lg:shadow lg:border border-lightgray/35">
       <div className="w-full max-w-3xl">
         {user?.address?.length === 0 && (
           <div className="flex flex-col items-center gap-4">

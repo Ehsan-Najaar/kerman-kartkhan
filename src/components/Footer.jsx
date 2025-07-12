@@ -135,14 +135,20 @@ export default function Footer() {
                 />
               </a>
 
-              <img
-                src="/images/zarinpall.png"
-                alt="زرین‌پال"
-                width={70}
-                height={70}
-                draggable="false"
-                className="bg-lightgray/30 rounded-md p-2"
-              />
+              <a
+                href="https://www.zarinpal.com"
+                target="_blank"
+                rel="noopener"
+                className="w-[70px] h-[70px]"
+              >
+                <img
+                  src="https://cdn.zarinpal.com/badges/trustLogo/1.svg"
+                  alt="زرین‌پال"
+                  width={50}
+                  height={50}
+                  className="w-full h-full bg-lightgray/30 rounded-md p-2 cursor-pointer object-contain"
+                />
+              </a>
             </div>
           </div>
         </div>

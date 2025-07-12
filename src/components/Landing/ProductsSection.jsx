@@ -38,7 +38,7 @@ export default function ProductsSection({
       animate={controlsRight}
       className="max-w-5xl mx-auto md:px-4 lg:px-0"
     >
-      <div className="bg-white rounded-3xl shadow-xl p-6 lg:p-8">
+      <div className="bg-white rounded-3xl shadow-xl p-4 lg:p-8">
         {/* نمایش قیمت فعلی و اسلایدر */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
           <div className="flex items-center gap-2 md:w-1/2">
@@ -86,7 +86,7 @@ export default function ProductsSection({
         </div>
 
         {/* لیست محصولات */}
-        <div className="h-96 max-h-96 overflow-auto p-4">
+        <div className="h-96 max-h-96 overflow-auto lg:p-4">
           {loading ? (
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
               {Array.from({ length: 8 }).map((_, index) => (
@@ -94,7 +94,7 @@ export default function ProductsSection({
               ))}
             </div>
           ) : filteredProducts.length > 0 ? (
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
               {filteredProducts.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}

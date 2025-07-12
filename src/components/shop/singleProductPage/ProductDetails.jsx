@@ -1,6 +1,7 @@
 'use client'
 
 import AuthModal from '@/components/shop/AuthModal'
+import TomanIcon from '@/components/TomanIcon'
 import Button from '@/components/ui/Button'
 import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
@@ -110,10 +111,10 @@ export default function ProductDetails({ product }) {
   }
 
   return (
-    <div className="px-24 space-y-16">
-      <section className="w-full rounded-2xl overflow-hidden flex flex-col lg:flex-row gap-4 text-dark border border-lightgray/35 shadow">
+    <div className="lg:px-24 space-y-16">
+      <section className="w-full rounded-2xl overflow-hidden flex flex-col lg:flex-row gap-4 text-dark lg:border border-lightgray/35 lg:shadow">
         <div className="flex flex-col lg:flex-row-reverse gap-4 p-4">
-          <figure className="relative flex items-center justify-center border-r border-lightgray/35">
+          <figure className="w-full sm:w-1/2 lg:w-full relative flex items-center justify-center lg:border-r border-lightgray/35">
             <Image
               src={selectedImage || '/placeholder.png'}
               alt={`تصویر ${product?.name}`}
@@ -169,7 +170,7 @@ export default function ProductDetails({ product }) {
               <FiChevronLeft />
               <li>{product.name.toUpperCase()}</li>
             </ol>
-            <small className="text-xs font-light text-gray">
+            <small className="hidden lg:block text-xs font-light text-gray">
               (فعال سازی و اتصال به حساب{' '}
               <b className="text-green-600">رایگان</b> است.)
             </small>
@@ -178,7 +179,7 @@ export default function ProductDetails({ product }) {
           <h1 className="flex items-center gap-2 text-2xl font-bold">
             کارتخوان {product.name.toUpperCase()}
           </h1>
-          <div className="flex gap-4">
+          <div className="md:flex grid grid-cols-2 gap-4 text-sm md:text-base">
             <p className="bg-light p-2 rounded-lg">
               <span className="text-gray">برند : </span>
               <span>{product.brand}</span>
@@ -319,7 +320,7 @@ export default function ProductDetails({ product }) {
             </ul>
           </section>
 
-          <section className="flex items-end justify-between">
+          <section className="hidden md:flex items-end justify-between">
             <article>
               <p className="text-gray">قیمت</p>
               <p className="text-2xl font-bold text-dark">
@@ -379,12 +380,58 @@ export default function ProductDetails({ product }) {
               </Button>
             </div>
           </section>
+
+          {/* حالت موبایل تا md */}
+          <div
+            className="
+                  fixed bottom-16 left-0 right-0 z-20
+                  bg-light
+                  p-4 flex sm:flex-row items-center justify-between
+                  gap-4
+                  md:hidden
+                    "
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
+              <span className="text-xs text-gray">قیمت</span>
+              <span className="flex items-center gap-1 text-sm text-dark">
+                {formatPriceToPersian(calculateTotalPrice())} تومان
+                <TomanIcon width={16} height={16} className="fill-dark" />
+              </span>
+            </div>
+
+            <Button
+              variant={`${productIsInCart ? 'ghost' : 'primary'}`}
+              fontWeight="medium"
+              size="sm"
+              className="w-full sm:w-max text-xs sm:text-sm"
+              onClick={() =>
+                !isInCart(product._id, activeVariant?.name || null) &&
+                updateCart()
+              }
+              disabled={
+                isInCart(product._id, activeVariant?.name || null) ||
+                cartLoading
+              }
+            >
+              {cartLoading ? (
+                <>
+                  در حال افزودن <FiLoader className="animate-spin" />
+                </>
+              ) : isInCart(product._id, activeVariant?.name || null) ? (
+                <>
+                  موجود در سبد خرید شما <FiCheck />
+                </>
+              ) : (
+                <>افزودن به سبد خرید</>
+              )}
+            </Button>
+          </div>
         </div>
       </section>
 
       <section
         id="product-details-tabs"
-        className="bg-lightgray/35 shadow px-4 pb-4 rounded-xl"
+        className="bg-lightgray/35 lg:shadow px-4 pb-4 lg:rounded-xl"
       >
         {/* تب‌ها */}
         <div className="flex gap-2 mb-4">

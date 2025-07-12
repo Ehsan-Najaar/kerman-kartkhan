@@ -26,7 +26,7 @@ export default function FilterSidebar({
   const [isOpen, setIsOpen] = useState({
     brands: true,
     conditions: true,
-    price: true,
+    price: false,
   })
 
   const toggleSection = (section) => {
@@ -107,12 +107,12 @@ export default function FilterSidebar({
   )
 
   return (
-    <div className="p-6 rounded-2xl text-dark shadow w-full max-w-xs border border-lightgray/35">
-      <h2 className="text-xl font-bold pb-2 border-b border-gray-400 mb-6">
+    <div className="w-full lg:max-w-xs lg:p-6 rounded-2xl text-dark lg:shadow lg:border border-lightgray/35">
+      <h2 className="hidden lg:block text-xl font-bold pb-2 border-b border-gray-400 mb-6">
         فیلترها
       </h2>
 
-      <div className="flex justify-end gap-2 mb-6">
+      <div className="hidden lg:flex justify-end gap-2 mb-6">
         <Button
           onClick={clearFilters}
           variant="ghost"
@@ -170,6 +170,27 @@ export default function FilterSidebar({
             </div>
           </Box>
         )}
+      </div>
+
+      <div className="w-full fixed bottom-0 right-0 left-0  p-4 bg-light lg:hidden flex justify-end gap-2 mt-6">
+        <Button
+          onClick={clearFilters}
+          variant="ghost"
+          size="sm"
+          fontWeight="medium"
+          className="w-1/2"
+        >
+          حذف فیلتر
+        </Button>
+        <Button
+          onClick={applyFilters}
+          variant="secondary"
+          size="sm"
+          fontWeight="medium"
+          className="w-1/2"
+        >
+          اعمال فیلتر
+        </Button>
       </div>
     </div>
   )

@@ -121,7 +121,7 @@ export default function IdentityForm() {
       <div className="min-h-screen min-w-screen bg-light grid place-items-center">
         <form
           onSubmit={handleSubmit}
-          className="md:w-[65%] max-w-6xl md:h-[76%] bg-light lg:border border-lightgray/35 rounded-2xl lg:p-6 p-4 lg:shadow space-y-3"
+          className="md:w-[65%] max-w-6xl md:h-[80%] bg-light lg:border border-lightgray/35 rounded-2xl lg:p-6 p-4 lg:shadow space-y-2"
         >
           <StepProgressBar
             currentStep={1}
@@ -136,7 +136,25 @@ export default function IdentityForm() {
             className="mb-8"
           />
 
-          <div className="grid grid-cols-2 gap-4 -space-y-1">
+          <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
+            <Info size={16} className="hidden lg:block" />
+            <p className="text-xs text-justify leading-6">
+              اگر جواز کسب نداشته باشید، عنوان صنف شما روی دستگاه کارت‌خوان
+              «سوپرمارکت» نمایش داده می‌شود، اما در مدارک مالیاتی همچنان نام
+              واقعی کسب‌وکار شما ثبت خواهد شد.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm mb-6">
+            <Info size={18} className="hidden lg:block" />
+            <p className="text-xs text-justify leading-6">
+              لطفاً توجه داشته باشید که شماره موبایل واردشده باید به نام صاحب
+              حساب باشد تا فرایند احراز هویت شما سریع‌تر و بدون مشکل انجام شود.
+              همچنین، اطلاعات حساب بانکی شما در مرحله بعد دریافت خواهد شد.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
             <div className="space-y-2">
               <Input
                 type="text"
@@ -156,15 +174,6 @@ export default function IdentityForm() {
                   onChange={handleChange}
                   className="border w-full p-2"
                 />
-
-                <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
-                  <Info size={40} />
-                  <p className="text-xs text-justify leading-6">
-                    اگر جواز کسب نداشته باشید، عنوان صنف شما روی دستگاه
-                    کارت‌خوان «سوپرمارکت» نمایش داده می‌شود، اما در مدارک
-                    مالیاتی همچنان نام واقعی کسب‌وکار شما ثبت خواهد شد.
-                  </p>
-                </div>
               </div>
             </div>
 
@@ -178,16 +187,6 @@ export default function IdentityForm() {
                 onChange={handleChange}
                 className="border w-full p-2"
               />
-
-              <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
-                <Info size={48} />
-                <p className="text-xs text-justify leading-6">
-                  لطفاً توجه داشته باشید که شماره موبایل واردشده باید به نام
-                  صاحب حساب باشد تا فرایند احراز هویت شما سریع‌تر و بدون مشکل
-                  انجام شود. همچنین، اطلاعات حساب بانکی شما در مرحله بعد دریافت
-                  خواهد شد.
-                </p>
-              </div>
             </div>
 
             <Input
@@ -218,7 +217,7 @@ export default function IdentityForm() {
             onChange={handleChange}
           />
 
-          <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4">
+          <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4 mt-4">
             <Link href={'/shop'}>
               <HomeIcon className="text-gray cursor-pointer" />
             </Link>

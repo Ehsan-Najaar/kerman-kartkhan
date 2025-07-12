@@ -53,7 +53,7 @@ export default function EditAccount() {
         </div>
 
         {/* هدر موبایل */}
-        <div className="lg:hidden flex items-center gap-2 bg-light text-dark rounded-lg p-4 mb-4">
+        <div className="lg:hidden flex items-center gap-2 bg-light text-dark border-b border-lightgray/35 py-6 px-4 mb-4">
           <Link href="/shop/dashboard">
             <ArrowRight size={24} />
           </Link>

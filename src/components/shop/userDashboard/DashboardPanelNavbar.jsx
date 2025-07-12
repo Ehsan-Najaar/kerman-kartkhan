@@ -8,7 +8,7 @@ import { FiEdit, FiLogOut, FiMap, FiSettings } from 'react-icons/fi'
 export default function DashboardPanelNavbar() {
   const pathname = usePathname()
   const router = useRouter()
-  const { user, setUser } = useAppContext()
+  const { user, logout } = useAppContext()
 
   const Tabs = [
     {
@@ -51,13 +51,13 @@ export default function DashboardPanelNavbar() {
   return (
     <div
       className={`${
-        pathname.startsWith('/dashboard/edit-account') || // اصلاح نام مسیر
+        pathname.startsWith('/dashboard/edit-account') ||
         pathname.startsWith('/dashboard/addresses') ||
         pathname.startsWith('/dashboard/my-orders')
           ? 'hidden lg:flex'
           : ''
-      }
-         lg:h-96  lg:w-[250px] bg-light text-dark rounded-2xl flex flex-col items-center p-4 lg:shadow lg:border border-lightgray/35`}
+      } 
+         lg:h-[440px] lg:w-[250px] bg-light text-dark rounded-2xl flex flex-col items-center p-4 lg:shadow lg:border border-lightgray/35`}
     >
       <figure className="p-4 bg-bg rounded-full mb-4">
         <User size={40} />
@@ -82,9 +82,7 @@ export default function DashboardPanelNavbar() {
             <button
               key={index}
               onClick={item.action}
-              className={`${
-                pathname !== '/dashboard' ? 'hidden' : ''
-              } flex items-center gap-2 p-3 w-full rounded-lg bg-red-400 hover:bg-bg hover:pr-6 transition-all duration-300`}
+              className="flex items-center gap-2 p-3 w-full rounded-lg bg-bg border border-red-500 text-red-500 hover:pr-6 transition-all duration-300 cursor-pointer"
             >
               {item.icon}
               <span className="body-text">{item.name}</span>

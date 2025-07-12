@@ -52,14 +52,14 @@ export default function MyOrdersPage() {
         <ShopPageHeader />
       </div>
 
-      <div className="lg:flex gap-12 px-4 sm:px-12 lg:px-24">
+      <div className="lg:flex gap-12 sm:px-12 lg:px-24">
         <div className="hidden lg:flex">
           <DashboardPanelNavbar />
         </div>
 
         <div className="flex-1">
           {/* هدر موبایل */}
-          <div className="lg:hidden flex items-center gap-2 bg-light text-dark rounded-lg p-4 mb-4">
+          <div className="lg:hidden flex items-center gap-2 bg-light text-dark border-b border-lightgray/35 py-6 px-4 mb-4">
             <Link href="/shop/dashboard">
               <ArrowRight size={24} />
             </Link>
@@ -68,7 +68,7 @@ export default function MyOrdersPage() {
 
           <div className="min-h-96 h-auto bg-light text-dark rounded-2xl flex flex-col items-center lg:p-6 lg:shadow lg:border border-lightgray/35 gap-4">
             {/* تب‌ها */}
-            <div className="w-full flex flex-nowrap gap-2 mb-2 overflow-x-auto scrollbar-hide">
+            <div className="w-full flex flex-nowrap gap-2 mb-2 px-4 overflow-x-auto scrollbar-hide">
               {TABS.map((tab) => (
                 <button
                   key={tab.value}
@@ -85,7 +85,7 @@ export default function MyOrdersPage() {
             </div>
 
             {/* لیست سفارش‌ها */}
-            <div className="w-full space-y-4">
+            <div className="w-full space-y-4 px-4">
               {isLoading && (
                 <div className="min-h-80 h-auto bg-light text-dark grid place-items-center">
                   <Loader className="animate-spin" />

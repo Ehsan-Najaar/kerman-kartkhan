@@ -40,10 +40,9 @@ export default function Layout({ children }) {
         ${isAdminPanel ? 'max-w-[1640px] mx-auto' : ''}
       `}
     >
+      {!isAdminPanel ? <BottomNavbar /> : <AdminPanelBottomNavbar />}
       {children}
       <Toaster />
-
-      {!isAdminPanel ? <BottomNavbar /> : <AdminPanelBottomNavbar />}
     </main>
   )
 }

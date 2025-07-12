@@ -333,7 +333,7 @@ export default function DocumentsPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="md:w-[65%] max-w-6xl md:h-[76%] bg-light lg:border border-lightgray/35 rounded-2xl p-6 lg:shadow space-y-6 mx-auto"
+        className="md:w-[65%] max-w-6xl md:h-[80%] bg-light lg:border border-lightgray/35 rounded-2xl p-6 lg:shadow space-y-6 mx-auto"
       >
         <StepProgressBar
           currentStep={2}
@@ -350,7 +350,7 @@ export default function DocumentsPage() {
 
         <section className="space-y-2">
           <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
-            <Info size={18} />
+            <Info size={18} className="hidden lg:block" />
             <p className="text-xs text-justify">
               اگر کارت ملی هوشمند ندارید، تصویر رسید کارت ملی خود را در هر دو
               بخش بارگذاری کنید.
@@ -358,7 +358,7 @@ export default function DocumentsPage() {
           </div>
 
           <div className="flex items-center gap-2 bg-gray-100 text-gray border border-gray p-3 rounded-lg text-sm">
-            <Info size={29} />
+            <Info size={29} className="hidden lg:block" />
             <p className="text-xs text-justify">
               داشتن جواز کسب الزامی نیست، اما توجه داشته باشید در صورت نداشتن
               جواز، عنوان صنف شما فقط در دستگاه کارت‌خوان تغییر خواهد کرد. تأکید
@@ -376,7 +376,7 @@ export default function DocumentsPage() {
           {renderFileUploadBox('license', 'جواز (اختیاری)')}
         </div>
 
-        <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4 mt-32">
+        <div className="flex items-center justify-between gap-4 border-t border-lightgray pt-4 mt-40">
           <Link href={'/shop'}>
             <HomeIcon className="text-gray cursor-pointer" />
           </Link>

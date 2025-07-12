@@ -14,7 +14,7 @@ export default function DocCard({
 }) {
   return (
     <div
-      className={`relative w-44 h-44  ${
+      className={`relative lg:w-44 lg:h-44 w-36 h-36  ${
         mode !== 'summary' ? '' : 'border-2 border-dashed'
       } border-gray-300 rounded-lg overflow-hidden bg-white flex items-center justify-center group`}
     >
