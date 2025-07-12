@@ -12,7 +12,7 @@ export async function POST(req) {
 
   try {
     const verifyResponse = await fetch(
-      'https://sandbox.zarinpal.com/pg/v4/payment/verify.json',
+      'https://payment.zarinpal.com/pg/v4/payment/verify.json',
       {
         method: 'POST',
         headers: {
@@ -27,7 +27,6 @@ export async function POST(req) {
     )
 
     const result = await verifyResponse.json()
-    console.log('Zarinpal verify response:', result)
 
     if (result.data?.code === 100) {
       return NextResponse.json({
