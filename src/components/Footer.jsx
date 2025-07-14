@@ -234,7 +234,7 @@ export default function Footer() {
                 dir="ltr"
                 className="flex lg:hidden items-center gap-2 small-text p-2 bg-light/30 rounded-md ml-8"
               >
-                <span>0913 710 1002</span>
+                <span>0913 713 1002</span>
                 <FaMobile size={20} />
               </section>
               <section className="flex items-center gap-2">

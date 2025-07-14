@@ -26,7 +26,7 @@ export default function TopSection({ controlsLeft, controlsRight }) {
           </p>
         </div>
         <div className="hidden lg:flex items-center gap-2">
-          <Link href={'/order-steps'}>
+          <Link href={'/shop'}>
             <Button
               variant="light"
               fontWeight="medium"
@@ -74,23 +74,28 @@ export default function TopSection({ controlsLeft, controlsRight }) {
         animate={controlsLeft}
         className="lg:hidden flex items-center gap-2 mt-4"
       >
-        <Button
-          variant="light"
-          size="sm"
-          fontWeight="medium"
-          className="whitespace-nowrap"
-        >
-          ثبت درخواست کارتخوان
-        </Button>
-        <Button
-          variant="light"
-          outline
-          size="sm"
-          fontWeight="medium"
-          className="whitespace-nowrap"
-        >
-          فروشگاه کرمان کارتخوان
-        </Button>
+        <Link href={'/shop'}>
+          <Button
+            variant="light"
+            size="sm"
+            fontWeight="medium"
+            className="whitespace-nowrap"
+          >
+            ثبت درخواست کارتخوان
+          </Button>
+        </Link>
+
+        <Link href={'/shop'}>
+          <Button
+            variant="light"
+            outline
+            size="sm"
+            fontWeight="medium"
+            className="whitespace-nowrap"
+          >
+            فروشگاه کرمان کارتخوان
+          </Button>
+        </Link>
       </motion.div>
     </section>
   )

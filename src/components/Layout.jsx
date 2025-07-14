@@ -2,6 +2,7 @@
 
 import AdminPanelBottomNavbar from '@/components/AdminPanelBottomNavbar'
 import BottomNavbar from '@/components/BottomNavbar'
+import Fab from '@/components/Fab'
 import { usePathname } from 'next/navigation'
 import { Toaster } from 'react-hot-toast'
 
@@ -43,6 +44,15 @@ export default function Layout({ children }) {
       {!isAdminPanel ? <BottomNavbar /> : <AdminPanelBottomNavbar />}
       {children}
       <Toaster />
+      {isLandingPage ||
+      isAboutPage ||
+      isContactPage ||
+      isGuidePage ||
+      isTermsPage ? (
+        <Fab />
+      ) : (
+        ''
+      )}
     </main>
   )
 }

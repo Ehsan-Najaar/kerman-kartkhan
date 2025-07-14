@@ -5,6 +5,7 @@ import TomanIcon from '@/components/TomanIcon'
 import Button from '@/components/ui/Button'
 import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
+import { BadgeCheck, Headphones, MapPin, RotateCcw, Truck } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -52,6 +53,29 @@ export default function ProductDetails({ product }) {
     'سفید/طوسی روشن': `linear-gradient(to right, #ffffff 50%, #d3d3d3 50%)`,
     'مشکی/طوسی روشن': `linear-gradient(to right, #000000 50%, #d3d3d3 50%)`,
   }
+
+  const benefits = [
+    {
+      icon: Truck,
+      title: 'ارسال به سراسر کشور',
+    },
+    {
+      icon: Headphones,
+      title: '24 ساعته، 7 روز هفته',
+    },
+    {
+      icon: MapPin,
+      title: 'امکان پرداخت در محل',
+    },
+    {
+      icon: RotateCcw,
+      title: 'هفت روز ضمانت بازگشت کالا',
+    },
+    {
+      icon: BadgeCheck,
+      title: 'ضمانت اصل بودن کالا',
+    },
+  ]
 
   const handleImageClick = (image) => setSelectedImage(image)
   const handleQuantityChange = (e) => setProductNumber(Number(e.target.value))
@@ -429,9 +453,23 @@ export default function ProductDetails({ product }) {
         </div>
       </section>
 
+      <section className="w-full py-6 bg-lightgray/35 rounded-lg">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-y-6 text-center text-sm text-gray-600">
+          {benefits.map((item, index) => {
+            const Icon = item.icon
+            return (
+              <div key={index} className="flex flex-col items-center gap-2">
+                <Icon className="w-6 h-6 text-gray-500" />
+                <span>{item.title}</span>
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
       <section
         id="product-details-tabs"
-        className="bg-lightgray/35 lg:shadow px-4 pb-4 lg:rounded-xl"
+        className="bg-lightgray/35 px-4 pb-4 lg:rounded-xl"
       >
         {/* تب‌ها */}
         <div className="flex gap-2 mb-4">

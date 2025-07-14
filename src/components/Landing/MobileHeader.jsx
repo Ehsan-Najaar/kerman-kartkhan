@@ -84,7 +84,7 @@ export default function MobileHeader() {
             />
           </Link>
         </div>
-        <Link href="/order-steps">
+        <Link href="/shop">
           <Button
             variant={isLanding ? (scrolled ? 'primary' : 'light') : 'primary'}
             size="sm"

@@ -62,7 +62,7 @@ export default function DesktopHeader() {
           </ul>
 
           {/* دکمه سفارش */}
-          <Link href="/order-steps">
+          <Link href="/shop">
             <Button
               variant="primary"
               fontWeight="medium"

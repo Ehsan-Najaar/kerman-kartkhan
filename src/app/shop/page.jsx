@@ -9,7 +9,7 @@ import Question from '@/components/shop/Question'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
 import SuggestedProducts from '@/components/shop/SuggestedProducts'
 import { useEffect, useState } from 'react'
-
+ 
 export default function ShopPage() {
   const [products, setProducts] = useState([])
 
