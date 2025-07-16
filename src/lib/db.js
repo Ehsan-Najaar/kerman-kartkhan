@@ -11,7 +11,6 @@ let cached = global.mongoose || { conn: null, promise: null }
 
 const connectDB = async () => {
   if (cached.conn) {
-    console.log('✅ Already connected to MongoDB')
     return cached.conn
   }
 
