@@ -27,7 +27,7 @@ export default function UserDropdown({ user, onLogout }) {
           isHovered ? 'bg-lightgray/35 border-lightgray' : 'border-lightgray/35'
         }`}
       >
-        <UserIcon size={24} className="stroke-[2] text-gray" />
+        <UserIcon size={24} className="stroke-[1.5] text-gray" />
       </div>
 
       <div

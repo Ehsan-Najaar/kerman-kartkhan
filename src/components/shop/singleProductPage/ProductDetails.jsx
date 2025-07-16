@@ -5,7 +5,7 @@ import TomanIcon from '@/components/TomanIcon'
 import Button from '@/components/ui/Button'
 import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
-import { BadgeCheck, Headphones, MapPin, RotateCcw, Truck } from 'lucide-react'
+import { BadgeCheck, CreditCard, Headphones, MapPin, Truck } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -18,7 +18,6 @@ import {
   FiLoader,
   FiMinus,
   FiPlus,
-  FiShoppingCart,
 } from 'react-icons/fi'
 
 export default function ProductDetails({ product }) {
@@ -68,8 +67,8 @@ export default function ProductDetails({ product }) {
       title: 'امکان پرداخت در محل',
     },
     {
-      icon: RotateCcw,
-      title: 'هفت روز ضمانت بازگشت کالا',
+      icon: CreditCard,
+      title: 'امکان خرید اقساطی در محل',
     },
     {
       icon: BadgeCheck,
@@ -352,7 +351,7 @@ export default function ProductDetails({ product }) {
               </p>
             </article>
 
-            <div className="space-y-4">
+            <div className="space-y-4 text-center">
               <div className="flex items-center justify-center gap-3">
                 <button
                   onClick={() =>
@@ -376,7 +375,13 @@ export default function ProductDetails({ product }) {
                 </button>
               </div>
               <Button
-                variant={`${productIsInCart ? 'ghost' : 'primary'}`}
+                variant={
+                  product.stock === 0
+                    ? 'ghost'
+                    : productIsInCart
+                    ? 'ghost'
+                    : 'primary'
+                }
                 fontWeight="medium"
                 className="w-max"
                 onClick={() =>
@@ -384,11 +389,14 @@ export default function ProductDetails({ product }) {
                   updateCart()
                 }
                 disabled={
+                  product.stock === 0 ||
                   isInCart(product._id, activeVariant?.name || null) ||
                   cartLoading
                 }
               >
-                {cartLoading ? (
+                {product.stock === 0 ? (
+                  <div>ناموجود</div>
+                ) : cartLoading ? (
                   <>
                     در حال افزودن <FiLoader className="animate-spin" />
                   </>
@@ -398,7 +406,14 @@ export default function ProductDetails({ product }) {
                   </>
                 ) : (
                   <>
-                    افزودن به سبد خرید <FiShoppingCart />
+                    افزودن به سبد خرید{' '}
+                    <Image
+                      src="/icons/custom/Basket-white.svg"
+                      alt="سبد خرید"
+                      width={20}
+                      height={20}
+                      className="object-contain grayscale-100"
+                    />
                   </>
                 )}
               </Button>
@@ -424,7 +439,13 @@ export default function ProductDetails({ product }) {
             </div>
 
             <Button
-              variant={`${productIsInCart ? 'ghost' : 'primary'}`}
+              variant={
+                product.stock === 0
+                  ? 'ghost'
+                  : productIsInCart
+                  ? 'ghost'
+                  : 'primary'
+              }
               fontWeight="medium"
               size="sm"
               className="w-full sm:w-max text-xs sm:text-sm"
@@ -433,11 +454,14 @@ export default function ProductDetails({ product }) {
                 updateCart()
               }
               disabled={
+                product.stock === 0 ||
                 isInCart(product._id, activeVariant?.name || null) ||
                 cartLoading
               }
             >
-              {cartLoading ? (
+              {product.stock === 0 ? (
+                <>ناموجود</>
+              ) : cartLoading ? (
                 <>
                   در حال افزودن <FiLoader className="animate-spin" />
                 </>
@@ -446,7 +470,16 @@ export default function ProductDetails({ product }) {
                   موجود در سبد خرید شما <FiCheck />
                 </>
               ) : (
-                <>افزودن به سبد خرید</>
+                <>
+                  افزودن به سبد خرید{' '}
+                  <Image
+                    src="/icons/custom/Basket-white.svg"
+                    alt="سبد خرید"
+                    width={18}
+                    height={18}
+                    className="object-contain grayscale-100"
+                  />
+                </>
               )}
             </Button>
           </div>

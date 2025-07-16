@@ -14,24 +14,27 @@ export default function PopularOrSearchProducts({ search, products }) {
         {search ? 'نتایج جستجو' : 'محصولات پرفروش'}
       </div>
       <div className="flex items-center max-h-60 overflow-y-auto">
-        {products.slice(0, 5).map((product) => (
-          <Link
-            href={`/shop/${`${product.brand}-${product.name}`.toLowerCase()}`}
-            key={product._id}
-            className="flex flex-col gap-2 items-center hover:bg-lightgray/20 p-4 transition border-l border-lightgray/35 last:border-none"
-          >
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              width={80}
-              height={80}
-              className="object-cover rounded-md"
-            />
-            <span className="text-sm text-gray-700 line-clamp-1 text-center">
-              {product.name}
-            </span>
-          </Link>
-        ))}
+        {products
+          .filter((product) => product.stock > 0)
+          .slice(0, 5)
+          .map((product) => (
+            <Link
+              href={`/shop/${`${product.brand}-${product.name}`.toLowerCase()}`}
+              key={product._id}
+              className="flex flex-col gap-2 items-center hover:bg-lightgray/20 p-4 transition border-l border-lightgray/35 last:border-none"
+            >
+              <Image
+                src={product.images[0]}
+                alt={product.name}
+                width={80}
+                height={80}
+                className="object-cover rounded-md"
+              />
+              <span className="text-sm text-gray-700 line-clamp-1 text-center">
+                {product.name.toUpperCase()}
+              </span>
+            </Link>
+          ))}
       </div>
     </div>
   )

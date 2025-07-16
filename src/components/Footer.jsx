@@ -118,11 +118,12 @@ export default function Footer() {
           {/* نمایش نمادهای اعتماد */}
           <div className="lg:w-1/4 lg:h-48 space-y-4">
             <h3 className="text-primary main-text">نماد ها</h3>
-            <div className="flex lg:flex-col gap-3 items-center justify-center">
+            <div className="flex lg:grid lg:grid-cols-2 gap-3 items-center justify-center">
               <a
                 referrerPolicy="origin"
                 target="_blank"
                 href="https://trustseal.enamad.ir/?id=609824&Code=BnvdJImbxIiAeEeBC3zKmsvRUMsJ0M6V"
+                className="w-[70px] h-[70px]"
               >
                 <img
                   referrerPolicy="origin"
@@ -130,7 +131,7 @@ export default function Footer() {
                   alt="نماد"
                   width={70}
                   height={70}
-                  className="bg-lightgray/30 rounded-md p-2 cursor-pointer"
+                  className="w-full h-full bg-lightgray/30 rounded-md p-2 cursor-pointer object-contain"
                   code="BnvdJImbxIiAeEeBC3zKmsvRUMsJ0M6V"
                 />
               </a>
@@ -144,8 +145,23 @@ export default function Footer() {
                 <img
                   src="https://cdn.zarinpal.com/badges/trustLogo/1.svg"
                   alt="زرین‌پال"
-                  width={50}
-                  height={50}
+                  width={70}
+                  height={70}
+                  className="w-full h-full bg-lightgray/30 rounded-md p-2 cursor-pointer object-contain"
+                />
+              </a>
+
+              <a
+                href="https://emalls.ir/Shop/63618/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[70px] h-[70px]"
+              >
+                <img
+                  src="https://service.emalls.ir/neshan?id=63618"
+                  alt="نشان اعتباری ایمالز"
+                  width={70}
+                  height={70}
                   className="w-full h-full bg-lightgray/30 rounded-md p-2 cursor-pointer object-contain"
                 />
               </a>

@@ -12,7 +12,7 @@ import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
 import { motion } from 'framer-motion'
 import Fuse from 'fuse.js'
-import { Menu, Search, Shapes, ShoppingCart, User, X } from 'lucide-react'
+import { Menu, Search, Shapes, User, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -344,7 +344,13 @@ export default function ShopPageHeader() {
 
           <a href={'/shop/cart'} className="relative">
             <button className="p-3 text-gray border border-lightgray/35 rounded-lg cursor-pointer relative">
-              <ShoppingCart size={20} />
+              <Image
+                src="/icons/custom/Basket.svg"
+                alt="سبد خرید"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
                   {formatPriceToPersian(cartCount)}

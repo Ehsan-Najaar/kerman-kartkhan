@@ -2,15 +2,7 @@ import AuthModal from '@/components/shop/AuthModal'
 import Button from '@/components/ui/Button'
 import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
-import {
-  BatteryCharging,
-  Box,
-  Check,
-  Plug,
-  Plus,
-  ShoppingCart,
-  Zap,
-} from 'lucide-react'
+import { BatteryCharging, Box, Check, Plug, Plus, Zap } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -123,7 +115,13 @@ export function ProductCard({ product }) {
               <Check size={20} className="text-secondary" />
             ) : (
               <>
-                <ShoppingCart size={20} />
+                <Image
+                  src="/icons/custom/Basket-active.svg"
+                  alt="سبد خرید"
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
                 <Plus
                   size={12}
                   className="absolute -top-1 -right-4 bg-light rounded-full text-secondary"

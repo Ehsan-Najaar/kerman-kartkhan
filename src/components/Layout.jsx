@@ -4,10 +4,22 @@ import AdminPanelBottomNavbar from '@/components/AdminPanelBottomNavbar'
 import BottomNavbar from '@/components/BottomNavbar'
 import Fab from '@/components/Fab'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 export default function Layout({ children }) {
   const pathname = usePathname()
+  const [isNotFoundPage, setIsNotFoundPage] = useState(false)
+
+  useEffect(() => {
+    // چک کنیم آیا DOM عنصر not-found-page رو داره یا نه
+    if (document.querySelector('.not-found-page')) {
+      setIsNotFoundPage(true)
+    } else {
+      setIsNotFoundPage(false)
+    }
+  }, [pathname])
+
   const isLandingPage = pathname.startsWith('/landing')
   const isGuidePage = pathname.startsWith('/guide')
   const isAboutPage = pathname.startsWith('/about-us')
@@ -21,6 +33,7 @@ export default function Layout({ children }) {
   const isPaymentPage = pathname.startsWith('/payment')
 
   const shouldApplyContainer = !isShopRoute && !isAdminPanel && !isLoginPage
+
   return (
     <main
       className={`
@@ -33,7 +46,8 @@ export default function Layout({ children }) {
           isCheckoutPage ||
           isPaymentPage ||
           isTermsPage ||
-          isFaqPage
+          isFaqPage ||
+          isNotFoundPage
             ? 'bg-transparent'
             : 'bg-light'
         }

@@ -26,13 +26,13 @@ const socialLinks = [
   {
     name: 'تلگرام',
     icon: <FaTelegramPlane size={20} />,
-    url: 'https://t.me/kerman.kartkhan',
+    url: 'https://t.me/kerman-kartkhan',
     label: '@kerman.kartkhan',
   },
   {
     name: 'اینستاگرام',
     icon: <FaInstagram size={20} />,
-    url: 'https://instagram.com/kerman.kartkhan',
+    url: 'https://instagram.com/kerman-kartkhan',
     label: '@kerman.kartkhan',
   },
   {
