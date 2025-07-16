@@ -150,21 +150,6 @@ export default function Footer() {
                   className="w-full h-full bg-lightgray/30 rounded-md p-2 cursor-pointer object-contain"
                 />
               </a>
-
-              <a
-                href="https://emalls.ir/Shop/63618/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-[70px] h-[70px]"
-              >
-                <img
-                  src="https://service.emalls.ir/neshan?id=63618"
-                  alt="نشان اعتباری ایمالز"
-                  width={70}
-                  height={70}
-                  className="w-full h-full bg-lightgray/30 rounded-md p-2 cursor-pointer object-contain"
-                />
-              </a>
             </div>
           </div>
         </div>
