@@ -1,7 +1,7 @@
 import UserWrapper from '@/app/UserWrapper'
 import InstallPrompt from '@/components/InstallPrompt'
 import Layout from '@/components/Layout'
-import '../../styles/globals.css'
+import '@/styles/globals.css'
 
 export const metadata = {
   title: 'kerman-kartkhan',
