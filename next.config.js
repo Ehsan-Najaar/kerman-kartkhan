@@ -26,5 +26,6 @@ module.exports = withPWA({
         hostname: 'storage.c2.liara.space',
       },
     ],
+    minimumCacheTTL: 60 * 60 * 24,
   },
 })

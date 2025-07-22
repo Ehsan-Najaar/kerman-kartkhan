@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '../public/fonts/IRANSans.css';
+@import '../../public/fonts/IRANSans.css';
 
 @theme {
   --color-primary: #f8243f;
