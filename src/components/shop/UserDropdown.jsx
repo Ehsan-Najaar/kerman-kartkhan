@@ -31,13 +31,13 @@ export default function UserDropdown({ user, onLogout }) {
       </div>
 
       <div
-        className={`absolute -left-16 mt-2 w-44 rounded-lg bg-white ring-1 ring-lightgray/0 overflow-hidden max-h-0 transition-all duration-300 z-10 ${
+        className={`absolute -left-16 mt-2 w-44 rounded-lg bg-light ring-1 ring-lightgray/0 overflow-hidden max-h-0 transition-all duration-300 z-10 ${
           isHovered ? 'ring-lightgray/100 max-h-[500px]' : ''
         }`}
       >
         <div className="border-b border-lightgray">
           <Link href={dashboardLink}>
-            <h3 className="flex items-center justify-between body-text hover:bg-gray-100 px-4 py-2 cursor-pointer">
+            <h3 className="flex items-center justify-between small-text hover:bg-gray-100 px-4 py-2 cursor-pointer">
               {user.name || user.phone}
               <ChevronLeft size={20} />
             </h3>
@@ -48,7 +48,7 @@ export default function UserDropdown({ user, onLogout }) {
           <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
             <Link
               href="/shop/dashboard/my-orders"
-              className="flex items-center gap-2 w-full body-text"
+              className="flex items-center gap-2 w-full small-text"
               onClick={() => setIsHovered(false)}
             >
               <ListChecks size={20} />
@@ -59,7 +59,7 @@ export default function UserDropdown({ user, onLogout }) {
           <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
             <Link
               href="/shop/dashboard/my-addresses"
-              className="flex items-center gap-2 w-full body-text"
+              className="flex items-center gap-2 w-full small-text"
               onClick={() => setIsHovered(false)}
             >
               <MapPin size={20} />
@@ -71,7 +71,7 @@ export default function UserDropdown({ user, onLogout }) {
             <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
               <Link
                 href="/admin/products"
-                className="flex items-center gap-2 w-full body-text"
+                className="flex items-center gap-2 w-full small-text"
                 onClick={() => setIsHovered(false)}
               >
                 <Settings size={20} />
@@ -86,7 +86,7 @@ export default function UserDropdown({ user, onLogout }) {
                 onLogout()
                 setIsHovered(false)
               }}
-              className="flex items-center gap-2 w-full text-red-500 px-4 py-2 hover:bg-gray-100 body-text cursor-pointer"
+              className="flex items-center gap-2 w-full text-red-500 px-4 py-2 hover:bg-gray-100 small-text cursor-pointer"
             >
               <LogOut size={20} />
               خروج از حساب

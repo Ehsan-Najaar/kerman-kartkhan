@@ -26,7 +26,7 @@ export default function SuggestedProducts({ products }) {
         p.stock > 0 &&
         suggestions.some(
           (keyword) =>
-            p.name?.trim().toLowerCase() === keyword.trim().toLowerCase()
+            p.model?.trim().toLowerCase() === keyword.trim().toLowerCase()
         )
     )
   }, [products])

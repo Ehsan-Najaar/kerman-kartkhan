@@ -47,7 +47,7 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
         <div className="flex items-center gap-4 sm:gap-6 w-full">
           <Link
             href={`/shop/${`${product.productId?.brand || ''}-${
-              product.productId?.name || ''
+              product.productId?.model || ''
             }`.toLowerCase()}`}
             className="relative w-20 h-20 sm:w-32 sm:h-32 md:w-32 md:h-32"
           >
@@ -72,7 +72,7 @@ export default function CartItemCard({ product, onUpdateQuantity, onRemove }) {
           <div className="flex flex-col lg:gap-4 justify-between w-full">
             <Link
               href={`/shop/${`${product.productId?.brand || ''}-${
-                product.productId?.name || ''
+                product.productId?.model || ''
               }`.toLowerCase()}`}
               className="block lg:w-64 text-sm sm:text-lg font-medium"
             >

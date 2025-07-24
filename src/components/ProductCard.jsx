@@ -1,8 +1,9 @@
 import AuthModal from '@/components/shop/AuthModal'
+import TomanIcon from '@/components/TomanIcon'
 import Button from '@/components/ui/Button'
 import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
-import { BatteryCharging, Box, Check, Plug, Plus, Zap } from 'lucide-react'
+import { Box, Check, Circle, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -45,49 +46,70 @@ export function ProductCard({ product }) {
           />
         </figure>
         <div className="flex items-center gap-1 mt-4 font-semibold text-xs sm:text-sm text-dark">
-          <span>کارتخوان</span>
-          {product.model || 'D210'}
+          {product.name.toUpperCase() || '-'}
         </div>
       </section>
 
       <section className="text-[10px] sm:text-xs text-gray mt-2 space-y-1">
+        {/* نوع دستگاه */}
         <article className="flex items-center gap-1">
           <Box size={14} className="text-secondary" />
           <span>{product.type}</span>
         </article>
 
+        {/* ویژگی اول */}
         <article className="flex items-center gap-1">
-          <Zap size={14} className="text-secondary" />
-          <span>{product.specs[0]?.value}</span>
-          <span>{product.specs[0]?.key}</span>
+          <Circle
+            size={12}
+            className="fill-lightgray/35 text-ligrfill-lightgray/35"
+          />
+          {product.type === 'تجهیزات فروشگاهی' ? (
+            <span>{product.specs[0]?.value}</span>
+          ) : ['سیار', 'ثابت', 'اندرویدی'].includes(product.type) ? (
+            <>
+              <span>{product.specs[0]?.value}</span>
+              <span>{product.specs[0]?.key}</span>
+            </>
+          ) : ['کش لس دیواری', 'کش لس رومیزی'].includes(product.type) ? (
+            <>
+              <span>{product.specs[0]?.key}</span>
+              <span>{product.specs[0]?.value}</span>
+            </>
+          ) : null}
         </article>
 
+        {/* ویژگی دوم */}
         <article className="flex items-center gap-1">
-          {product.type === 'ثابت' ? (
-            <Plug size={14} className="text-secondary" />
-          ) : (
-            <BatteryCharging size={14} className="text-secondary" />
-          )}
+          <Circle
+            size={12}
+            className="fill-lightgray/35 text-ligrfill-lightgray/35"
+          />
           <span>
-            {product.type === 'ثابت'
-              ? product.specs[1]?.value
-              : product.specs[2]?.value}
-          </span>
-          <span>
-            {product.type === 'ثابت'
-              ? product.specs[1]?.key
-              : product.specs[2]?.key}
+            {['سیار', 'ثابت', 'اندرویدی'].includes(product.type) ? (
+              <>
+                {product.type === 'سیار'
+                  ? `${product.specs[2]?.value} ${product.specs[2]?.key}`
+                  : `${product.specs[1]?.value} ${product.specs[1]?.key}`}
+              </>
+            ) : (
+              <>
+                {product.type === 'کش لس دیواری' ||
+                product.type === 'کش لس رومیزی' ||
+                product.type === 'تجهیزات فروشگاهی'
+                  ? `${product.specs[1]?.key} ${product.specs[1]?.value}`
+                  : ''}
+              </>
+            )}
           </span>
         </article>
       </section>
-
-      <div className="text-sm font-semibold text-dark mt-2">
-        {formatPriceToPersian(product.price)} تومان
+      <div className="flex items-center gap-1 text-sm font-semibold text-dark mt-2">
+        {formatPriceToPersian(product.price)}
+        <TomanIcon width={16} height={16} className="fill-dark" />
       </div>
-
       <section className="flex items-center gap-2">
         <Link
-          href={`/shop/${`${product.brand}-${product.name}`.toLowerCase()}`}
+          href={`/shop/${`${product.brand}-${product.model}`.toLowerCase()}`}
         >
           <Button variant="primary" size="xs" fontWeight="medium">
             <p>مشاهده</p>
@@ -131,7 +153,6 @@ export function ProductCard({ product }) {
           </span>
         </button>
       </section>
-
       {authModalOpen && (
         <AuthModal
           isOpen={authModalOpen}
@@ -221,7 +242,7 @@ export default function ProductCard2({
             />
           )}
           <div className="flex flex-col justify-between">
-            <h3 className="sm:text-lg text-sm font-bold capitalize">
+            <h3 className="sm:text-sm text-sm font-bold capitalize">
               {product.name}
             </h3>
           </div>

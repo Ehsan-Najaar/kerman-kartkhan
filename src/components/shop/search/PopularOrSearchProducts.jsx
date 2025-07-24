@@ -19,7 +19,7 @@ export default function PopularOrSearchProducts({ search, products }) {
           .slice(0, 5)
           .map((product) => (
             <Link
-              href={`/shop/${`${product.brand}-${product.name}`.toLowerCase()}`}
+              href={`/shop/${`${product.brand}-${product.model}`.toLowerCase()}`}
               key={product._id}
               className="flex flex-col gap-2 items-center hover:bg-lightgray/20 p-4 transition border-l border-lightgray/35 last:border-none"
             >

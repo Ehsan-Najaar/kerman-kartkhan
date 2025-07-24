@@ -43,13 +43,9 @@ export async function POST(req) {
     if (!user) {
       user = await User.create({ phone })
       isNewUser = true
-      console.log('کاربر جدید ایجاد شد:', user)
-    } else {
-      console.log('ورود کاربر قدیمی:', user)
     }
 
     otpStorage.delete(phone)
-    console.log('OTP data for', phone, ':', otpData)
 
     const token = jwt.sign(
       {
@@ -62,8 +58,8 @@ export async function POST(req) {
       { expiresIn: '7d' }
     )
 
-    // ✅ ست کردن کوکی به روش Next.js
-    cookies().set({
+    const cookieStore = cookies()
+    cookieStore.set({
       name: 'token',
       value: token,
       httpOnly: true,

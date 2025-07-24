@@ -187,7 +187,11 @@ export default function ProductDetails({ product }) {
               <FiChevronLeft />
               <li>
                 <Link href={`/shop/type/${product.type}`}>
-                  کارتخوان {product.type}
+                  {product.type === 'سیار' ||
+                  product.type === 'ثابت' ||
+                  product.type === 'اندرویدی'
+                    ? `کارتخوان ${product.type}`
+                    : product.type}
                 </Link>
               </li>
               <FiChevronLeft />
@@ -200,7 +204,7 @@ export default function ProductDetails({ product }) {
           </nav>
 
           <h1 className="flex items-center gap-2 text-2xl font-bold">
-            کارتخوان {product.name.toUpperCase()}
+            {product.name.toUpperCase()}
           </h1>
           <div className="md:flex grid grid-cols-2 gap-4 text-sm md:text-base">
             <p className="bg-light p-2 rounded-lg">
@@ -346,8 +350,9 @@ export default function ProductDetails({ product }) {
           <section className="hidden md:flex items-end justify-between">
             <article>
               <p className="text-gray">قیمت</p>
-              <p className="text-2xl font-bold text-dark">
-                {formatPriceToPersian(calculateTotalPrice())} تومان
+              <p className="flex items-center gap-1 text-2xl font-bold text-dark">
+                {formatPriceToPersian(calculateTotalPrice())}
+                <TomanIcon width={18} height={18} className="fill-dark" />
               </p>
             </article>
 
@@ -433,7 +438,7 @@ export default function ProductDetails({ product }) {
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
               <span className="text-xs text-gray">قیمت</span>
               <span className="flex items-center gap-1 text-sm text-dark">
-                {formatPriceToPersian(calculateTotalPrice())} تومان
+                {formatPriceToPersian(calculateTotalPrice())}
                 <TomanIcon width={16} height={16} className="fill-dark" />
               </span>
             </div>

@@ -25,9 +25,11 @@ export default function Question() {
               سوالات متداول
             </Button>
           </Link>
-          <Button variant="secondary" fontWeight="medium" size="sm">
-            گفتگو با ما
-          </Button>
+          <Link href={'/contact-us'}>
+            <Button variant="secondary" fontWeight="medium" size="sm">
+              گفتگو با ما
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

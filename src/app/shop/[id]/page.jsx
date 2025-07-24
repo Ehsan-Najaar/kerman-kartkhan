@@ -22,7 +22,7 @@ export default function SingleProductPage() {
         const data = await res.json()
 
         const matchedProduct = data.find(
-          (item) => `${item.brand}-${item.name}`.toLowerCase() === id
+          (item) => `${item.brand}-${item.model}`.toLowerCase() === id
         )
 
         setProduct(matchedProduct || null)

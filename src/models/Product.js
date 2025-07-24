@@ -25,7 +25,16 @@ const productSchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: true,
-    enum: ['ثابت', 'سیار', 'اندرویدی'],
+    enum: [
+      'ثابت',
+      'سیار',
+      'اندرویدی',
+      'کش لس دیواری',
+      'کش لس رومیزی',
+      'عابربانک',
+      'لوازم جانبی',
+      'تجهیزات فروشگاهی',
+    ],
   },
 
   variants: [

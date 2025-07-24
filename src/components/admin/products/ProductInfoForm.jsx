@@ -139,6 +139,11 @@ export default function ProductInfoForm({
             { label: 'ثابت', value: 'ثابت' },
             { label: 'سیار', value: 'سیار' },
             { label: 'اندرویدی', value: 'اندرویدی' },
+            { label: 'کش لس دیواری', value: 'کش لس دیواری' },
+            { label: 'کش لس رومیزی', value: 'کش لس رومیزی' },
+            { label: 'عابربانک', value: 'عابربانک' },
+            { label: 'لوازم جانبی', value: 'لوازم جانبی' },
+            { label: 'تجهیزات فروشگاهی', value: 'تجهیزات فروشگاهی' },
           ]}
           value={form.type}
           onChange={handleChange}

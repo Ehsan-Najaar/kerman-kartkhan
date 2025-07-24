@@ -54,7 +54,7 @@ export default function ProductsByType({ products }) {
   return (
     <section className="gap-4 py-12 lg:px-24">
       <h3 className="lg:text-center lg:text-xl px-4 lg:px-0 font-semibold mb-2">
-        محصولات ما بر اساس نوع کارت‌خوان
+        انواع محصولات کرمان کارتخوان
       </h3>
 
       <figure className="hidden lg:block relative">
@@ -71,16 +71,16 @@ export default function ProductsByType({ products }) {
 
       <div className="relative lg:mt-12 mt-4 lg:max-w-[85%] mx-auto">
         <h4 className="hidden lg:block text-center relative z-10">
-          نوع کارت‌خوان مورد نظرت رو انتخاب کن تا محصول مناسب رو پیدا کنی.
+          نوع دسته بندی مورد نظرت رو انتخاب کن تا محصول مناسب رو پیدا کنی.
         </h4>
 
         {/* لیست انواع کارت‌خوان */}
-        <div className="flex flex-wrap lg:justify-center gap-4 my-4 px-4 lg:px-0 relative z-10">
+        <div className="flex gap-2 my-4 px-4 py-2 lg:px-0 relative z-10 overflow-x-auto flex-nowrap lg:justify-center scrollbar-hide">
           {types.map((type) => (
             <span
               key={type}
               onClick={() => setSelectedType(type.trim())}
-              className={`lg:w-24 px-4 py-2 rounded-full text-xs md:text-sm text-center shadow-sm cursor-pointer transition-all duration-300 ${
+              className={`flex-shrink-0 lg:w-36 px-4 py-2 rounded-full text-xs md:text-sm text-center shadow-sm cursor-pointer transition-all duration-300 ${
                 selectedType.trim().toLowerCase() === type.trim().toLowerCase()
                   ? activeClass
                   : normalClass

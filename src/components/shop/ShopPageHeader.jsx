@@ -12,7 +12,7 @@ import { useAppContext } from '@/context/AppContext'
 import { formatPriceToPersian } from '@/utils/formatPrice'
 import { motion } from 'framer-motion'
 import Fuse from 'fuse.js'
-import { Menu, Search, Shapes, User, X } from 'lucide-react'
+import { ChevronDown, Menu, Search, Shapes, User, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -23,7 +23,6 @@ export default function ShopPageHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [search, setSearch] = useState('')
-  const [show, setShow] = useState(true)
   const [recentSearches, setRecentSearches] = useState([])
   const [popularProducts, setPopularProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
@@ -32,10 +31,30 @@ export default function ShopPageHeader() {
   const dropdownRef = useRef(null)
 
   const categories = [
-    { name: 'ثابت', href: '/shop/type/ثابت' },
-    { name: 'سیار', href: '/shop/type/سیار' },
-    { name: 'اندرویدی', href: '/shop/type/اندرویدی' },
-    { name: 'لوازم جانبی', href: '/category/accessories' },
+    {
+      name: 'کارتخوان',
+      children: [
+        { name: 'ثابت', href: '/shop/type/ثابت' },
+        { name: 'سیار', href: '/shop/type/سیار' },
+        { name: 'اندرویدی', href: '/shop/type/اندرویدی' },
+        { name: 'لوازم جانبی', href: '/category/accessories' },
+      ],
+    },
+    {
+      name: 'کش لس',
+      children: [
+        { name: 'رومیزی', href: '/shop/type/کش لس رومیزی' },
+        { name: 'دیواری', href: '/shop/type/کش لس دیواری' },
+      ],
+    },
+    {
+      name: 'عابربانک',
+      href: '/shop/type/عابربانک',
+    },
+    {
+      name: 'تجهیزات فروشگاهی',
+      href: '/shop/type/تجهیزات فروشگاهی',
+    },
   ]
 
   const headerRoutes = [
@@ -45,15 +64,6 @@ export default function ShopPageHeader() {
     { name: 'ارتباط با ما', href: '/contact-us' },
     { name: 'راهنمای دریافت کارتخوان', href: '/guide' },
   ]
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShow(window.scrollY < 20)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   useEffect(() => {
     const fetchPopular = async () => {
@@ -363,9 +373,7 @@ export default function ShopPageHeader() {
 
       {/* منوی پایین: headerRoutes و دسته‌ها */}
       <nav
-        className={`hidden absolute top-full left-0 w-full bg-light -z-10 px-24 py-2 xl:flex items-center gap-20 text-sm font-medium overflow-x-auto transition-transform duration-300 ${
-          show ? 'translate-y-0' : '-translate-y-full'
-        }`}
+        className={`hidden absolute top-full left-0 w-full bg-light px-24 py-2 xl:flex items-center gap-20 text-sm font-medium overflow-visible transition-transform duration-300 z-30`}
       >
         <section className="flex items-center gap-4">
           <span className="bg-section/25 text-secondary/80 rounded-full px-4 py-1 text-sm whitespace-nowrap">
@@ -385,18 +393,43 @@ export default function ShopPageHeader() {
 
         <section className="flex items-center gap-4">
           <span className="bg-section/25 text-secondary/80 rounded-full px-4 py-1 text-sm whitespace-nowrap">
-            کارتخوان‌ها
+            دسته بندی ها
           </span>
           <div className="h-6 w-px bg-lightgray rounded-full"></div>
-          {categories.map((cat) => (
-            <Link
-              key={cat.href}
-              href={cat.href}
-              className="text-gray/70 hover:text-primary transition-colors whitespace-nowrap"
-            >
-              {cat.name}
-            </Link>
-          ))}
+          {categories.map((cat) =>
+            cat.children ? (
+              <div className="relative group" key={cat.name}>
+                <span className="flex items-center gap-1 cursor-pointer text-gray/70 group-hover:text-secondary transition-colors whitespace-nowrap">
+                  {cat.name}
+                  <ChevronDown
+                    size={14}
+                    className="text-gray/60 group-hover:text-secondary transition-colors"
+                  />
+                </span>
+                <div className="absolute right-0 -mt-1 hidden group-hover:flex z-50 min-w-[150px] text-sm">
+                  <div className="w-full flex flex-col mt-3 bg-white border border-lightgray rounded-lg shadow-lg">
+                    {cat.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className="px-4 py-2 hover:bg-gray-100 text-gray-700"
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={cat.href}
+                href={cat.href}
+                className="text-gray/70 hover:text-secondary transition-colors whitespace-nowrap"
+              >
+                {cat.name}
+              </Link>
+            )
+          )}
         </section>
       </nav>
 

@@ -103,7 +103,7 @@ export default function TypePage() {
       <ShopPageHeader />
 
       <div className="flex gap-4 lg:px-24 px-4">
-        <aside className="hidden lg:block w-1/4 sticky top-24 self-start h-fit">
+        <aside className="hidden lg:block w-1/4 sticky top-32 self-start h-fit">
           <FilterSidebar
             brands={allBrands}
             conditions={allConditions}
@@ -278,7 +278,9 @@ export default function TypePage() {
           )}
 
           <ProductListToolbar
-            title={`کارتخوان‌های ${type}`}
+            title={`${
+              ['سیار', 'ثابت', 'اندرویدی'].includes(type) ? 'کارتخوان های' : ''
+            } ${type}`}
             onSortChange={handleSortChange}
             activeSort={activeSort}
           />

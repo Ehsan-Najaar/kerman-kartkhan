@@ -13,7 +13,7 @@ export default function CartSummary({ totalItems, totalPrice }) {
       <div
         className="
           hidden md:block
-          lg:sticky lg:top-24
+          lg:sticky lg:top-32
           lg:w-[30%] h-full bg-light p-4 border border-lightgray/35 shadow rounded-lg space-y-6
         "
       >
