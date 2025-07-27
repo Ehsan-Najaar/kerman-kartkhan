@@ -37,7 +37,7 @@ export default function ShopPageHeader() {
         { name: 'ثابت', href: '/shop/type/ثابت' },
         { name: 'سیار', href: '/shop/type/سیار' },
         { name: 'اندرویدی', href: '/shop/type/اندرویدی' },
-        { name: 'لوازم جانبی', href: '/category/accessories' },
+        { name: 'لوازم جانبی', href: '/shop/type/لوازم جانبی' },
       ],
     },
     {
