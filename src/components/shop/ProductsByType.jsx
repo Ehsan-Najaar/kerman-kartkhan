@@ -75,7 +75,7 @@ export default function ProductsByType({ products }) {
         </h4>
 
         {/* لیست انواع کارت‌خوان */}
-        <div className="flex gap-2 my-4 px-4 py-2 lg:px-0 relative z-10 overflow-x-auto flex-nowrap lg:justify-center scrollbar-hide">
+        <div className="flex gap-2 my-4 px-4 py-2 lg:px-0 relative z-10 overflow-x-auto lg:flex-wrap lg:justify-start scrollbar-hide">
           {types.map((type) => (
             <span
               key={type}

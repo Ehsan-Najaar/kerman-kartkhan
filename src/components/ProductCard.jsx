@@ -75,7 +75,12 @@ export function ProductCard({ product }) {
               <span>{product.specs[0]?.key}</span>
               <span>{product.specs[0]?.value}</span>
             </>
-          ) : null}
+          ) : (
+            <>
+              <span>{product.specs[0]?.key}</span>
+              <span>{product.specs[0]?.value}</span>
+            </>
+          )}
         </article>
 
         {/* ویژگی دوم */}
@@ -85,21 +90,18 @@ export function ProductCard({ product }) {
             className="fill-lightgray/35 text-ligrfill-lightgray/35"
           />
           <span>
-            {['سیار', 'ثابت', 'اندرویدی'].includes(product.type) ? (
-              <>
-                {product.type === 'سیار'
-                  ? `${product.specs[2]?.value} ${product.specs[2]?.key}`
-                  : `${product.specs[1]?.value} ${product.specs[1]?.key}`}
-              </>
-            ) : (
-              <>
-                {product.type === 'کش لس دیواری' ||
-                product.type === 'کش لس رومیزی' ||
-                product.type === 'تجهیزات فروشگاهی'
-                  ? `${product.specs[1]?.key} ${product.specs[1]?.value}`
-                  : ''}
-              </>
-            )}
+            {['سیار', 'ثابت', 'اندرویدی'].includes(product.type)
+              ? product.type === 'سیار'
+                ? `${product.specs[2]?.value} ${product.specs[2]?.key}`
+                : `${product.specs[1]?.value} ${product.specs[1]?.key}`
+              : ['کش لس دیواری', 'کش لس رومیزی', 'تجهیزات فروشگاهی'].includes(
+                  product.type
+                )
+              ? `${product.specs[1]?.key} ${product.specs[1]?.value}`
+              : // شرط جدید برای بقیه موارد
+              product.specs[0]
+              ? `${product.specs[1].key} ${product.specs[1].value}`
+              : ''}
           </span>
         </article>
       </section>

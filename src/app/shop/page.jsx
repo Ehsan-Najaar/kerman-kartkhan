@@ -33,10 +33,10 @@ export default function ShopPage() {
 
       <section className="space-y-12">
         <BannersSection />
-        <ProductsByType products={products} />
+        <BestSellingProducts products={products} />
         <SuggestedProducts products={products} />
         <Question />
-        <BestSellingProducts products={products} />
+        <ProductsByType products={products} />
         <CustomersComments />
       </section>
 
