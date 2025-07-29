@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,7 +5,7 @@ export default function BannersSection() {
   return (
     <div className="flex flex-col lg:flex-row gap-4 px-4 md:px-12 lg:px-24 md:pt-10 lg:pt-12">
       {/* big banner */}
-      <section className="w-full lg:w-4/5 relative min-h-[510px] h-[220px] sm:h-[280px] md:h-[350px] lg:h-[510px]">
+      <section className="w-full lg:w-4/5 relative h-[220px] sm:h-[280px] md:h-[350px] lg:h-[510px]">
         <Image
           src="/images/banners/main-banner.jpg"
           alt="بنر اصلی"
@@ -26,6 +24,7 @@ export default function BannersSection() {
               alt="بنر اندرویدی"
               fill
               className="rounded-lg object-cover"
+              priority
             />
           </Link>
         </div>
@@ -37,6 +36,7 @@ export default function BannersSection() {
               alt="بنر سیار"
               fill
               className="rounded-lg object-cover"
+              priority
             />
           </Link>
         </div>

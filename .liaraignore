@@ -1,0 +1,9 @@
+node_modules
+.next
+.vscode
+uploads
+*.zip
+*.psd
+*.mp4
+*.mov
+*.webm
