@@ -8,5 +8,6 @@
   "next": {
     "nodeVersion": "20"
   },
+  "mirror": false,
   "disks": []
 }
