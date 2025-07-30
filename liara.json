@@ -3,7 +3,7 @@
   "platform": "next",
   "app": "kerman-kartkhan",
   "build": {
-    "location": "germany"
+    "location": "iran"
   },
   "next": {
     "nodeVersion": "20"
