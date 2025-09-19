@@ -16,7 +16,7 @@ const connectDB = async () => {
 
   if (!cached.promise) {
     cached.promise = mongoose
-      .connect(MONGO_URI) // حذف useNewUrlParser و useUnifiedTopology
+      .connect(MONGO_URI)
       .then((mongoose) => {
         console.log('🚀 MongoDB connected')
         return mongoose

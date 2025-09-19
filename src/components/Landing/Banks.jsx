@@ -32,9 +32,9 @@ const banks = [
   { id: 20, name: 'کشاورزی', image: '/images/banks/Keshavarzi.png' },
   { id: 21, name: 'گردشگری', image: '/images/banks/gardeshgary.png' },
   { id: 22, name: 'مسکن', image: '/images/banks/Maskan.png' },
-  { id: 24, name: 'ملت', image: '/images/banks/Mellat.png' },
-  { id: 25, name: 'موسسه اعتباری ملل', image: '/images/banks/melal.png' },
-  { id: 26, name: 'موسسه اعتباری نور', image: '/images/banks/noor.png' },
+  { id: 23, name: 'ملت', image: '/images/banks/Mellat.png' },
+  { id: 24, name: 'موسسه اعتباری ملل', image: '/images/banks/melal.png' },
+  { id: 25, name: 'موسسه اعتباری نور', image: '/images/banks/noor.png' },
   { id: 26, name: 'سامان', image: '/images/banks/Saman.png' },
 ]
 
@@ -42,14 +42,12 @@ const companies = [
   {
     name: 'پاسارگاد',
     image: '/images/psp/pasargad.png',
-    bankIds: [1, 4, 5, 6, 7, 8, 11, 12, 14, 15, 16, 18, 21, 22, 25, 26],
+    bankIds: [1, 4, 5, 6, 7, 8, 11, 12, 14, 15, 16, 18, 21, 22, 25],
   },
   {
     name: 'پرداخت نوین',
     image: '/images/psp/pardakht-novin.png',
-    bankIds: [
-      1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 17, 18, 20, 21, 22, 26,
-    ],
+    bankIds: [1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 17, 18, 20, 21, 22],
   },
   {
     name: 'سپهر',
@@ -65,6 +63,21 @@ const companies = [
     name: 'به پرداخت ملت',
     image: '/images/psp/behpardakht.png',
     bankIds: [3, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 21, 23, 24],
+  },
+  {
+    name: 'آسان پرداخت',
+    image: '/images/psp/asan-pardakht.png',
+    bankIds: [1, 3, 4, 5, 7, 8, 9, 10, 12, 16, 18, 20, 21],
+  },
+  {
+    name: 'سداد',
+    image: '/images/psp/sadad.png',
+    bankIds: [12],
+  },
+  {
+    name: 'فن آوا',
+    image: '/images/psp/fan-ava.png',
+    bankIds: [2, 4, 5, 6, 12, 13, 14, 18, 21, 25],
   },
 ]
 
@@ -150,7 +163,7 @@ export default function Banks() {
               }`}
               {...tabAnimation}
             >
-              <figure className="h-10">
+              <figure className="h-8 w-8">
                 <Image
                   src={company.image}
                   alt={company.name}
