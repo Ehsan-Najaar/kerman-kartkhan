@@ -36,6 +36,9 @@ const banks = [
   { id: 24, name: 'موسسه اعتباری ملل', image: '/images/banks/melal.png' },
   { id: 25, name: 'موسسه اعتباری نور', image: '/images/banks/noor.png' },
   { id: 26, name: 'سامان', image: '/images/banks/Saman.png' },
+  { id: 27, name: 'توسعه صادرات', image: '/images/banks/t-saderat.png' },
+  { id: 28, name: 'ملی', image: '/images/banks/meli.png' },
+  { id: 29, name: 'ایران ونزوئلا', image: '/images/banks/Iran-venezuela.png' },
 ]
 
 const companies = [
@@ -47,7 +50,9 @@ const companies = [
   {
     name: 'پرداخت نوین',
     image: '/images/psp/pardakht-novin.png',
-    bankIds: [1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 17, 18, 20, 21, 22],
+    bankIds: [
+      1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 20, 21, 22,
+    ],
   },
   {
     name: 'سپهر',
@@ -57,27 +62,27 @@ const companies = [
   {
     name: 'ایران کیش',
     image: '/images/psp/iran-kish.png',
-    bankIds: [1, 3, 4, 5, 6, 8, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 25],
+    bankIds: [1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 21, 25],
   },
   {
     name: 'به پرداخت ملت',
     image: '/images/psp/behpardakht.png',
-    bankIds: [3, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 21, 23, 24],
+    bankIds: [3, 7, 8, 9, 10, 12, 14, 15, 17, 18, 19, 20, 21, 23, 24, 29],
   },
   {
     name: 'آسان پرداخت',
     image: '/images/psp/asan-pardakht.png',
-    bankIds: [1, 3, 4, 5, 7, 8, 9, 10, 12, 16, 18, 20, 21],
+    bankIds: [1, 3, 4, 5, 7, 8, 9, 10, 12, 14, 15, 18, 20, 21, 27],
   },
   {
     name: 'سداد',
     image: '/images/psp/sadad.png',
-    bankIds: [12],
+    bankIds: [12, 28],
   },
   {
     name: 'فن آوا',
     image: '/images/psp/fan-ava.png',
-    bankIds: [2, 4, 5, 6, 12, 13, 14, 18, 21, 25],
+    bankIds: [2, 4, 5, 6, 12, 13, 14, 15, 18, 20, 21, 25],
   },
 ]
 
