@@ -1,9 +1,13 @@
-'use client'
-
 import Footer from '@/components/Footer'
 import LandingHeaderPage from '@/components/Landing/LandingHeaderPage'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
+
+export const metadata = {
+  title: 'کرمان کارتخوان | درباره ما',
+  description:
+    'صفحه درباره ما کرمان کارتخوان؛ آشنایی با تاریخچه و تیم متخصص ما و خدمات ارائه شده در زمینه کارتخوان‌های سریع، امن و تراکنش‌های کش‌لس قابل اعتماد برای کسب‌وکارها.',
+}
 
 export default function AbouutUs() {
   return (

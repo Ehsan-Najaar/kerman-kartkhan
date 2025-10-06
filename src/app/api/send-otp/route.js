@@ -1,4 +1,4 @@
-import otpStorage from '@/lib/otpStorage'
+import Otp from '@/models/Otp'
 import { NextResponse } from 'next/server'
 
 export async function POST(req) {
@@ -6,7 +6,15 @@ export async function POST(req) {
 
   if (!phone) {
     return NextResponse.json(
-      { error: 'شماره موبایل وارد نشده' },
+      { error: 'لطفا شماره موبایل را وارد کنید' },
+      { status: 400 }
+    )
+  }
+
+  const phoneRegex = /^09\d{9}$/
+  if (!phoneRegex.test(phone) || phone.length !== 11) {
+    return NextResponse.json(
+      { error: 'شماره موبایل وارد شده معتبر نمیباشد' },
       { status: 400 }
     )
   }
@@ -20,31 +28,28 @@ export async function POST(req) {
   })
 
   try {
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: data,
     })
+    const result = await res.json()
 
-    let result = null
-    try {
-      result = await response.json()
-    } catch {}
-
-    if (!response.ok || !result?.code) {
+    if (!res.ok || !result?.code) {
       return NextResponse.json(
         { error: 'ارسال پیامک ناموفق بود', result },
         { status: 500 }
       )
     }
 
-    // ✅ ذخیره کدی که سرویس برگردونده
-    otpStorage.set(phone, {
-      code: result.code,
-      expires: Date.now() + 5 * 60 * 1000,
-    })
+    const code = result.code
+    const expiresAt = Date.now() + 1 * 60 * 1000
+
+    // save code in db
+    const otp = await Otp.create({ phone, code, expiresAt })
+    console.log(otp)
 
     return NextResponse.json({ status: 'ok' }, { status: 200 })
   } catch (error) {

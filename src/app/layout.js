@@ -4,9 +4,18 @@ import Layout from '@/components/Layout'
 import '@/styles/globals.css'
 
 export const metadata = {
-  title: 'kerman-kartkhan',
-  description: 'kerman-kartkhan',
-  icons: '/images/browser-tab-logo.png',
+  title: 'کرمان کارتخوان | همراه هوشمند پرداخت',
+  description:
+    'کرمان کارتخوان، همراه هوشمند پرداخت شما در کرمان؛ کارتخوان‌های سریع، امن و قابل اعتماد برای کسب‌وکارها.',
+  icons: {
+    icon: [
+      {
+        url: 'https://kerman-kartkhan-2.storage.c2.liara.space/android-icon-192x192.png',
+        type: 'image/png',
+        sizes: '192x192',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({ children }) {

@@ -4,24 +4,25 @@ import { ProductCard } from '@/components/ProductCard'
 import CustomRange from '@/components/ui/CustomRange'
 import ProductCardSkeleton from '@/components/ui/Skeleton'
 import { formatPriceToPersian } from '@/utils/formatPrice'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { motion, useAnimation } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { fadeIn } from '../../../variants'
 
 const tabs = ['آکبند', 'استوک']
 
-export default function ProductsSection({
-  products,
-  activeTab,
-  loading,
-  setActiveTab,
-  activeStep,
-  setActiveStep,
-  controlsRight,
-}) {
-  const [price, setPrice] = useState(20000000)
+export default function ProductsSection({ products }) {
+  const controlsRight = useAnimation()
+  const [price, setPrice] = useState(30000000)
+  const [activeTab, setActiveTab] = useState('آکبند')
+  const [activeStep, setActiveStep] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  // فیلتر محصولات بر اساس تب، قیمت و موجود بودن
+  useEffect(() => {
+    controlsRight.start('show')
+    const timer = setTimeout(() => setLoading(false), 500)
+    return () => clearTimeout(timer)
+  }, [controlsRight])
+
   const filteredProducts = products
     .filter(
       (product) =>
@@ -39,19 +40,18 @@ export default function ProductsSection({
       className="max-w-5xl mx-auto md:px-4 lg:px-0"
     >
       <div className="bg-white rounded-3xl shadow-xl p-4 lg:p-8">
-        {/* نمایش قیمت فعلی و اسلایدر */}
+        {/* فیلتر قیمت */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
           <div className="flex items-center gap-2 md:w-1/2">
-            <span className="w-28 text-sm text-dark">۳ میلیون</span>
+            <span className="w-28 text-sm text-dark">۵ میلیون</span>
             <CustomRange
-              min={3000000}
-              max={20000000}
+              min={5000000}
+              max={30000000}
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
               direction="rtl"
-              isDescending={false}
             />
-            <span className="w-28 text-sm text-dark">۲۰ میلیون</span>
+            <span className="w-28 text-sm text-dark">۳۰ میلیون</span>
           </div>
 
           <div className="text-xl lg:text-2xl font-bold text-dark">
@@ -85,12 +85,12 @@ export default function ProductsSection({
           ))}
         </div>
 
-        {/* لیست محصولات */}
+        {/* محصولات */}
         <div className="h-96 max-h-96 overflow-auto lg:p-4">
           {loading ? (
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
-              {Array.from({ length: 8 }).map((_, index) => (
-                <ProductCardSkeleton key={index} />
+              {Array.from({ length: 8 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
               ))}
             </div>
           ) : filteredProducts.length > 0 ? (

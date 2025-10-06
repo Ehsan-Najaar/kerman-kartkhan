@@ -1,5 +1,3 @@
-'use client'
-
 import Footer from '@/components/Footer'
 import Banks from '@/components/Landing/Banks'
 import Faq from '@/components/Landing/Faq'

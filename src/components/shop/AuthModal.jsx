@@ -3,10 +3,11 @@
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { useAppContext } from '@/context/AppContext'
-import { MessageSquare, X } from 'lucide-react'
+import { RotateCcw, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { FaSpinner } from 'react-icons/fa'
 import { FiEdit } from 'react-icons/fi'
 
 export default function AuthModal({ isOpen, onClose }) {
@@ -82,6 +83,7 @@ export default function AuthModal({ isOpen, onClose }) {
   }
 
   const handleResendOtp = async () => {
+    setLoading(true)
     await fetch('/api/send-otp', {
       method: 'POST',
       body: JSON.stringify({ phone }),
@@ -90,15 +92,21 @@ export default function AuthModal({ isOpen, onClose }) {
       },
     })
 
+    setLoading(false)
     setSeconds(60)
     toast.success('کد مجدداً ارسال شد')
   }
 
   async function sendOtp() {
     if (!phone) {
-      toast.error('شماره موبایل را وارد کنید')
-      return
+      return toast.error('شماره موبایل را وارد کنید')
     }
+
+    const phoneRegex = /^09\d{9}$/
+    if (!phoneRegex.test(phone) || phone.length !== 11) {
+      return toast.error('شماره موبایل معتبر نیست')
+    }
+
     setLoading(true)
     const res = await fetch('/api/send-otp', {
       method: 'POST',
@@ -162,6 +170,7 @@ export default function AuthModal({ isOpen, onClose }) {
               type="tel"
               label="شماره موبایل"
               value={phone}
+              maxLength={11}
               onChange={(e) => setPhone(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -177,7 +186,11 @@ export default function AuthModal({ isOpen, onClose }) {
               className="w-full"
               disabled={loading}
             >
-              {loading ? 'در حال ارسال...' : 'دریافت کد'}
+              {loading ? (
+                <FaSpinner size={22} className="animate-spin" />
+              ) : (
+                'دریافت کد تایید'
+              )}
             </Button>
           </div>
         )}
@@ -238,10 +251,16 @@ export default function AuthModal({ isOpen, onClose }) {
                   onClick={handleResendOtp}
                   variant="ghost"
                   fontWeight="medium"
-                  className="w-full"
+                  className="w-full text-sm"
                 >
-                  <MessageSquare size={18} />
-                  ارسال مجدد کد
+                  {loading ? (
+                    <FaSpinner size={18} className="animate-spin" />
+                  ) : (
+                    <>
+                      <RotateCcw size={18} />
+                      ارسال مجدد کد
+                    </>
+                  )}
                 </Button>
               </>
             )}

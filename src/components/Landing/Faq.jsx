@@ -1,4 +1,5 @@
 'use client'
+
 import Button from '@/components/ui/Button'
 import { motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
@@ -16,7 +17,7 @@ const faqData = [
       <span className="flex flex-col md:flex-row items-center gap-2">
         برای دریافت کارت‌خوان، به این مدارک نیاز است :
         <a
-          href="#RequiredDocuments"
+          href="/landing#RequiredDocuments"
           className=" text-blue-500 hover:underline ml-1"
         >
           [ لیست مدارک مورد نیاز ]
@@ -29,7 +30,10 @@ const faqData = [
     answer: (
       <span className="flex flex-col md:flex-row items-center gap-2">
         کارتخوان ها به این حساب ها قابل اتصال هستند :
-        <a href="#banks" className=" text-blue-500 hover:underline ml-1">
+        <a
+          href="/landing#banks"
+          className=" text-blue-500 hover:underline ml-1"
+        >
           [ مشاهده حساب‌ها ]
         </a>
       </span>
@@ -51,7 +55,10 @@ const faqData = [
     answer: (
       <span className="flex flex-col md:flex-row items-center gap-2">
         کارت‌خوان‌ها هم سیار هستند و هم ثابت
-        <a href="#productPage" className="text-blue-500 hover:underline ml-1">
+        <a
+          href="/shop/type/%D8%B3%DB%8C%D8%A7%D8%B1"
+          className="text-blue-500 hover:underline ml-1"
+        >
           [ مشاهده محصولات ]
         </a>
       </span>
@@ -61,7 +68,7 @@ const faqData = [
     question: 'مدت زمان فعال‌سازی کارت‌خوان چقدر است؟',
     answer: (
       <span>
-        پس از ارسال کامل مدارک، کارت‌خوان معمولاً ظرف ۳ تا ۵ روز کاری فعال
+        پس از ارسال کامل مدارک، کارت‌خوان معمولاً ظرف ۱ تا ۳ روز کاری فعال
         می‌شود.
       </span>
     ),
@@ -70,7 +77,7 @@ const faqData = [
     question: 'آیا دستگاه‌ها دارای گارانتی هستند؟',
     answer: (
       <span>
-        بله، تمامی کارت‌خوان‌ها دارای ۶ ماه گارانتی تعویض و ۱۲ ماه خدمات پس از
+        بله، تمامی کارت‌خوان‌ها دارای ۱۸ ماه گارانتی شرکتی و ۱۲ ماه خدمات پس از
         فروش هستند.
       </span>
     ),
@@ -79,7 +86,7 @@ const faqData = [
     question: 'هزینه ارسال کارت‌خوان چقدر است؟',
     answer: (
       <span>
-        هزینه ارسال برای تهران رایگان است. برای شهرستان‌ها بسته به موقعیت
+        هزینه ارسال برای کرمان رایگان است. برای شهرستان‌ها بسته به موقعیت
         جغرافیایی، هزینه‌ای جزئی دریافت می‌شود.
       </span>
     ),
@@ -89,9 +96,6 @@ const faqData = [
     answer: (
       <span>
         بله، برخی از مدل‌ها قابلیت اتصال به نرم‌افزارهای حسابداری را دارند.
-        <a href="#integration" className="text-blue-500 hover:underline ml-1">
-          [ اطلاعات بیشتر ]
-        </a>
       </span>
     ),
   },
@@ -101,7 +105,7 @@ const faqData = [
       <span>
         بله، امکان خرید کارت‌خوان به‌صورت اقساطی وجود دارد. برای اطلاع از شرایط
         اقساط، با ما تماس بگیرید.
-        <a href="#installment" className="text-blue-500 hover:underline ml-1">
+        <a href="/contact-us" className="text-blue-500 hover:underline ml-1">
           [ شرایط اقساط ]
         </a>
       </span>

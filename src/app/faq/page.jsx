@@ -1,11 +1,15 @@
-'use client'
-
 import Footer from '@/components/Footer'
 import Faq from '@/components/Landing/Faq'
 import LandingHeaderPage from '@/components/Landing/LandingHeaderPage'
 import Image from 'next/image'
 
-export default function page() {
+export const metadata = {
+  title: 'کرمان کارتخوان | سوالات متداول',
+  description:
+    'صفحه سوالات متداول کرمان کارتخوان؛ پاسخ به پرسش‌های رایج درباره خرید و نصب کارتخوان، تراکنش‌های کش‌لس، قیمت‌ها و خدمات پشتیبانی برای کسب‌وکارها.',
+}
+
+export default function FaqPage() {
   return (
     <div>
       <LandingHeaderPage />

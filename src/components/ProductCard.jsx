@@ -59,10 +59,7 @@ export function ProductCard({ product }) {
 
         {/* ویژگی اول */}
         <article className="flex items-center gap-1">
-          <Circle
-            size={12}
-            className="fill-lightgray/35 text-ligrfill-lightgray/35"
-          />
+          <Circle size={12} className="fill-section/20 text-secondary/70" />
           {product.type === 'تجهیزات فروشگاهی' ? (
             <span>{product.specs[0]?.value}</span>
           ) : ['سیار', 'ثابت', 'اندرویدی'].includes(product.type) ? (
@@ -85,10 +82,7 @@ export function ProductCard({ product }) {
 
         {/* ویژگی دوم */}
         <article className="flex items-center gap-1">
-          <Circle
-            size={12}
-            className="fill-lightgray/35 text-ligrfill-lightgray/35"
-          />
+          <Circle size={12} className="fill-section/20 text-secondary/70" />
           <span>
             {['سیار', 'ثابت', 'اندرویدی'].includes(product.type)
               ? product.type === 'سیار'

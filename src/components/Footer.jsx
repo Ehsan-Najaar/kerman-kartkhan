@@ -1,3 +1,5 @@
+'use client'
+
 import Button from '@/components/ui/Button'
 import ScrollToTopButton from '@/components/ui/ScrollToTopButton'
 import Link from 'next/link'

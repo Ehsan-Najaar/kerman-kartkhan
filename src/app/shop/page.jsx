@@ -1,5 +1,3 @@
-'use client'
-
 import Footer from '@/components/Footer'
 import BannersSection from '@/components/shop/BannersSection'
 import BestSellingProducts from '@/components/shop/BestSellingProducts'
@@ -8,24 +6,17 @@ import ProductsByType from '@/components/shop/ProductsByType'
 import Question from '@/components/shop/Question'
 import ShopPageHeader from '@/components/shop/ShopPageHeader'
 import SuggestedProducts from '@/components/shop/SuggestedProducts'
-import { useEffect, useState } from 'react'
 
-export default function ShopPage() {
-  const [products, setProducts] = useState([])
+export const metadata = {
+  title: 'کرمان کارتخوان | فروشگاه',
+  description:
+    'خرید انواع کارتخوان‌های آکبند و استوک، فعال‌سازی سریع و تراکنش‌های کش‌لس امن، با پشتیبانی مطمئن کرمان کارتخوان.',
+}
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch('/api/products')
-        const data = await res.json()
-        setProducts(data)
-      } catch (err) {
-        console.error('خطا در گرفتن محصولات:', err)
-      }
-    }
-
-    fetchProducts()
-  }, [])
+export default async function ShopPage() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  const res = await fetch(`${baseUrl}/api/products`, { cache: 'no-store' })
+  const products = await res.json()
 
   return (
     <div className="min-h-screen bg-light">

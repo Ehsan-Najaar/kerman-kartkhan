@@ -9,6 +9,7 @@ export default function Input({
   onChange,
   onFocus,
   onKeyDown,
+  maxLength,
   required,
   type = 'text',
   icon = null,
@@ -34,6 +35,7 @@ export default function Input({
         value={value ?? ''}
         placeholder={placeholder}
         onChange={onChange}
+        maxLength={maxLength}
         onFocus={(e) => {
           setFocused(true)
           if (typeof onFocus === 'function') onFocus(e)

@@ -1,10 +1,10 @@
 'use client'
-import { AnimatePresence, motion, useAnimation } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 
+import { AnimatePresence, motion, useAnimation } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 import { fadeIn } from '../../../variants'
 
 export default function StepsBuying() {

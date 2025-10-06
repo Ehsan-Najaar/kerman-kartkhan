@@ -18,7 +18,7 @@ export default function SuggestedProducts({ products }) {
 
   const loading = !products || products.length === 0
 
-  const suggestions = ['T3', 'D210', 'I90', 'P3', 'D230', 'H9']
+  const suggestions = ['T3', 'D210', 'I90', 'P3', 'D230', 'H9', 'S915']
 
   const suggestedProducts = useMemo(() => {
     return products.filter(

@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
+      match: [/^09\d{9}$/, 'شماره موبایل معتبر نیست'],
+      minlength: [11, 'شماره موبایل باید ۱۱ رقم باشد'],
+      maxlength: [11, 'شماره موبایل باید ۱۱ رقم باشد'],
     },
     name: {
       type: String,

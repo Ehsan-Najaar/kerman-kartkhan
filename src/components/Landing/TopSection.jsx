@@ -1,10 +1,22 @@
+'use client'
+
 import Button from '@/components/ui/Button'
-import { motion } from 'framer-motion'
+import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { fadeIn } from '../../../variants'
 
-export default function TopSection({ controlsLeft, controlsRight }) {
+export default function TopSection() {
+  const controlsLeft = useAnimation()
+  const controlsRight = useAnimation()
+
+  // اجرای انیمیشن هنگام mount
+  useEffect(() => {
+    controlsLeft.start('show')
+    controlsRight.start('show')
+  }, [controlsLeft, controlsRight])
+
   return (
     <section className="flex flex-col lg:flex-row items-center justify-between px-4 py-10 lg:p-12">
       {/* متن و دکمه‌ها سمت چپ */}
@@ -26,7 +38,7 @@ export default function TopSection({ controlsLeft, controlsRight }) {
           </p>
         </div>
         <div className="hidden lg:flex items-center gap-2">
-          <Link href={'/shop'}>
+          <Link href="/shop">
             <Button
               variant="light"
               fontWeight="medium"
@@ -35,7 +47,7 @@ export default function TopSection({ controlsLeft, controlsRight }) {
               ثبت درخواست کارتخوان
             </Button>
           </Link>
-          <Link href={'/shop'}>
+          <Link href="/shop">
             <Button
               variant="light"
               fontWeight="medium"
@@ -74,7 +86,7 @@ export default function TopSection({ controlsLeft, controlsRight }) {
         animate={controlsLeft}
         className="lg:hidden flex items-center gap-2 mt-4"
       >
-        <Link href={'/shop'}>
+        <Link href="/shop">
           <Button
             variant="light"
             size="sm"
@@ -85,7 +97,7 @@ export default function TopSection({ controlsLeft, controlsRight }) {
           </Button>
         </Link>
 
-        <Link href={'/shop'}>
+        <Link href="/shop">
           <Button
             variant="light"
             outline
