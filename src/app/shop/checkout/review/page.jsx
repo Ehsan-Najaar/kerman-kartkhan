@@ -12,6 +12,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export default function ReviewPage() {
   const { cart } = useAppContext()
@@ -75,7 +76,7 @@ export default function ReviewPage() {
       method: 'POST',
       body: JSON.stringify({
         amount: totalPrice,
-        callback_url: 'http://localhost:3000/payment/verify',
+        callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment/verify`,
         description: 'خرید از فروشگاه',
       }),
       headers: {
@@ -88,7 +89,7 @@ export default function ReviewPage() {
       localStorage.setItem('zarinpal_amount', totalPrice.toString())
       window.location.href = data.url
     } else {
-      alert('خطا در پرداخت')
+      toast.error(data.error.message)
     }
   }
 
