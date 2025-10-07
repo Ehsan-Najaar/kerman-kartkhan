@@ -1,3 +1,5 @@
+'use client'
+
 import AuthModal from '@/components/shop/AuthModal'
 import TomanIcon from '@/components/TomanIcon'
 import Button from '@/components/ui/Button'
@@ -7,6 +9,7 @@ import { Box, Check, Circle, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { FaSpinner } from 'react-icons/fa'
 import { FiEdit, FiPlus, FiTrash2 } from 'react-icons/fi'
 
 export function ProductCard({ product }) {
@@ -128,7 +131,7 @@ export function ProductCard({ product }) {
           <span className="relative">
             {loadingCart ? (
               // می‌تونی اینجا یک آیکون لودینگ بزاری یا یه انیمیشن کوچیک
-              <span className="animate-spin inline-block w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full"></span>
+              <FaSpinner size={21} className="animate-spin" />
             ) : inCart ? (
               <Check size={20} className="text-secondary" />
             ) : (

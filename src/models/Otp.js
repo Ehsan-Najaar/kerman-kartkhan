@@ -17,13 +17,18 @@ const otpSchema = new mongoose.Schema(
     },
     expiresAt: {
       type: Date,
+      required: true, // برای اعتبار ۱ دقیقه
+    },
+    // فیلد اختیاری برای حذف بعد از ۲۴ ساعت
+    deleteAt: {
+      type: Date,
       required: true,
     },
   },
   { timestamps: true }
 )
 
-// TTL index: رکوردها بعد از زمان expiresAt حذف می‌شوند
-otpSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 })
+// TTL فقط روی deleteAt برای حذف خودکار بعد از ۲۴ ساعت
+otpSchema.index({ deleteAt: 1 }, { expireAfterSeconds: 0 })
 
 export default mongoose.models.Otp || mongoose.model('Otp', otpSchema)

@@ -6,6 +6,7 @@ import { useAppContext } from '@/context/AppContext'
 import { RotateCcw, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import toast from 'react-hot-toast'
 import { FaSpinner } from 'react-icons/fa'
 import { FiEdit } from 'react-icons/fi'
@@ -17,6 +18,8 @@ export default function AuthModal({ isOpen, onClose }) {
   const [phone, setPhone] = useState('')
   const [loading, setLoading] = useState(false)
   const [seconds, setSeconds] = useState(60)
+  const [mounted, setMounted] = useState(false)
+  const [cooldown, setCooldown] = useState(0)
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
 
   // ریست حالت‌ها هنگام بستن
@@ -29,6 +32,18 @@ export default function AuthModal({ isOpen, onClose }) {
       setSeconds(60)
     }
   }, [isOpen])
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    let timer
+    if (cooldown > 0) {
+      timer = setTimeout(() => setCooldown(cooldown - 1), 1000)
+    }
+    return () => clearTimeout(timer)
+  }, [cooldown])
 
   useEffect(() => {
     if (step === 'verify' && seconds > 0) {
@@ -83,21 +98,41 @@ export default function AuthModal({ isOpen, onClose }) {
   }
 
   const handleResendOtp = async () => {
-    setLoading(true)
-    await fetch('/api/send-otp', {
-      method: 'POST',
-      body: JSON.stringify({ phone }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    if (!phone) {
+      return toast.error('شماره موبایل الزامی است')
+    }
 
-    setLoading(false)
-    setSeconds(60)
-    toast.success('کد مجدداً ارسال شد')
+    setLoading(true)
+
+    try {
+      const res = await fetch('/api/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        setSeconds(60) // شروع شمارش معکوس دوباره
+        toast.success(data.message || 'کد مجدداً ارسال شد')
+      } else {
+        toast.error(data.error || 'خطا در ارسال کد')
+      }
+    } catch (error) {
+      console.error('خطا در ارسال مجدد OTP:', error)
+      toast.error('خطا در ارتباط با سرور')
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function sendOtp() {
+    if (cooldown > 0) {
+      toast.error(`لطفاً ${cooldown} ثانیه صبر کنید`)
+      return
+    }
+
     if (!phone) {
       return toast.error('شماره موبایل را وارد کنید')
     }
@@ -108,18 +143,25 @@ export default function AuthModal({ isOpen, onClose }) {
     }
 
     setLoading(true)
-    const res = await fetch('/api/send-otp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone }),
-    })
-    setLoading(false)
-    if (res.ok) {
-      setStep('verify')
-      toast.success('کد تایید 6 رقمی ارسال شد')
-    } else {
-      const data = await res.json()
-      toast.error(data.error || 'خطا در ارسال کد')
+    try {
+      const res = await fetch('/api/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone }),
+      })
+
+      if (res.ok) {
+        toast.success('کد تایید 6 رقمی ارسال شد')
+        setStep('verify')
+        setCooldown(60) // شروع شمارش 60 ثانیه‌ای
+      } else {
+        const data = await res.json()
+        toast.error(data.error || 'خطا در ارسال کد')
+      }
+    } catch (err) {
+      toast.error('خطا در اتصال به سرور')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -151,9 +193,9 @@ export default function AuthModal({ isOpen, onClose }) {
     }
   }
 
-  if (!isOpen) return null
+  if (!isOpen || !mounted) return null
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg p-6 w-[90%] max-w-sm relative">
         <button
@@ -165,7 +207,9 @@ export default function AuthModal({ isOpen, onClose }) {
 
         {step === 'phone' && (
           <div className="space-y-4">
-            <h2 className="text-xl mb-4 text-center">ورود / ثبت‌نام</h2>
+            <h2 className="text-xl text-dark mb-4 text-center">
+              ورود / ثبت‌ نام
+            </h2>
             <Input
               type="tel"
               label="شماره موبایل"
@@ -184,10 +228,12 @@ export default function AuthModal({ isOpen, onClose }) {
               variant="primary"
               fontWeight="medium"
               className="w-full"
-              disabled={loading}
+              disabled={loading || cooldown > 0}
             >
               {loading ? (
                 <FaSpinner size={22} className="animate-spin" />
+              ) : cooldown > 0 ? (
+                `${cooldown} ثانیه صبر کنید`
               ) : (
                 'دریافت کد تایید'
               )}
@@ -267,6 +313,7 @@ export default function AuthModal({ isOpen, onClose }) {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

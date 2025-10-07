@@ -48,10 +48,6 @@ export default function ShopPageHeader() {
       ],
     },
     {
-      name: 'عابربانک',
-      href: '/shop/type/عابربانک',
-    },
-    {
       name: 'تجهیزات فروشگاهی',
       href: '/shop/type/تجهیزات فروشگاهی',
     },

@@ -11,12 +11,16 @@ export async function GET(req) {
 
   try {
     const { searchParams } = new URL(req.url)
-    const type = searchParams.get('type') // گرفتن نوع کارتخوان از کوئری
+    const type = searchParams.get('type')
+    const brand = searchParams.get('brand')
+    const model = searchParams.get('model')
 
     const filter = {}
-    if (type) {
-      filter.type = type // فیلتر کردن بر اساس نوع (ثابت، سیار، اندرویدی)
-    }
+    if (brand) filter.brand = { $regex: brand, $options: 'i' }
+    if (type) filter.type = { $regex: type, $options: 'i' }
+    if (model) filter.model = { $regex: model, $options: 'i' }
+
+
 
     const products = await Product.find(filter).populate('category')
 
