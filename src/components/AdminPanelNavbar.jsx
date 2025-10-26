@@ -29,11 +29,16 @@ const AdminPanelNavbar = () => {
       href: '/admin/users',
       icon: '/icons/custom/Users.svg',
     },
+    {
+      name: 'مقالات',
+      href: '/admin/articles',
+      icon: '/icons/custom/Book.svg',
+    },
   ]
 
   return (
     <div
-      className={`min-h-full w-full lg:w-1/5 text-dark rounded-2xl flex flex-col items-center p-4 ${
+      className={`min-h-full w-full lg:w-1/5 text-dark bg-gray-200 flex flex-col items-center p-4 ${
         pathname !== '/admin' ? 'hidden lg:flex' : ''
       }`}
     >
@@ -66,10 +71,10 @@ const AdminPanelNavbar = () => {
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center gap-3 px-6 py-4 rounded-xl bg-bg ${
+              className={`flex items-center gap-3 px-6 py-4 rounded-xl font-medium  bg-bg ${
                 isActive
-                  ? 'bg-section/50'
-                  : 'lg:bg-transparent hover:bg-dark/5 hover:pr-8 transition-all duration-300'
+                  ? 'bg-section text-dark'
+                  : 'lg:bg-transparent text-gray hover:bg-dark/5 hover:pr-8 transition-all duration-300'
               }`}
             >
               {/* نمایش آیکون به صورت تصویر یا JSX */}

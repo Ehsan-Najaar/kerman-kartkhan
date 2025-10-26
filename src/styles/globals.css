@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import '../../public/fonts/IRANSans.css';
 
 @theme {
   --color-primary: #f8243f;
@@ -41,11 +40,50 @@
   .title-text {
     @apply text-2xl font-semibold text-dark;
   }
+
+  .prose a {
+    @apply text-sky-600 hover:underline;
+  }
+
+  .prose p {
+    @apply text-gray-600 font-light;
+  }
+
+  .prose strong {
+    @apply font-medium text-dark;
+  }
+}
+
+/* در فایل CSS اصلی (globals.css) */
+.noise-background {
+  /* تعریف یک پترن کوچک برای شبیه سازی نویز */
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.08) 0,
+    rgba(0, 0, 0, 0.08) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  background-size: 4px 4px; /* اندازه پترن تکرارشونده */
+}
+
+.inline-h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.inline-h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.inline-h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 *,
 body {
-  font-family: 'IRANSans';
   scroll-behavior: smooth;
 }
 

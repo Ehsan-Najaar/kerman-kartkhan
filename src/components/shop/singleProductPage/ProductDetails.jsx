@@ -139,8 +139,8 @@ export default function ProductDetails({ product }) {
         <div className="flex flex-col lg:flex-row-reverse gap-4 p-4">
           <figure className="w-full sm:w-1/2 lg:w-full relative flex items-center justify-center lg:border-r border-lightgray/35">
             <Image
-              src={selectedImage || '/placeholder.png'}
-              alt={`تصویر ${product?.name}`}
+              src={selectedImage || '/images/logo.png'}
+              alt={`${product?.name} ${product.type} از برند ${product.brand}`}
               width={800}
               height={800}
               className="object-contain"
@@ -186,13 +186,7 @@ export default function ProductDetails({ product }) {
               </li>
               <FiChevronLeft />
               <li>
-                <Link href={`/shop/type/${product.type}`}>
-                  {product.type === 'سیار' ||
-                  product.type === 'ثابت' ||
-                  product.type === 'اندرویدی'
-                    ? `کارتخوان ${product.type}`
-                    : product.type}
-                </Link>
+                <Link href={`/shop/type/${product.type}`}>{product.type}</Link>
               </li>
               <FiChevronLeft />
               <li>{product.name.toUpperCase()}</li>
@@ -204,8 +198,15 @@ export default function ProductDetails({ product }) {
           </nav>
 
           <h1 className="flex items-center gap-2 text-2xl font-bold">
-            {product.name.toUpperCase()}
+            {['کارتخوان', 'کش لس'].includes(product.category.title)
+              ? `${
+                  product.type
+                } مدل ${product.model.toUpperCase()} از برند ${product.brand.toUpperCase()} - ${
+                  product.condition
+                }`
+              : product.name.toUpperCase()}
           </h1>
+
           <div className="md:flex grid grid-cols-2 gap-4 text-sm md:text-base">
             <p className="bg-light p-2 rounded-lg">
               <span className="text-gray">برند : </span>

@@ -120,10 +120,10 @@ export default function ProductsManagement() {
   }, [])
 
   return (
-    <div className="min-h-screen flex md:p-6 gap-12">
+    <div className="min-h-screen flex">
       <AdminPanelNavbar />
 
-      <div className="w-full lg:w-4/5 lg:h-[750px] bg-light px-2 lg:p-4 rounded-2xl shadow-lg space-y-4 overflow-hidden">
+      <div className="w-full lg:w-4/5 bg-light px-2 lg:p-4 space-y-4 overflow-hidden">
         <ProductsManagementHeader
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

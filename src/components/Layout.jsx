@@ -31,8 +31,10 @@ export default function Layout({ children }) {
   const isAdminPanel = pathname.startsWith('/admin')
   const isLoginPage = pathname.startsWith('/login')
   const isPaymentPage = pathname.startsWith('/payment')
+  const isBlogPage = pathname.startsWith('/blog')
 
-  const shouldApplyContainer = !isShopRoute && !isAdminPanel && !isLoginPage
+  const shouldApplyContainer =
+    !isShopRoute && !isAdminPanel && !isLoginPage && !isBlogPage
 
   return (
     <main
@@ -49,7 +51,7 @@ export default function Layout({ children }) {
           isFaqPage ||
           isNotFoundPage
             ? 'bg-transparent'
-            : 'bg-light'
+            : ''
         }
         ${isShopRoute ? 'max-w-[1640px] mx-auto' : ''}
         ${isAdminPanel ? 'max-w-[1640px] mx-auto' : ''}

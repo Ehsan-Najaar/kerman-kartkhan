@@ -11,9 +11,9 @@ export default function ProductsManagementHeader({
 }) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-4 lg:gap-0 pt-4">
-      <div className="w-full lg:w-1/3 flex items-center justify-center gap-2">
+      <div className="w-full lg:w-1/3 flex items-center justify-center md:justify-start gap-2">
         <h2 className="h3">لیست محصولات</h2>
-        <small>({products.length} محصول)</small>
+        <small className="text-gray-500">({products.length} محصول)</small>
       </div>
 
       <div className="w-full lg:w-1/3 flex items-center gap-2">

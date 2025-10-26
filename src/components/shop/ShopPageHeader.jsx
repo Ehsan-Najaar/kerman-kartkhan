@@ -16,6 +16,7 @@ import { ChevronDown, Menu, Search, Shapes, User, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { FaBook } from 'react-icons/fa'
 
 export default function ShopPageHeader() {
   const { user, cart, logout } = useAppContext()
@@ -369,7 +370,7 @@ export default function ShopPageHeader() {
 
       {/* منوی پایین: headerRoutes و دسته‌ها */}
       <nav
-        className={`hidden absolute top-full left-0 w-full bg-light px-24 py-2 xl:flex items-center gap-20 text-sm font-medium overflow-visible transition-transform duration-300 z-30`}
+        className={`hidden absolute top-full left-0 w-full bg-light px-24 py-2 xl:flex items-center justify-between gap-20 text-sm font-medium overflow-visible transition-transform duration-300 z-30`}
       >
         <section className="flex items-center gap-4">
           <span className="bg-section/25 text-secondary/80 rounded-full px-4 py-1 text-sm whitespace-nowrap">
@@ -427,6 +428,15 @@ export default function ShopPageHeader() {
             )
           )}
         </section>
+
+        {/* <section>
+          <Link href={'/blog'}>
+            <Button variant="ghost" outline size="xs">
+              <FaBook size={18} />
+              مقالات
+            </Button>
+          </Link>
+        </section> */}
       </nav>
 
       {isDrawerOpen && (

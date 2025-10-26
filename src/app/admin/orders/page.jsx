@@ -128,10 +128,10 @@ export default function OrdersManagement() {
   })
 
   return (
-    <div className="min-h-screen flex md:p-6 gap-12">
+    <div className="min-h-screen flex">
       <AdminPanelNavbar />
 
-      <div className="w-full lg:w-4/5 bg-light p-4 rounded-2xl shadow-lg overflow-hidden relative">
+      <div className="w-full lg:w-4/5 bg-light p-4 overflow-hidden relative">
         <OrdersHeader
           search={search}
           setSearch={setSearch}

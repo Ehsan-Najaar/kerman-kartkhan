@@ -64,16 +64,6 @@ export default function CategoryManagement() {
     }
   }
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/api/admin/categories/${id}`)
-      const res = await axios.get('/api/categories')
-      setCategories(res.data)
-    } catch (err) {
-      setError('خطا در حذف دسته‌بندی')
-    }
-  }
-
   const handleEdit = (category) => {
     setCategoryData({
       ...category,
@@ -103,10 +93,10 @@ export default function CategoryManagement() {
   }
 
   return (
-    <div className="min-h-screen flex md:p-6 gap-12">
+    <div className="min-h-screen flex">
       <AdminPanelNavbar />
 
-      <div className="w-full lg:w-4/5 lg:h-[750px] bg-light p-4 rounded-2xl shadow-lg overflow-hidden relative">
+      <div className="w-full lg:w-4/5 bg-light p-4 overflow-hidden relative">
         {loading ? (
           <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-10">
             <Loader2 />

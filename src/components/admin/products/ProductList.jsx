@@ -60,7 +60,7 @@ export default function ProductList({
     )
 
   return (
-    <div className="space-y-4 p-4 overflow-auto lg:h-[450px]">
+    <div className="space-y-4 p-4 overflow-auto lg:h-[500px]">
       {filteredProducts.map((product) => (
         <ProductCard2
           key={product._id}

@@ -21,14 +21,15 @@ export async function generateMetadata({ params }) {
 
   return {
     title: `خرید ${
-      product.category.title === 'کارتخوان'
-        ? product.category.title
+      ['کارتخوان', 'کش لس'].includes(product.category.title)
+        ? ''
         : '' || product.category.title === 'تجهیزات فروشگاهی'
         ? product.name.toUpperCase()
         : 'تجهیزات فروشگاهی'
     } ${product.type !== 'تجهیزات فروشگاهی' ? product.type : ''} مدل ${
       product.model
     } از برند ${product.brand}`,
+
     description: product.description,
     openGraph: {
       title: `${product.name} | ${product.brand}`,

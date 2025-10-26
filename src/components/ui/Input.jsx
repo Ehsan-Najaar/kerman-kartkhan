@@ -54,7 +54,7 @@ export default function Input({
         htmlFor={id}
         className={`absolute right-4 text-xs transition-all duration-300 cursor-text ${
           shouldFloatLabel
-            ? '-top-2 text-secondary md:text-sm text-xs bg-light'
+            ? '-top-2 text-secondary bg-light'
             : 'top-4 text-gray/50'
         }`}
       >

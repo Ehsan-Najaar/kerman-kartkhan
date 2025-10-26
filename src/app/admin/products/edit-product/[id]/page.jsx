@@ -46,7 +46,7 @@ export default function EditProductPage() {
   }
 
   return (
-    <div className="min-h-screen flex md:p-6 gap-12">
+    <div className="min-h-screen lg:h-[710px] lg:flex">
       <AdminPanelNavbar />
       <div className="w-full lg:w-4/5 p-6 bg-light rounded-2xl shadow-lg space-y-6">
         {loading ? (
